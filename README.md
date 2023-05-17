@@ -1,6 +1,4 @@
-"# WhatsInMyFridge"  
-FUTURE OVERWHELMING GROUP EH...
-
+"#WhatsInMyFridge"  
 After Cloning The Project, try directing your cmd to the clone folder
 
 Do this I think..
@@ -16,4 +14,4 @@ you can scan the qr code using your phone by downloading the app "Expo Go"
 
 *YOU CAN ONLY SCAN THE QR USING THE "EXPO GO" APP*
 
-"# WhatsInMyFridge" 
+"#WhatsInMyFridge" 
