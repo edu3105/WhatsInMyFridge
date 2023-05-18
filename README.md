@@ -1,10 +1,12 @@
 "#WhatsInMyFridge"  
+
 After Cloning The Project, try directing your cmd to the clone folder
 
 Do this I think..
 
-1. npm install -g expo-cli
-2. npm install
+1. `npm install -g expo-cli`
+2. `npm install`
+3. `yarn install` (just to make sure, I totally forgot what package I have installed in this project)
 
 Finally run the program using:
 3. expo start
