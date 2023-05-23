@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './page/HomeScreen.js';
 import SettingsScreen from './page/Settings.js';
+import ExploreScreen from './page/ExploreScreen.js'
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +29,20 @@ export default function App() {
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={focused ? 'home' : 'home-outline'}
+                size={30} // Set the size of the icon here
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          }} 
+        />
+        <Tab.Screen name="Explore" component={ExploreScreen} 
+          options={{ 
+            tabBarBadge: 5,
+            tabBarLabel: ' ',
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={focused ? 'search' : 'search-outline'}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
