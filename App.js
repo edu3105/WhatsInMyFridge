@@ -1,14 +1,18 @@
+//app,js
+
 // import { StatusBar } from 'expo-status-bar';
 // import { StyleSheet, Text, View } from 'react-native';
 // import { NativeBaseProvider, Box } from "native-base";
 
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from './page/HomeScreen.js';
-import SettingsScreen from './page/Settings.js';
-import ExploreScreen from './page/ExploreScreen.js'
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import HomeScreen from "./page/HomeScreen.js";
+import SettingsScreen from "./page/Settings.js";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import ExploreScreen from "./page/ExploreScreen.js";
+import { FirstScreenNavigator } from "./CustomNavigation.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,48 +26,76 @@ export default function App() {
           },
         }}
       >
-        <Tab.Screen name="Home" component={HomeScreen} 
-          options={{ 
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
             tabBarBadge: 5,
-            tabBarLabel: ' ',
+            tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name={focused ? 'home' : 'home-outline'}
+                name={focused ? "home" : "home-outline"}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
               />
             ),
-          }} 
+          }}
         />
-        <Tab.Screen name="Explore" component={ExploreScreen} 
-          options={{ 
+        <Tab.Screen
+          name="Explore"
+          component={ExploreScreen}
+          options={{
             tabBarBadge: 5,
-            tabBarLabel: ' ',
+            tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name={focused ? 'search' : 'search-outline'}
+                name={focused ? "search" : "search-outline"}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
               />
             ),
-          }} 
+          }}
         />
-        <Tab.Screen name="Settings" component={SettingsScreen}
-          options={{ 
-            tabBarLabel: ' ',
+        <Tab.Screen
+          name="Settings 1"
+          component={FirstScreenNavigator}
+          options={({ route }) => ({
+            tabBarStyle: {
+              display: getTabBarVisibility(route),
+              height: 60,
+            },
+            //dont show header
+            headerShown: getHeaderVisibility(route),
+            tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name={focused ? 'settings' : 'settings-outline'}
+                name={focused ? "settings" : "settings-outline"}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
               />
             ),
-          }} 
+          })}
         />
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
+const getTabBarVisibility = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
+  if (routeName == "NestedScreen1") {
+    return "none";
+  } else {
+    return "flex";
+  }
+};
+
+const getHeaderVisibility = (route) => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
+  if (routeName == "NestedScreen1") {
+    return false;
+  }
+};
