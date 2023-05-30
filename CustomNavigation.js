@@ -3,8 +3,11 @@
 import React from "react";
 import { NativeBaseProvider } from "native-base";
 import { createStackNavigator } from "@react-navigation/stack";
-import NestedSettings from "./page/NestedSettings";
-import SettingsScreen from "./page/Settings.js";
+// import NestedSettings from "./page/Settings/NestedSettings.js";
+// import SettingsScreen from "./page/Settings/SettingsSettings.js";
+
+import NestedSettings from "./page/Settings/NestedSettings";
+import SettingsScreen from "./page/Settings/Settings";
 
 const Stack = createStackNavigator(); // creates object for Stack Navigator
 

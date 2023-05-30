@@ -15,7 +15,6 @@ import {
   Button,
   Flex,
 } from "native-base";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import SearchBar from "./searchBar";
 import IngredientsBox from "./quickFilter";
 import BigBox from "./IngredientsBox/bigBox";

@@ -13,6 +13,8 @@ import HomeScreen from "./page/Home/HomeScreen.js";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
+import AddScreen from "./page/AddRecipes.js";
+import BookmarkScreen from "./page/Bookmarks.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,6 +53,38 @@ export default function App() {
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={focused ? "search" : "search-outline"}
+                size={30} // Set the size of the icon here
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Add"
+          component={AddScreen}
+          options={{
+            // tabBarBadge: 0,
+            tabBarLabel: " ",
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={focused ? "add-circle" : "add-circle-outline"}
+                size={30} // Set the size of the icon here
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Bookmark"
+          component={BookmarkScreen}
+          options={{
+            // tabBarBadge: 0,
+            tabBarLabel: " ",
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={focused ? "bookmark" : "bookmark-outline"}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
