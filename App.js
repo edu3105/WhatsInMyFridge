@@ -6,9 +6,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from './page/HomeScreen.js';
+import HomeScreen from './page/Home/HomeScreen.js';
 import SettingsScreen from './page/Settings.js';
-import ExploreScreen from './page/ExploreScreen.js'
+import ExploreScreen from './page/Explore/ExploreScreen.js'
 
 const Tab = createBottomTabNavigator();
 
