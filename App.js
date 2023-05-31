@@ -76,9 +76,12 @@ export default function App() {
             ),
           }}
         />
-        <Tab.Screen name="Settings" component={SettingsScreen}
-          options={{ 
-            tabBarLabel: ' ',
+        <Tab.Screen
+          name="Bookmark"
+          component={BookmarkScreen}
+          options={{
+            // tabBarBadge: 0,
+            tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={focused ? "bookmark" : "bookmark-outline"}
@@ -88,6 +91,27 @@ export default function App() {
               />
             ),
           }}
+        />
+        <Tab.Screen
+          name="Settings 1"
+          component={FirstScreenNavigator}
+          options={({ route }) => ({
+            tabBarStyle: {
+              display: getTabBarVisibility(route),
+              height: 60,
+            },
+            //dont show header
+            headerShown: getHeaderVisibility(route),
+            tabBarLabel: " ",
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={focused ? "settings" : "settings-outline"}
+                size={30} // Set the size of the icon here
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          })}
         />
       </Tab.Navigator>
     </NavigationContainer>
