@@ -8,7 +8,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './page/HomeScreen.js';
 import SettingsScreen from './page/Settings.js';
-import ExploreScreen from './page/ExploreScreen.js'
+import ExploreScreen from './page/ExploreScreen.js';
+import BookmarkScreen from './page/BookmarkScreen.js';
+import CardItemBordered from './page/playground.js';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,6 +52,19 @@ export default function App() {
             ),
           }} 
         />
+        <Tab.Screen name="Bookmark" component={BookmarkScreen}
+          options={{
+            tabBarLabel: 'Bookmark',
+            tabBarIcon: ({focused}) => (
+              <Ionicons
+                name={focused? 'bookmark' : 'bookmark-outline'}
+                size={30}
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          }}
+        />
         <Tab.Screen name="Settings" component={SettingsScreen}
           options={{ 
             tabBarLabel: ' ',
@@ -62,6 +77,19 @@ export default function App() {
               />
             ),
           }} 
+        />
+        <Tab.Screen name="Playground" component={CardItemBordered}
+          options={{
+            tabBarLabel: ' ',
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={focused ? 'card' : 'card-outline'}
+                size={30} // Set the size of the icon here
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          }}
         />
       </Tab.Navigator>
     </NavigationContainer>
