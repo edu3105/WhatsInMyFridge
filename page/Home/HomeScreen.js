@@ -16,7 +16,7 @@ import {
   Flex,
 } from "native-base";
 import SearchBar from "./searchBar";
-import IngredientsBox from "./quickFilter";
+import QuickFilter from "./quickFilter";
 import BigBox from "./IngredientsBox/bigBox";
 import Recipes from "./Recipes";
 
@@ -26,12 +26,29 @@ export default function HomeScreen() {
       <ScrollView vertical={true}>
         <SearchBar />
 
-        <IngredientsBox />
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ScrollView horizontal={true} mx="5" mt="3" style={{ width: "90%" }}>
+            <QuickFilter />
+            <QuickFilter />
+            <QuickFilter />
+            <QuickFilter />
+            <QuickFilter />
+            <QuickFilter />
+            <QuickFilter />
+          </ScrollView>
+        </View>
 
         <BigBox />
 
         <ScrollView horizontal={true}>
-          <Recipes />
+          <HStack space={2} overflow="scroll" px={10}>
+            <Recipes />
+            <Recipes />
+            <Recipes />
+            <Recipes />
+          </HStack>
         </ScrollView>
       </ScrollView>
     </NativeBaseProvider>
