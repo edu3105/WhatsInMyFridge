@@ -1,34 +1,39 @@
-//settings.js
-
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { NativeBaseProvider, HStack, IconButton, Box } from "native-base";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
+import {
+  NativeBaseProvider,
+  HStack,
+  IconButton,
+  Box,
+  Button,
+} from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import "react-native-gesture-handler";
-// import SettingsPage from './SettingsPage.js';
 
-const SettingsScreen = ({ navigation }) => {
+const AddScreen = ({ navigation }) => {
   return (
     <NativeBaseProvider>
       <View style={styles.screen}>
-        <Text style={styles.text}>I am screen1</Text>
-        <IconButton
-          position="absolute"
-          top={0}
-          right={0}
-          m={4}
-          icon={<Ionicons name="settings-outline" size={24} />}
-          onPress={() => navigation.navigate("NestedScreen1")}
-          variant="unstyled"
-          colorScheme="gray"
+        <ImageBackground
+          source={require("../../assets/Create/FeatherPen2.png")}
+          style={styles.image}
         />
+        <Button onPress={() => navigation.navigate("Basic Information")}>
+          Start Writing
+        </Button>
       </View>
     </NativeBaseProvider>
   );
 };
 
-export default SettingsScreen;
+export default AddScreen;
 
 const styles = StyleSheet.create({
   screen: {
@@ -36,7 +41,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00000025",
+    backgroundColor: "#fff",
   },
   container: {
     flex: 1,
@@ -57,5 +62,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 25,
+  },
+  image: {
+    width: 285,
+    height: 225,
+    marginBottom: 20,
+
+    //  position: "absolute",
   },
 });
