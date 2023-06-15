@@ -22,7 +22,7 @@ export default function Recommended() {
   return (
     <NativeBaseProvider>
       <ScrollView horizontal={true}>
-        <HStack space={2} overflow="scroll" px={5}>
+        <HStack space={2} overflow="scroll" px={10}>
           <Box flex={1} height="100%" alignItems="center" py={10}>
             <Box
               maxW="40"

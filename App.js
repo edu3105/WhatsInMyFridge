@@ -13,7 +13,7 @@ import HomeScreen from "./page/Home/HomeScreen.js";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
-import AddScreen from "./page/AddRecipes.js";
+import { Create_BasicInfo } from "./page/Create/Custom1.js";
 import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
 
 
@@ -62,10 +62,15 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Add"
-          component={AddScreen}
-          options={{
-            // tabBarBadge: 0,
+          name="Create"
+          component={Create_BasicInfo}
+          options={({ route }) => ({
+            tabBarStyle: {
+              display: getTabBarVisibility(route),
+              height: 60,
+            },
+            //dont show header
+            headerShown: getHeaderVisibility(route),
             tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
@@ -75,7 +80,7 @@ export default function App() {
                 marginBottom={-15}
               />
             ),
-          }}
+          })}
         />
         <Tab.Screen
           name="Bookmark"
@@ -94,7 +99,7 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Settings 1"
+          name="Settings"
           component={FirstScreenNavigator}
           options={({ route }) => ({
             tabBarStyle: {
@@ -121,7 +126,7 @@ export default function App() {
 
 const getTabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1") {
+  if (routeName == "NestedScreen1" || routeName == "Basic Information") {
     return "none";
   } else {
     return "flex";
@@ -130,7 +135,7 @@ const getTabBarVisibility = (route) => {
 
 const getHeaderVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1") {
+  if (routeName == "NestedScreen1" || routeName == "Basic Information") {
     return false;
   }
 };
