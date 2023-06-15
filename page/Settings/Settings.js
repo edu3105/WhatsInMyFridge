@@ -13,6 +13,8 @@ import {
   Box,
   Avatar,
   ScrollView,
+  VStack,
+  Stack,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -52,6 +54,18 @@ export default function SettingsScreen() {
     // });
   };
 
+  const handleDraftRecipePress = () => {
+    console.log("Draft_pressed");
+    setActiveTab("draft");
+  };
+
+  const handleUploadRecipePress = () => {
+    console.log("Upload_pressed");
+    setActiveTab("upload");
+  };
+
+  const [activeTab, setActiveTab] = useState("draft");
+
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
@@ -87,36 +101,166 @@ export default function SettingsScreen() {
         />
       </HStack>
 
+      <View style={styles.centeredContainer}>
+        <HStack>
+          <TouchableWithoutFeedback onPress={handleDraftRecipePress}>
+            <View style={styles.draft_button}>
+              <Text style={styles.draftedRecipeText}>Drafted Recipe</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={handleUploadRecipePress}>
+            <View style={styles.upload_button}>
+              <Text style={styles.uploadedRecipeText}>Uploaded Recipe</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </HStack>
+      </View>
+
       <View style={styles.shared_draft}>
         <ScrollView
           nestedScrollEnabled={true}
           vertical={true}
           style={{ flexDirection: "column" }}
-          bg="coolGray.300"
+          //bg="coolGray.300"
+          showsVerticalScrollIndicator={false}
           mx="5"
           mt="3"
-          w="80%"
-          h={10 * 0.5}
+          w={375}
+          h={300}
         >
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-            <Box
-              key={item}
-              alignSelf="center"
-              _text={{
-                fontSize: "md",
-                fontWeight: "medium",
-                color: "warmGray.50",
-                letterSpacing: "lg",
-              }}
-              bg={["red.400", "blue.400"]}
-              w="100%"
-              h="100%"
-              my="2"
-              borderRadius={8}
-            >
-              This is box {item}
-            </Box>
-          ))}
+          {activeTab === "draft" && (
+            <>
+              {/* Drafted Recipe content */}
+              <Box
+                alignSelf="center"
+                bg="white"
+                w="100%"
+                h={200}
+                my="2"
+                borderRadius={8}
+              >
+                {/* Content for Drafted Recipe */}
+                <View style={styles.boxContent}>
+                  <Text style={styles.header_title}>AYAM KFC</Text>
+                  <Text style={styles.body}>
+                    Fried chicken, also known as Southern fried chicken, is a
+                    dish consisting of chicken pieces that have been coated with
+                    seasoned flour or batter and pan-fried chicken while
+                    retaining.....
+                  </Text>
+                </View>
+              </Box>
+
+              {/* Add more draft recipe boxes here */}
+
+              <Box
+                alignSelf="center"
+                bg="white"
+                w="100%"
+                h={200}
+                my="2"
+                borderRadius={8}
+              >
+                {/* Content for Drafted Recipe */}
+                <View style={styles.boxContent}>
+                  <Text style={styles.header_title}>AYAM KFC2</Text>
+                  <Text style={styles.body}>
+                    Fried chicken, also known as Southern fried chicken, is a
+                    dish consisting of chicken pieces that have been coated with
+                    seasoned flour or batter and pan-fried chicken while
+                    retaining.....
+                  </Text>
+                </View>
+              </Box>
+
+              <Box
+                alignSelf="center"
+                bg="white"
+                w="100%"
+                h={200}
+                my="2"
+                borderRadius={8}
+              >
+                {/* Content for Drafted Recipe */}
+                <View style={styles.boxContent}>
+                  <Text style={styles.header_title}>AYAM KFC3</Text>
+                  <Text style={styles.body}>
+                    Fried chicken, also known as Southern fried chicken, is a
+                    dish consisting of chicken pieces that have been coated with
+                    seasoned flour or batter and pan-fried chicken while
+                    retaining.....
+                  </Text>
+                </View>
+              </Box>
+            </>
+          )}
+
+          {activeTab === "upload" && (
+            <>
+              {/* Uploaded Recipe content */}
+              <Box
+                alignSelf="center"
+                bg="white"
+                w="100%"
+                h={200}
+                my="2"
+                borderRadius={8}
+              >
+                {/* Content for Uploaded Recipe */}
+                <View style={styles.boxContent}>
+                  <Text style={styles.header_title}>AYAM MCD</Text>
+                  <Text style={styles.body}>
+                    Fried chicken, also known as Southern fried chicken, is a
+                    dish consisting of chicken pieces that have been coated with
+                    seasoned flour or batter and pan-fried chicken while
+                    retaining.....
+                  </Text>
+                </View>
+              </Box>
+
+              {/* Add more uploaded recipe boxes here */}
+
+              <Box
+                alignSelf="center"
+                bg="white"
+                w="100%"
+                h={200}
+                my="2"
+                borderRadius={8}
+              >
+                {/* Content for Uploaded Recipe */}
+                <View style={styles.boxContent}>
+                  <Text style={styles.header_title}>AYAM MCD2</Text>
+                  <Text style={styles.body}>
+                    Fried chicken, also known as Southern fried chicken, is a
+                    dish consisting of chicken pieces that have been coated with
+                    seasoned flour or batter and pan-fried chicken while
+                    retaining.....
+                  </Text>
+                </View>
+              </Box>
+
+              <Box
+                alignSelf="center"
+                bg="white"
+                w="100%"
+                h={200}
+                my="2"
+                borderRadius={8}
+              >
+                {/* Content for Uploaded Recipe */}
+                <View style={styles.boxContent}>
+                  <Text style={styles.header_title}>AYAM MCD3</Text>
+                  <Text style={styles.body}>
+                    Fried chicken, also known as Southern fried chicken, is a
+                    dish consisting of chicken pieces that have been coated with
+                    seasoned flour or batter and pan-fried chicken while
+                    retaining.....
+                  </Text>
+                </View>
+              </Box>
+            </>
+          )}
         </ScrollView>
       </View>
     </NativeBaseProvider>
@@ -162,11 +306,72 @@ const styles = StyleSheet.create({
     left: 350,
   },
 
+  centeredContainer: {
+    flex: 1,
+    position: "absolute",
+    left: 57,
+    textAlign: "center",
+    top: 170,
+  },
+
+  draft_button: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    right: 10,
+  },
+
+  upload_button: {
+    borderWidth: 1,
+
+    borderColor: "black",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+    paddingRight: 10,
+    right: 10,
+  },
+
+  draftedRecipeText: {
+    fontSize: 17,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    right: 10,
+    marginLeft: 20,
+  },
+
+  uploadedRecipeText: {
+    fontSize: 17,
+    color: "gray",
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 10,
+  },
+
+  header_title: {
+    fontWeight: "bold",
+    bottom: 10,
+    fontSize: 20,
+  },
+  body: {},
+
+  boxContent: {
+    flex: 1,
+    padding: 10,
+    margin: 15,
+    marginLeft: 125,
+  },
+
   shared_draft: {
     flex: 1,
 
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -300,
+    marginTop: -350,
   },
 });
