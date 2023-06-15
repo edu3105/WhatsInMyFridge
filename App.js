@@ -14,7 +14,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
 import AddScreen from "./page/AddRecipes.js";
-import BookmarkScreen from "./page/Bookmarks.js";
+import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
 
 const Tab = createBottomTabNavigator();
 
