@@ -1,129 +1,69 @@
-import React, {useState, useEffect}from "react";
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { Box, Card, NativeBaseProvider, Stack, Center, Divider, Button } from "native-base";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import {fetchRecipeById} from "./api/api.js";
+import { fetchRecipeById } from "../api/api.js";
 
-export default function BookmarkScreen({navigation}){
+export default function BookmarkScreenPg({ navigation }) {
+    const [oddStack, setOddStack] = useState([]);
+    const [evenStack, setEvenStack] = useState([]);
+    const [recipeCount, setRecipeCount] = useState(1);
 
-    const [buttonName, setButtonName] = useState("I'm a button");
-    const [boxName, setBoxName] = useState("Box");
+    function addComponent() {
+        var isOdd = recipeCount % 2 === 1 ? true : false;
 
-    const handleBoxClick = () =>{
-        fetchRecipeById(716429).then((res) => {
-            setBoxName(res.recipeName);
-        });
-    };
-
-    const handleClick = () =>{
-        setButtonName("Button Clicked");
-    };
+        if (isOdd) {
+            setOddStack([...oddStack, newBox(recipeCount)]);
+        } else {
+            setEvenStack([...evenStack, newBox(recipeCount)]);
+        }
+        setRecipeCount(recipeCount + 1);
+    }
 
     return (
         <NativeBaseProvider>
-            <ScrollView >
-                <Stack direction="row" justifyContent="space-evenly" top = "5">
+            <ScrollView>
+                <Stack direction="row" justifyContent="space-evenly" top="5">
                     <Stack direction="column" space="md">
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart = {handleBoxClick}>
-                            {boxName}
-                        </Box>
-
-                        <Button onPressOut={handleClick}>{buttonName}</Button>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
+                        {oddStack}
                     </Stack>
-
-                    <Stack direction="column" space="md" >
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
-                        <Box
-                            _text={styles.recipePage.text}
-                            bg = {styles.recipePage.bg} 
-                            height={styles.recipePage.height}
-                            width={styles.recipePage.width}
-                            onTouchStart={() => console.log("Hello this is center 1")}>
-                            CENTER 1
-                        </Box>
+                    <Stack direction="column" space="md">
+                        {evenStack}
                     </Stack>
                 </Stack>
+                <Button onTouchStart={addComponent}> Create a Box </Button>
             </ScrollView>
         </NativeBaseProvider>
+    )
+}
+
+
+function newBox(id) {
+    return (
+        <Box
+            _text={styles.recipePage.text}
+            bg={styles.recipePage.bg}
+            height={styles.recipePage.height}
+            width={styles.recipePage.width}>
+            {id}
+        </Box>
     );
 }
 
 var styles = StyleSheet.create({
-    
-    recipePage:{
-        text:{
-            color:"white",
+
+    recipePage: {
+        text: {
+            color: "white",
             fontWeight: "bold",
         },
-        bg:'primary.200',
+        bg: 'primary.200',
         height: 158,
-        width:{
+        width: {
             base: 150,
             lg: 250
         }
     }
 
-    
+
 
 });
