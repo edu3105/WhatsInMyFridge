@@ -4,7 +4,14 @@ import { Box, Card, NativeBaseProvider, Stack, Center, Divider, Button } from "n
 
 import {fetchRecipeById} from "../api/api.js";
 
-export default function BookmarkScreenPg({ navigation }) {
+/*
+Right now the box will disappear in both stacks, probably because the index of both the boxes are the same.
+fix with uuid later on. thanks. -Owen 6/15
+
+*/
+
+
+export default function BookmarkScreen({ navigation }) {
     const [oddStack, setOddStack] = useState([]);
     const [evenStack, setEvenStack] = useState([]);
     const [recipeCount, setRecipeCount] = useState(1);
@@ -13,11 +20,18 @@ export default function BookmarkScreenPg({ navigation }) {
         var isOdd = recipeCount % 2 === 1 ? true : false;
 
         if (isOdd) {
-            setOddStack([...oddStack, newBox(recipeCount)]);
+            setOddStack([...oddStack, recipeCount]);
         } else {
-            setEvenStack([...evenStack, newBox(recipeCount)]);
+            setEvenStack([...evenStack, recipeCount]);
         }
         setRecipeCount(recipeCount + 1);
+    }
+
+    function removeComponent(index){
+        var newStack = oddStack.filter((_, i) => i !== index);
+        setOddStack(newStack);
+        newStack = evenStack.filter((_, i) => i !== index);
+        setEvenStack(newStack);
     }
 
     return (
@@ -25,29 +39,31 @@ export default function BookmarkScreenPg({ navigation }) {
             <ScrollView>
                 <Stack direction="row" justifyContent="space-evenly" top="5">
                     <Stack direction="column" space="md">
-                        {oddStack}
+                        {oddStack.map((recipeId, index) => newBox(recipeId, index))}
                     </Stack>
                     <Stack direction="column" space="md">
-                        {evenStack}
+                        {evenStack.map((recipeId, index) => newBox(recipeId, index))}
                     </Stack>
                 </Stack>
                 <Button onTouchStart={addComponent}> Create a Box </Button>
             </ScrollView>
         </NativeBaseProvider>
     )
-}
 
 
-function newBox(id) {
-    return (
-        <Box
-            _text={styles.recipePage.text}
-            bg={styles.recipePage.bg}
-            height={styles.recipePage.height}
-            width={styles.recipePage.width}>
-            {id}
-        </Box>
-    );
+    function newBox(recipeId, index) {
+        return (
+            <Box
+                key={index}
+                _text={styles.recipePage.text}
+                bg={styles.recipePage.bg}
+                height={styles.recipePage.height}
+                width={styles.recipePage.width}
+                onTouchStart={() => removeComponent(index)}>
+                {recipeId}
+            </Box>
+        );
+    }
 }
 
 var styles = StyleSheet.create({
@@ -64,7 +80,4 @@ var styles = StyleSheet.create({
             lg: 250
         }
     }
-
-
-
 });
