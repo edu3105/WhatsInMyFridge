@@ -16,6 +16,7 @@ import { FirstScreenNavigator } from "./CustomNavigation.js";
 import AddScreen from "./page/AddRecipes.js";
 import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
 
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
