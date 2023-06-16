@@ -15,6 +15,8 @@ import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
 import { Create_BasicInfo } from "./page/Create/Custom1.js";
 import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
+//owen-debug
+//import Bsbro from "./page/Bookmark/bookmarkplayground.js";
 
 
 const Tab = createBottomTabNavigator();
@@ -84,7 +86,9 @@ export default function App() {
         />
         <Tab.Screen
           name="Bookmark"
+          //debug
           component={BookmarkScreen}
+          //component={BookmarkScreen}
           options={{
             // tabBarBadge: 0,
             tabBarLabel: " ",

@@ -39,7 +39,6 @@ export default function BookmarkScreen({ navigation }) {
             {oddStack.map((el)=> newBox(el.recipeCount, el.uid))}
           </Stack>
           <Stack direction="column" space="md">
-            {/* {evenStack.map((recipeId, uid) => newBox(recipeId, uid))} */}
             {evenStack.map((el) => newBox(el.recipeCount, el.uid))}
           </Stack>
         </Stack>
