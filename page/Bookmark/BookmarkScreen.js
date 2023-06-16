@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import {
-  Box,
-  Card,
-  NativeBaseProvider,
-  Stack,
-  Center,
-  Divider,
-  Button,
-} from "native-base";
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Box, Card, NativeBaseProvider, Stack, Center, Divider, Button } from "native-base";
 
 import { fetchRecipeById } from "../api/api.js";
 
+/*
+Right now the box will disappear in both stacks, probably because the index of both the boxes are the same.
+fix with uuid later on. thanks. -Owen 6/15
+
+*/
+
+
 export default function BookmarkScreen({ navigation }) {
-  const [buttonName, setButtonName] = useState("I'm a button");
-  const [boxName, setBoxName] = useState("Box");
+  const [oddStack, setOddStack] = useState([]);
+  const [evenStack, setEvenStack] = useState([]);
+  const [recipeCount, setRecipeCount] = useState(1);
 
-  const handleBoxClick = () => {
-    fetchRecipeById(716429).then((res) => {
-      setBoxName(res.recipeName);
-    });
-  };
+  function addComponent() {
+    var isOdd = recipeCount % 2 === 1 ? true : false;
 
-  const handleClick = () => {
-    setButtonName("Button Clicked");
-  };
+    if (isOdd) {
+      setOddStack([...oddStack, recipeCount]);
+    } else {
+      setEvenStack([...evenStack, recipeCount]);
+    }
+    setRecipeCount(recipeCount + 1);
+  }
+
+  function removeComponent(index) {
+    var newStack = oddStack.filter((_, i) => i !== index);
+    setOddStack(newStack);
+    newStack = evenStack.filter((_, i) => i !== index);
+    setEvenStack(newStack);
+  }
 
   return (
     <NativeBaseProvider>
@@ -40,7 +48,8 @@ export default function BookmarkScreen({ navigation }) {
         <Button onTouchStart={addComponent}> Create a Box </Button>
       </ScrollView>
     </NativeBaseProvider>
-  );
+  )
+
 
   function newBox(recipeId, index) {
     return (
@@ -50,8 +59,7 @@ export default function BookmarkScreen({ navigation }) {
         bg={styles.recipePage.bg}
         height={styles.recipePage.height}
         width={styles.recipePage.width}
-        onTouchStart={() => removeComponent(index)}
-      >
+        onTouchStart={() => removeComponent(index)}>
         {recipeId}
       </Box>
     );
@@ -59,16 +67,17 @@ export default function BookmarkScreen({ navigation }) {
 }
 
 var styles = StyleSheet.create({
+
   recipePage: {
     text: {
       color: "white",
       fontWeight: "bold",
     },
-    bg: "primary.200",
+    bg: 'primary.200',
     height: 158,
     width: {
       base: 150,
-      lg: 250,
-    },
-  },
+      lg: 250
+    }
+  }
 });
