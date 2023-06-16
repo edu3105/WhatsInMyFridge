@@ -8,6 +8,8 @@ import { fetchRecipeById } from "../api/api.js";
 Right now the box will disappear in both stacks, probably because the index of both the boxes are the same.
 fix with uuid later on. thanks. -Owen 6/15
 
+
+// check is this correct?
 */
 
 
