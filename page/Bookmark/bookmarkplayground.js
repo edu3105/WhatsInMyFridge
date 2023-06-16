@@ -39,7 +39,8 @@ export default function BookmarkScreenPg({ navigation }) {
 
 function newBox(id){
     return (
-        <Box
+        <Box 
+            key={id}
             _text={styles.recipePage.text}
             bg={styles.recipePage.bg}
             height={styles.recipePage.height}

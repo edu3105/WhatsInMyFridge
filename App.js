@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./page/Home/HomeScreen.js";
 // import SettingsScreen from "./page/Settings.js";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";  
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
 import { Create_BasicInfo } from "./page/Create/Custom1.js";
