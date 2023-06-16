@@ -3,11 +3,11 @@ import { StyleSheet, Text, View } from "react-native";
 import { NativeBaseProvider, Center, HStack, Button } from "native-base";
 
 export default function FilterBar({ navigation }) {
-  const [selectedButton, setSelectedButton] = useState("ForYou");
+  const [selectedButton, setSelectedButton] = useState("Region");
   const pressHandler = () => {
-    navigation.navigate("Region");
+    navigation.navigate("ForYou");
   };
-  const pressHandlers = () => {
+  const pressHandler2 = () => {
     navigation.navigate("Rating");
   };
   return (
@@ -17,6 +17,7 @@ export default function FilterBar({ navigation }) {
           <HStack space={0} marginTop={5}>
             <Button
               size="sm"
+              onPress={pressHandler}
               colorScheme={selectedButton === "ForYou" ? "purple" : "white"}
               _text={{
                 color: selectedButton === "ForYou" ? "white" : "purple",
@@ -34,10 +35,9 @@ export default function FilterBar({ navigation }) {
             </Button>
             <Button
               size="sm"
-              onPress={pressHandler}
               colorScheme={selectedButton === "Region" ? "purple" : "white"}
               _text={{
-                color: selectedButton === "Region" ? "white" : "purple",
+                color: "white",
               }}
               style={{
                 borderWidth: selectedButton !== "Region" ? 1 : 0,
@@ -51,7 +51,7 @@ export default function FilterBar({ navigation }) {
               Region
             </Button>
             <Button
-              onPress={pressHandlers}
+              onPress={pressHandler2}
               size="sm"
               colorScheme={selectedButton === "Rating" ? "purple" : "white"}
               _text={{

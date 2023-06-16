@@ -13,9 +13,12 @@ import HomeScreen from "./page/Home/HomeScreen.js";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
+import { ExploreScreenNavigator } from "./CustomNavigation.js";
 import AddScreen from "./page/AddRecipes.js";
 import BookmarkScreen from "./page/Bookmarks.js";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -46,7 +49,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Explore"
-          component={ExploreScreen}
+          component={ExploreScreenNavigator}
           options={{
             tabBarBadge: 5,
             tabBarLabel: " ",
@@ -129,7 +132,11 @@ const getTabBarVisibility = (route) => {
 
 const getHeaderVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1") {
+  if (
+    routeName == "NestedScreen1" ||
+    routeName == "Region" ||
+    routeName == "Rating"
+  ) {
     return false;
   }
 };
