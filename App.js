@@ -16,6 +16,7 @@ import { FirstScreenNavigator } from "./CustomNavigation.js";
 import { Create_BasicInfo } from "./page/Create/Custom1.js";
 import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
 
+import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -99,8 +100,8 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Settings"
-          component={FirstScreenNavigator}
+          name="Profile"
+          component={FirstScreenNavigatorSettings}
           options={({ route }) => ({
             tabBarStyle: {
               display: getTabBarVisibility(route),
@@ -111,7 +112,7 @@ export default function App() {
             tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name={focused ? "settings" : "settings-outline"}
+                name={focused ? "person" : "person-outline"}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
@@ -126,7 +127,14 @@ export default function App() {
 
 const getTabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1" || routeName == "Basic Information") {
+  if (
+    routeName == "Settings" ||
+    routeName == "Basic Information" ||
+    routeName == "Edit Profile" ||
+    routeName == "Change Password" ||
+    routeName == "FAQ" ||
+    routeName == "About Us"
+  ) {
     return "none";
   } else {
     return "flex";
@@ -135,7 +143,14 @@ const getTabBarVisibility = (route) => {
 
 const getHeaderVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1" || routeName == "Basic Information") {
+  if (
+    routeName == "Settings" ||
+    routeName == "Basic Information" ||
+    routeName == "Edit Profile" ||
+    routeName == "Change Password" ||
+    routeName == "FAQ" ||
+    routeName == "About Us"
+  ) {
     return false;
   }
 };

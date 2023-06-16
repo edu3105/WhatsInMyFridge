@@ -28,7 +28,7 @@ export default function SettingsScreen() {
   const navigation = useNavigation();
 
   const handleSettingsPress = () => {
-    navigation.navigate("SettingsPage");
+    navigation.navigate("Settings");
     console.log("pressed");
   };
 
