@@ -125,7 +125,11 @@ export default function App() {
 
 const getTabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1" || routeName == "Basic Information") {
+  if (
+    routeName == "NestedScreen1" ||
+    routeName == "Basic Information" ||
+    routeName == "Steps"
+  ) {
     return "none";
   } else {
     return "flex";
@@ -134,7 +138,11 @@ const getTabBarVisibility = (route) => {
 
 const getHeaderVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1" || routeName == "Basic Information") {
+  if (
+    routeName == "NestedScreen1" ||
+    routeName == "Basic Information" ||
+    routeName == "Steps"
+  ) {
     return false;
   }
 };

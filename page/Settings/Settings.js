@@ -16,7 +16,7 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import "react-native-gesture-handler";
+// import "react-native-gesture-handler";
 // import SettingsPage from "./SettingsPage.js";
 
 //var ImagePicker = require('react-native-image-picker');
