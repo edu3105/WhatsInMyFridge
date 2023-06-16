@@ -28,3 +28,20 @@ export const onSubmit = async (ingredient) => {
     console.error("Error storing ingredient data:", error);
   }
 };
+
+export const deleteData = async (ingredientName) => {
+  try {
+    const existingData = await AsyncStorage.getItem("ingredients");
+    if (existingData) {
+      const parsedData = JSON.parse(existingData);
+      const updatedData = parsedData.filter(
+        (ingredient) => ingredient.name !== ingredientName
+      );
+      await AsyncStorage.setItem("ingredients", JSON.stringify(updatedData));
+      console.log("Ingredient data deleted successfully.");
+    }
+  } catch (error) {
+    console.error("Error deleting ingredient data:", error);
+    throw error;
+  }
+};

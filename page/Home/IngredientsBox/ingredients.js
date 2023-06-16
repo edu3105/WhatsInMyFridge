@@ -13,7 +13,7 @@ import {
 } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { getData } from "../../api/ingredientsData.js";
+import { getData, deleteData } from "../../api/ingredientsData.js";
 
 const ingredients = () => {
   const [showModal, setShowModal] = useState(false);
@@ -29,6 +29,17 @@ const ingredients = () => {
     setShowModal(false);
   };
 
+  const handleDeleteData = async () => {
+    try {
+      await deleteData(selectedItem?.name);
+      console.log("Ingredient data deleted successfully.");
+      setSelectedItem(null);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error deleting ingredient data:", error);
+    }
+  };
+
   //FOR ingredients list
   const [ingredients, setIngredients] = useState([]);
 
@@ -39,6 +50,8 @@ const ingredients = () => {
     };
 
     fetchData();
+
+    console.log(ingredients);
   }, [ingredients]);
 
   // const fetchData = async () => {
@@ -81,7 +94,7 @@ const ingredients = () => {
     <NativeBaseProvider>
       {ingredients.map((ingredient) => (
         <Box
-          key="item"
+          key={ingredient.name}
           alignSelf="center"
           bg={["red.400", "blue.400"]}
           w="90%"
@@ -147,7 +160,7 @@ const ingredients = () => {
                     <Button
                       // variant="ghost"
                       colorScheme="danger"
-                      onPress={closeModal}
+                      onPress={handleDeleteData}
                     >
                       Delete
                     </Button>
@@ -164,7 +177,7 @@ const ingredients = () => {
                 color: "coolGray.800",
               }}
             >
-              {ingredient.amount}
+              {ingredient.quantity}
             </Center>
           </Flex>
         </Box>
