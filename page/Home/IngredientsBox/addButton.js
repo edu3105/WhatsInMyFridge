@@ -20,9 +20,12 @@ import {
   Modal,
 } from "native-base";
 
+import { onSubmit, getData } from "../../api/ingredientsData.js";
+
 const addButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [placement, setPlacement] = useState(undefined);
+  const [ingredientName, setIngredientName] = useState("");
 
   const handleExplorePress = (placement) => {
     setIsOpen(true);
@@ -33,8 +36,23 @@ const addButton = () => {
     setIsOpen(false);
   };
 
-  const handleSubmit = () => {
-    // Handle form submission logic here
+  const handleNameChange = (value) => {
+    setIngredientName(value);
+  };
+
+  const handleSubmit = async () => {
+    const ingredient = {
+      name: ingredientName,
+      quantity: count.toString(),
+    };
+
+    try {
+      await onSubmit(ingredient);
+      console.log("Ingredient submitted successfully.");
+    } catch (error) {
+      console.error("Error submitting ingredient:", error);
+    }
+
     handleClose();
   };
 
@@ -76,7 +94,7 @@ const addButton = () => {
           <Modal.Body>
             <Box p="4">
               <Text>Ingredients Name:</Text>
-              <Input placeholder="Name" />
+              <Input placeholder="Name" onChangeText={handleNameChange} />
               <Text>Quantity:</Text>
               <Box justifyContent="space-between" alignItems="center">
                 <Button
@@ -113,22 +131,6 @@ const addButton = () => {
 };
 
 const styles = {
-  top: {
-    marginBottom: "auto",
-    marginTop: 0,
-  },
-  bottom: {
-    marginBottom: 0,
-    marginTop: "auto",
-  },
-  left: {
-    marginLeft: 0,
-    marginRight: "auto",
-  },
-  right: {
-    marginLeft: "auto",
-    marginRight: 0,
-  },
   center: {},
 };
 

@@ -1,15 +1,9 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
   Box,
-  AspectRatio,
-  Image,
   Center,
-  Stack,
-  Heading,
-  HStack,
-  ScrollView,
   Input,
   Pressable,
   Button,
@@ -19,12 +13,14 @@ import {
 } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { getData } from "../../api/ingredientsData.js";
+
 const ingredients = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const openModal = (item) => {
-    setSelectedItem(item);
+  const openModal = (ingredient) => {
+    setSelectedItem(ingredient);
     setShowModal(true);
   };
 
@@ -32,6 +28,31 @@ const ingredients = () => {
     setSelectedItem(null);
     setShowModal(false);
   };
+
+  //FOR ingredients list
+  const [ingredients, setIngredients] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData();
+      setIngredients(data);
+    };
+
+    fetchData();
+  }, [ingredients]);
+
+  // const fetchData = async () => {
+  //   const data = await getData();
+  //   setIngredients(data);
+  // };
+
+  // const ingredients = [
+  //   { name: "Item 1", amount: 100 },
+  //   { name: "Item 2", amount: 500 },
+  //   { name: "Poxad", amount: 1 },
+  // ];
+
+  //end of ingredients
 
   // FOR THE NUMBER INSIDE THE MODAL
   const [count, setCount] = useState(0);
@@ -56,12 +77,6 @@ const ingredients = () => {
   };
   // END OF NUMBER
 
-  const ingredients = [
-    { name: "Item 1", amount: 100 },
-    { name: "Item 2", amount: 500 },
-    { name: "Poxad", amount: 1 },
-  ];
-
   return (
     <NativeBaseProvider>
       {ingredients.map((ingredient) => (
@@ -80,7 +95,7 @@ const ingredients = () => {
             w="100%"
             justifyContent="center"
           >
-            <Pressable onPress={() => openModal(item)}>
+            <Pressable onPress={() => openModal(ingredient)}>
               <Center
                 mr="1"
                 height="8"
