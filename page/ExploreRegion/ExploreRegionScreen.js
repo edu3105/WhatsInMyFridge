@@ -17,23 +17,18 @@ import {
   Avatar,
 } from "native-base";
 
-import SearchBar from "./ExploreSearchbar";
-import FilterBar from "./ExploreFilterBar";
-import MainBoxes from "./ExploreBoxes";
-import Recommended from "./ExploreRecommendedBox";
-import Creators from "./ExploreCreators";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationContainer } from "@react-navigation/native";
-export default function ExploreScreen({ navigation }) {
+import SearchBar from "../Explore/ExploreSearchbar";
+import FilterBar from "./ExploreRegionFilterBar";
+import MainBoxes from "./ExploreRegionBoxes";
+
+export default function ExploreRegionScreen({ navigation }) {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <NativeBaseProvider>
       <ScrollView vertical={true}>
         <SearchBar />
         <FilterBar navigation={navigation} />
-        <Recommended />
         <MainBoxes />
-        <Creators />
       </ScrollView>
     </NativeBaseProvider>
   );

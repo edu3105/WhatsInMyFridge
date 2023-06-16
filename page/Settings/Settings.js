@@ -18,7 +18,7 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import "react-native-gesture-handler";
+// import "react-native-gesture-handler";
 // import SettingsPage from "./SettingsPage.js";
 
 //var ImagePicker = require('react-native-image-picker');
@@ -28,7 +28,7 @@ export default function SettingsScreen() {
   const navigation = useNavigation();
 
   const handleSettingsPress = () => {
-    navigation.navigate("SettingsPage");
+    navigation.navigate("Settings");
     console.log("pressed");
   };
 
