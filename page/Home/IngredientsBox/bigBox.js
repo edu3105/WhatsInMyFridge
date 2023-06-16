@@ -35,20 +35,6 @@ const bigBox = () => {
           h={height * 0.5}
         >
           <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
-          <Ingredients />
         </ScrollView>
       </View>
 
