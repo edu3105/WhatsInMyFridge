@@ -3,10 +3,18 @@ import axios from 'axios';
 const key = `77d2cedd5a944b288f0de0648f282b1e`;
 const baseUrl = `https://api.spoonacular.com/`;
 
+const recipePage = {
+    recipeName: "",
+    image: "",
+    rating: "",
+    timeToCook: "",
+    creator: "",
+    description: "",
+    steps: [],
+    ingredients: [],
+};
 
-const ingredientList = ['apple', 'flour', 'sugar'];
 
-//
 function fetchRecipeByIngredients(ingredientList) {
     const ls = ingredientList.join(",+");
     var url = `${baseUrl}/recipes/findByIngredients?apiKey=${key}&ingredients=${ls}`;
@@ -23,7 +31,8 @@ function fetchRecipeByIngredients(ingredientList) {
                 id: res[i].id,
                 image: res[i].image,
                 missedIngredientCount: res[i].missedIngredientCount,
-                missedIngredients: res[i].missedIngredients
+                missedIngredients: res[i].missedIngredients,
+
             };
             recipes.push(recipe);
         }
@@ -34,22 +43,26 @@ function fetchRecipeByIngredients(ingredientList) {
     });
 }
 
-function fetchRecipeById(recipeId){
+export function fetchRecipeById(recipeId){
     var url = `${baseUrl}/recipes/${recipeId}/information?apiKey=${key}`;
     console.log(`Making a request to ${url}`);
 
     return axios.get(url).then((response) =>{
-        var recipe = response.data;
+        var res = response.data;
+
+        var recipe = {
+            recipeName: res.title,
+            image: res.image,
+            imageType: res.imageType,
+            timeToCook: res.readyInMinutes,
+            creator: "",
+            description: res.summary,
+            steps: res.analyzedInstructions,
+        };
+
         return recipe;
     });
 }
-
-
-//const id = 716429;
-
-// const test = await fetchRecipeById(id);
-// console.log(test);
-
 
 
 const createIngredient = (name, amount) => ({
@@ -60,8 +73,4 @@ const createIngredient = (name, amount) => ({
 const filterIngredientList = (ingredientList, filterName) => {
     console.log("Test");
 }
-
-
-//console.log(obj);
-//await fetchRecipeByIngredients(ingredientList);
 

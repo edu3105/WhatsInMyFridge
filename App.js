@@ -14,8 +14,10 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
 import { FirstScreenNavigator } from "./CustomNavigation.js";
 import { ExploreScreenNavigator } from "./CustomNavigation.js";
-import AddScreen from "./page/AddRecipes.js";
-import BookmarkScreen from "./page/Bookmarks.js";
+import { Create_BasicInfo } from "./page/Create/Custom1.js";
+import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
+
+import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation.js";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -64,10 +66,15 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Add"
-          component={AddScreen}
-          options={{
-            // tabBarBadge: 0,
+          name="Create"
+          component={Create_BasicInfo}
+          options={({ route }) => ({
+            tabBarStyle: {
+              display: getTabBarVisibility(route),
+              height: 60,
+            },
+            //dont show header
+            headerShown: getHeaderVisibility(route),
             tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
@@ -77,7 +84,7 @@ export default function App() {
                 marginBottom={-15}
               />
             ),
-          }}
+          })}
         />
         <Tab.Screen
           name="Bookmark"
@@ -96,8 +103,8 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Settings 1"
-          component={FirstScreenNavigator}
+          name="Profile"
+          component={FirstScreenNavigatorSettings}
           options={({ route }) => ({
             tabBarStyle: {
               display: getTabBarVisibility(route),
@@ -108,7 +115,7 @@ export default function App() {
             tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
               <Ionicons
-                name={focused ? "settings" : "settings-outline"}
+                name={focused ? "person" : "person-outline"}
                 size={30} // Set the size of the icon here
                 focused={focused}
                 marginBottom={-15}
@@ -123,7 +130,15 @@ export default function App() {
 
 const getTabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
-  if (routeName == "NestedScreen1") {
+  if (
+    routeName == "Settings" ||
+    routeName == "Basic Information" ||
+    routeName == "Edit Profile" ||
+    routeName == "Change Password" ||
+    routeName == "FAQ" ||
+    routeName == "About Us" ||
+    routeName == "Steps"
+  ) {
     return "none";
   } else {
     return "flex";
@@ -133,9 +148,13 @@ const getTabBarVisibility = (route) => {
 const getHeaderVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
   if (
-    routeName == "NestedScreen1" ||
-    routeName == "Region" ||
-    routeName == "Rating"
+    routeName == "Settings" ||
+    routeName == "Basic Information" ||
+    routeName == "Edit Profile" ||
+    routeName == "Change Password" ||
+    routeName == "FAQ" ||
+    routeName == "About Us" ||
+    routeName == "Steps"
   ) {
     return false;
   }
