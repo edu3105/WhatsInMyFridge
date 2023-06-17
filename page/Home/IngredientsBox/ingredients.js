@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
@@ -31,7 +31,9 @@ const ingredients = () => {
 
   const handleDeleteData = async () => {
     try {
-      await deleteData(selectedItem?.name);
+      console.log(selectedItem.name);
+      await deleteData(selectedItem.name);
+
       console.log("Ingredient data deleted successfully.");
       setSelectedItem(null);
       setShowModal(false);
@@ -41,18 +43,35 @@ const ingredients = () => {
   };
 
   //FOR ingredients list
-  const [ingredients, setIngredients] = useState([]);
+
+  const [ingredients, setIngredients] = useState([getData()]);
+
+  const fetchData = useCallback(async () => {
+    const data = await getData();
+    setIngredients(data);
+  }, [])
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData();
-      setIngredients(data);
-    };
-
     fetchData();
-
     console.log(ingredients);
-  }, [ingredients]);
+  }, [fetchData]);
+
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getData();
+  //     setIngredients(data);
+  //   };
+
+  //   fetchData();
+
+  //   console.log(ingredients);
+  // }, [ingredients]);
+
+
+
+  
 
   // const fetchData = async () => {
   //   const data = await getData();
