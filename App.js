@@ -16,9 +16,12 @@ import { FirstScreenNavigator } from "./CustomNavigation.js";
 import { ExploreScreenNavigator } from "./CustomNavigation.js";
 import { Create_BasicInfo } from "./page/Create/Custom1.js";
 import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
+import RegisterScreen from "./page/register/RegisterScreen.js";
 
 import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation.js";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ExploretoRecipe } from "./CustomNavigation.js";
+import SplashScreen from "./page/register/SplashScreen.js";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,7 +54,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Explore"
-          component={ExploreScreenNavigator}
+          component={ExploretoRecipe}
           options={{
             tabBarBadge: 5,
             tabBarLabel: " ",
@@ -123,6 +126,23 @@ export default function App() {
             ),
           })}
         />
+        {/* demo owen */}
+        <Tab.Screen
+          name="Register"
+          component={SplashScreen}
+          options={{
+            // tabBarBadge: 0,
+            tabBarLabel: " ",
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={focused ? "bookmark" : "bookmark-outline"}
+                size={30} // Set the size of the icon here
+                focused={focused}
+                marginBottom={-15}
+              />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
@@ -138,6 +158,7 @@ const getTabBarVisibility = (route) => {
     routeName == "FAQ" ||
     routeName == "About Us" ||
     routeName == "Steps" ||
+    routeName == "RecipePage" ||
     routeName == "Stats"
   ) {
     return "none";
@@ -155,8 +176,7 @@ const getHeaderVisibility = (route) => {
     routeName == "Change Password" ||
     routeName == "FAQ" ||
     routeName == "About Us" ||
-    routeName == "Steps" ||
-    routeName == "Stats"
+    routeName == "Steps"
   ) {
     return false;
   }

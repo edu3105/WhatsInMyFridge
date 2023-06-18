@@ -19,97 +19,98 @@ import {
   Flex,
   VStack,
 } from "native-base";
+import { extendTheme } from "native-base";
 
-export default function MainBoxes() {
+const theme = extendTheme({
+  components: {
+    VStack: {
+      baseStyle: {
+        space: -3,
+      },
+    },
+  },
+});
+
+title = "Daddy's Chicken";
+
+function addLineBreaks(text) {
+  const words = text.split(" ");
+  const wordsWithBreaks = [];
+
+  for (let i = 0; i < words.length; i += 5) {
+    const chunk = words.slice(i, i + 5);
+    wordsWithBreaks.push(chunk.join(" "));
+  }
+
+  return wordsWithBreaks.join("\n");
+}
+
+const body =
+  "Fried chicken, also known as Southern fried chicken, is a dish consisting of chicken pieces that have been coated with seasoned flour or batter and..";
+
+const bodyWithLineBreaks = addLineBreaks(body);
+
+export default function MainBoxes({ navigation }) {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <NativeBaseProvider>
-      <Heading size="md" ml="10">
-        {" "}
-        For You
-      </Heading>
-      <Text>ㅤ</Text>
-      <Center>
-        <Box
-          maxW="400"
-          rounded="lg"
-          overflow="hidden"
-          borderColor="coolGray.200"
-          borderWidth="1"
-          _dark={{
-            borderColor: "coolGray.600",
-            backgroundColor: "gray.700",
-          }}
-          _web={{
-            shadow: 2,
-            borderWidth: 0,
-          }}
-          _light={{
-            backgroundColor: "gray.50",
-          }}
-        >
-          <HStack space={3}>
-            <Center>
-              <HStack space={1}>
-                <Text>ㅤ</Text>
-                <Image
-                  source={{
-                    uri: "https://media.istockphoto.com/id/477596753/photo/homemade-southern-fried-chicken.jpg?s=612x612&w=0&k=20&c=8b_5KjKmmO34ChsqVZN4-1YlDXyVJNlKh3w6qtVjR88=",
-                  }}
-                  alt="Alternate Text"
-                  size="lg"
-                />
-              </HStack>
-            </Center>
-            <VStack space={1}>
-              <Heading size="md" ml="-1">
-                AYAM KFC
-              </Heading>
-              <VStack>
-                <Text>Fried chicken, also known as</Text>
-                <Text>Southern fried chicken, is a dish</Text>
-                <Text>consisting of chicken pieces that</Text>
-                <Text>have been coated with seasoned</Text>
-                <Text>flour or batter and pan-fried chickenㅤ</Text>
-                <Text>while retaining.....</Text>
-              </VStack>
-              <VStack>
-                <HStack
-                  alignItems="flex-end"
-                  space={4}
-                  justifyContent="flex-end"
-                >
-                  <HStack alignItems="flex-end">
-                    <Text
-                      color="coolGray.600"
-                      _dark={{
-                        color: "warmGray.200",
-                      }}
-                      fontWeight="400"
-                    >
-                      ㅤTap to see moreㅤ
-                    </Text>
-                  </HStack>
-                </HStack>
-                <Text>ㅤ</Text>
-              </VStack>
-            </VStack>
-          </HStack>
-        </Box>
-      </Center>
+      <VStack space={2} marginLeft={6}>
+        <Heading size="md">For You</Heading>
 
-      <Heading size="md" ml="10">
-        {" "}
-        Trending now
-      </Heading>
+        <Pressable onPress={() => navigation.navigate("RecipePage")}>
+          <Box
+            maxW="380"
+            rounded="lg"
+            overflow="hidden"
+            borderColor="coolGray.200"
+            borderWidth="2"
+            _dark={{
+              borderColor: "coolGray.600",
+              backgroundColor: "gray.700",
+            }}
+            _web={{
+              shadow: 2,
+              borderWidth: 0,
+            }}
+            _light={{
+              backgroundColor: "gray.50",
+            }}
+          >
+            <HStack space={5}>
+              <Center>
+                <HStack space={0} marginTop={4}>
+                  <Text>ㅤ</Text>
+                  <Image
+                    rounded="md"
+                    source={{
+                      uri: "https://media.istockphoto.com/id/477596753/photo/homemade-southern-fried-chicken.jpg?s=612x612&w=0&k=20&c=8b_5KjKmmO34ChsqVZN4-1YlDXyVJNlKh3w6qtVjR88=",
+                    }}
+                    alt="Alternate Text"
+                    size="xl"
+                  />
+                  <Text>ㅤ</Text>
+                  <VStack space={0}>
+                    <Heading size="md">{title}</Heading>
+                    <Text>{bodyWithLineBreaks}</Text>
+                    <Text marginTop={3}>ㅤㅤㅤㅤㅤㅤㅤㅤㅤTap to see more</Text>
+                  </VStack>
+                </HStack>
+              </Center>
+            </HStack>
+            <Text>ㅤ</Text>
+          </Box>
+        </Pressable>
+      </VStack>
       <Text>ㅤ</Text>
-      <Center>
+
+      <VStack space={2} marginLeft={6}>
+        <Heading size="md">Trending</Heading>
         <Box
-          maxW="400"
+          maxW="380"
           rounded="lg"
           overflow="hidden"
           borderColor="coolGray.200"
-          borderWidth="1"
+          borderWidth="2"
           _dark={{
             borderColor: "coolGray.600",
             backgroundColor: "gray.700",
@@ -122,55 +123,31 @@ export default function MainBoxes() {
             backgroundColor: "gray.50",
           }}
         >
-          <HStack space={3}>
+          <HStack space={5}>
             <Center>
-              <HStack space={1}>
+              <HStack space={0} marginTop={4}>
                 <Text>ㅤ</Text>
                 <Image
+                  rounded="md"
                   source={{
                     uri: "https://media.istockphoto.com/id/477596753/photo/homemade-southern-fried-chicken.jpg?s=612x612&w=0&k=20&c=8b_5KjKmmO34ChsqVZN4-1YlDXyVJNlKh3w6qtVjR88=",
                   }}
                   alt="Alternate Text"
-                  size="lg"
+                  size="xl"
                 />
+                <Text>ㅤ</Text>
+                <VStack space={0}>
+                  <Heading size="md">{title}</Heading>
+                  <Text>{bodyWithLineBreaks}</Text>
+                  <Text marginTop={3}>ㅤㅤㅤㅤㅤㅤㅤㅤㅤTap to see more</Text>
+                </VStack>
               </HStack>
             </Center>
-            <VStack space={1}>
-              <Heading size="md" ml="-1">
-                AYAM KFC
-              </Heading>
-              <VStack>
-                <Text>Fried chicken, also known as</Text>
-                <Text>Southern fried chicken, is a dish</Text>
-                <Text>consisting of chicken pieces that</Text>
-                <Text>have been coated with seasoned</Text>
-                <Text>flour or batter and pan-fried chickenㅤ</Text>
-                <Text>while retaining.....</Text>
-              </VStack>
-              <VStack>
-                <HStack
-                  alignItems="flex-end"
-                  space={4}
-                  justifyContent="flex-end"
-                >
-                  <HStack alignItems="flex-end">
-                    <Text
-                      color="coolGray.600"
-                      _dark={{
-                        color: "warmGray.200",
-                      }}
-                      fontWeight="400"
-                    >
-                      ㅤTap to see moreㅤ
-                    </Text>
-                  </HStack>
-                </HStack>
-                <Text>ㅤ</Text>
-              </VStack>
-            </VStack>
           </HStack>
+          <Text>ㅤ</Text>
         </Box>
-      </Center>
+      </VStack>
+      <Text>ㅤ</Text>
     </NativeBaseProvider>
   );
 }

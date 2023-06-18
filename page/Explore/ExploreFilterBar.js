@@ -14,9 +14,9 @@ export default function FilterBar({ navigation }) {
     <NativeBaseProvider>
       <Center>
         <View>
-          <HStack space={0} marginTop={5}>
+          <HStack space={1} marginTop={5}>
             <Button
-              size="sm"
+              size="md"
               colorScheme={selectedButton === "ForYou" ? "purple" : "white"}
               _text={{
                 color: selectedButton === "ForYou" ? "white" : "purple",
@@ -24,6 +24,7 @@ export default function FilterBar({ navigation }) {
               style={{
                 borderWidth: selectedButton !== "ForYou" ? 1 : 0,
                 borderColor: "purple",
+                width: 100, // Adjust the width as needed
               }}
               hoverProps={{
                 backgroundColor: "purple",
@@ -33,7 +34,7 @@ export default function FilterBar({ navigation }) {
               For You
             </Button>
             <Button
-              size="sm"
+              size="md"
               onPress={pressHandler}
               colorScheme={selectedButton === "Region" ? "purple" : "white"}
               _text={{
@@ -42,6 +43,7 @@ export default function FilterBar({ navigation }) {
               style={{
                 borderWidth: selectedButton !== "Region" ? 1 : 0,
                 borderColor: "purple",
+                width: 100, // Adjust the width as needed
               }}
               hoverProps={{
                 backgroundColor: "purple",
@@ -52,7 +54,7 @@ export default function FilterBar({ navigation }) {
             </Button>
             <Button
               onPress={pressHandlers}
-              size="sm"
+              size="md"
               colorScheme={selectedButton === "Rating" ? "purple" : "white"}
               _text={{
                 color: selectedButton === "Rating" ? "white" : "purple",
@@ -60,6 +62,7 @@ export default function FilterBar({ navigation }) {
               style={{
                 borderWidth: selectedButton !== "Rating" ? 1 : 0,
                 borderColor: "purple",
+                width: 100, // Adjust the width as needed
               }}
               hoverProps={{
                 backgroundColor: "purple",

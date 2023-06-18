@@ -21,6 +21,8 @@ import AddButton from "./addButton.js";
 const bigBox = () => {
   const { height } = Dimensions.get("window");
 
+  const [ingredients, setIngredients] = useState([]); // State for ingredients
+
   return (
     <NativeBaseProvider>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -34,11 +36,13 @@ const bigBox = () => {
           w="80%"
           h={height * 0.5}
         >
-          <Ingredients />
+          <Ingredients
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+          />
         </ScrollView>
       </View>
-
-      <AddButton />
+      <AddButton setIngredients={setIngredients} />
     </NativeBaseProvider>
   );
 };
