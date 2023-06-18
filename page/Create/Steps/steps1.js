@@ -1,3 +1,4 @@
+//Steps.js
 import { ScrollView, VStack, HStack } from "native-base";
 import React from "react";
 import {
@@ -14,12 +15,13 @@ import BasicInfo from "../BasicInfo/BasicInfo.js";
 import { Button, Input } from "native-base";
 import { useState } from "react";
 import { useRoute } from "@react-navigation/native";
-var ImagePicker = require('expo-image-picker');
+var ImagePicker = require("expo-image-picker");
 const Steps = ({ navigation }) => {
-  // Fetching Dish Name
+  //Fetching Datas from Basic Info
   const route = useRoute();
-  const { dishName, hours, minutes } = route.params;
-  
+  const { dishName, hours, minutes, chefHatCount, descriptions } = route.params;
+
+  //-----------------------------------------
   const [inputs, setInputs] = useState([]);
   const [inputCount, setInputCount] = useState(1);
 
@@ -28,6 +30,9 @@ const Steps = ({ navigation }) => {
       dishName,
       hours,
       minutes,
+      chefHatCount,
+      descriptions,
+      inputs,
     });
   };
 
@@ -44,9 +49,9 @@ const Steps = ({ navigation }) => {
 
   const selectImage = async (index) => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-    if (status !== 'granted') {
-      console.log('Permission to access media library was denied.');
+
+    if (status !== "granted") {
+      console.log("Permission to access media library was denied.");
       return;
     }
 
@@ -58,7 +63,7 @@ const Steps = ({ navigation }) => {
     if (!result.canceled) {
       const updatedInputs = [...inputs];
       const selectedAsset = result.assets[0]; // Get the first selected asset
-  
+
       if (selectedAsset) {
         updatedInputs[index].imageUri = selectedAsset.uri;
         setInputs(updatedInputs);
@@ -91,18 +96,18 @@ const Steps = ({ navigation }) => {
               />
             </HStack>
             {inputValue.imageUri ? (
-            <Image
-              source={{ uri: inputValue.imageUri }}
-              style={{ width: 100, height: 100 }}
-            />
-          ) : (
-            <Button
-              onPress={() => selectImage(index)}
-              style={styles.selectImageButton}
-            >
-              <Text style={styles.buttonTextimage}>Add image</Text>
-            </Button>
-          )}
+              <Image
+                source={{ uri: inputValue.imageUri }}
+                style={{ width: 100, height: 100 }}
+              />
+            ) : (
+              <Button
+                onPress={() => selectImage(index)}
+                style={styles.selectImageButton}
+              >
+                <Text style={styles.buttonTextimage}>Add image</Text>
+              </Button>
+            )}
           </VStack>
         ))}
         {inputs.length > 0 && (
@@ -153,6 +158,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   title: {
+    textAlign: "center",
     color: "#000",
     fontWeight: "700",
     fontSize: 25,
@@ -230,5 +236,5 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     marginBottom: 50,
-  }
+  },
 });
