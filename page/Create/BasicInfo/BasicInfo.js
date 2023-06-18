@@ -30,8 +30,22 @@ import { Picker } from "@react-native-picker/picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import AddButton from "../../Home/IngredientsBox/addButton";
+import { useNavigation } from "@react-navigation/native";
 
-const BasicInfo = ({ navigation }) => {
+const BasicInfo = () => {
+  const navigation = useNavigation();
+  //Sending Datas
+
+  const handleNext = () => {
+    navigation.navigate("Steps", {
+      dishName,
+      hours: duration.hours,
+      minutes: duration.minutes,
+    });
+  };
+
+  //---------------------------------------------
+  const [dishName, setDishName] = useState("");
   const [duration, setDuration] = useState({ hours: 0, minutes: 0 });
   const handleDurationChange = (value, type) => {
     setDuration((prevState) => ({
@@ -40,7 +54,7 @@ const BasicInfo = ({ navigation }) => {
     }));
   };
 
-  const [chefHatCount, setChefHatCount] = useState(-1);
+  const [chefHatCount, setChefHatCount] = useState(0);
   const [activeChefHat, setActiveChefHat] = useState(0);
 
   const handleChefHatPress = () => {
@@ -88,7 +102,12 @@ const BasicInfo = ({ navigation }) => {
 
       <View style={styles.DishName}>
         <Text style={styles.heading}>Dish Name</Text>
-        <TextInput style={styles.input} placeholder="Dish name" />
+        <TextInput
+          style={styles.input}
+          placeholder="Dish name"
+          value={dishName}
+          onChangeText={setDishName}
+        />
       </View>
 
       <View style={styles.time}>
@@ -203,11 +222,8 @@ const BasicInfo = ({ navigation }) => {
             </Modal.Content>
           </Modal>
         </View>
-        <Button
-          style={styles.nextButton}
-          onPress={() => navigation.navigate("Steps")}
-        >
-          next
+        <Button style={styles.nextButton} onPress={handleNext}>
+          Next
         </Button>
       </View>
     </ScrollView>
