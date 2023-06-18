@@ -20,6 +20,7 @@ import RegisterScreen from "./page/register/RegisterScreen.js";
 
 import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation.js";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ExploretoRecipe } from "./CustomNavigation.js";
 import SplashScreen from "./page/register/SplashScreen.js";
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +54,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Explore"
-          component={ExploreScreenNavigator}
+          component={ExploretoRecipe}
           options={{
             tabBarBadge: 5,
             tabBarLabel: " ",
@@ -156,7 +157,9 @@ const getTabBarVisibility = (route) => {
     routeName == "Change Password" ||
     routeName == "FAQ" ||
     routeName == "About Us" ||
-    routeName == "Steps"
+    routeName == "Steps" ||
+    routeName == "RecipePage" ||
+    routeName == "Stats"
   ) {
     return "none";
   } else {

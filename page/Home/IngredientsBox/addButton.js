@@ -1,31 +1,29 @@
-import { React, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
   Box,
-  AspectRatio,
-  Image,
-  Center,
-  Stack,
-  Heading,
-  HStack,
-  ScrollView,
   Input,
   Pressable,
   Button,
-  Flex,
-  useDisclose,
-  Actionsheet,
-  KeyboardAvoidingView,
   Modal,
 } from "native-base";
+import {
+  onSubmit,
+  getData,
+  deleteAllData,
+} from "../../api/Data/ingredientsData.js";
+import ingredientDb from "../../../assets/ingredientsList/ingredientsDb.js";
+import Autocomplete from "react-native-autocomplete-input";
 
-import { onSubmit, getData } from "../../api/ingredientsData.js";
-
-const addButton = () => {
+const addButton = ({ setIngredients }) => {
+  // Accept setIngredients as a prop
   const [isOpen, setIsOpen] = useState(false);
   const [placement, setPlacement] = useState(undefined);
   const [ingredientName, setIngredientName] = useState("");
+  const [filteredIngredientList, setFilteredIngredientList] = useState(
+    ingredientDb.slice(0, 3)
+  );
 
   const handleExplorePress = (placement) => {
     setIsOpen(true);
@@ -34,10 +32,21 @@ const addButton = () => {
 
   const handleClose = () => {
     setIsOpen(false);
+    setCount(1);
+    setIngredientName("");
   };
 
+  // const handleNameChange = (value) => {
+  //   setIngredientName(value);
+  // };
   const handleNameChange = (value) => {
     setIngredientName(value);
+    const filteredList = ingredientDb
+      .filter((ingredient) =>
+        ingredient.toLowerCase().includes(value.toLowerCase())
+      )
+      .slice(0, 3);
+    setFilteredIngredientList(filteredList);
   };
 
   const handleSubmit = async () => {
@@ -46,8 +55,17 @@ const addButton = () => {
       quantity: count.toString(),
     };
 
+    // Check if quantity is greater than 0
+    if (parseInt(ingredient.quantity) <= 0) {
+      throw new Error("Quantity must be greater than 0");
+    }
+
+    if (!ingredientDb.includes(ingredient.name)) {
+      throw new Error("Ingredient not found in the database");
+    }
+
     try {
-      await onSubmit(ingredient);
+      await onSubmit(ingredient, setIngredients); // Pass setIngredients to onSubmit
       console.log("Ingredient submitted successfully.");
     } catch (error) {
       console.error("Error submitting ingredient:", error);
@@ -56,14 +74,14 @@ const addButton = () => {
     handleClose();
   };
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const handleIncrement = () => {
     setCount(count + 1);
   };
 
   const handleDecrement = () => {
-    if (count > 0) {
+    if (count > 1) {
       setCount(count - 1);
     }
   };
@@ -77,6 +95,10 @@ const addButton = () => {
     }
   };
 
+  const handleDeleteAll = () => {
+    deleteAllData(setIngredients);
+  };
+
   return (
     <NativeBaseProvider>
       <Box alignItems="center" mt="3">
@@ -87,14 +109,22 @@ const addButton = () => {
           Add Ingredients
         </Button>
       </Box>
-      <Modal isOpen={isOpen} onClose={handleClose} avoidKeyboard>
+      <Modal isOpen={isOpen} onClose={handleClose}>
         <Modal.Content {...styles[placement]}>
           <Modal.CloseButton />
           <Modal.Header>Add Ingredients</Modal.Header>
           <Modal.Body>
             <Box p="4">
               <Text>Ingredients Name:</Text>
-              <Input placeholder="Name" onChangeText={handleNameChange} />
+              <Autocomplete
+                placeholder="Name"
+                onChangeText={handleNameChange}
+                value={ingredientName}
+                data={filteredIngredientList}
+                renderItem={({ item }) => (
+                  <Autocomplete.Item label={item} value={item} />
+                )}
+              />
               <Text>Quantity:</Text>
               <Box justifyContent="space-between" alignItems="center">
                 <Button
@@ -126,6 +156,9 @@ const addButton = () => {
           </Modal.Body>
         </Modal.Content>
       </Modal>
+      <Button title="Delete All Ingredients" onPress={handleDeleteAll}>
+        Delete All
+      </Button>
     </NativeBaseProvider>
   );
 };

@@ -1,14 +1,17 @@
-// Nested SettingsPage.js
+// NestedSetting.js
 
 import React from "react";
 import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
 import { Avatar, NativeBaseProvider, IconButton } from "native-base";
 import { useState } from "react";
 import { HStack, Box, VStack } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { Settings } from "react-native";
 
-export default function NestedSettings() {
+const NestedSettings = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const username = route.params?.username ?? "Default";
 
   const handleAboutUsPress = () => {
     console.log("about_us_pressed");
@@ -56,7 +59,7 @@ export default function NestedSettings() {
                 mr={2}
               />
             </TouchableWithoutFeedback>
-            <Text style={styles.profileName}>Profile Name</Text>
+            <Text style={styles.profileName}>{username}</Text>
             <Text style={styles.profileRecipe}>Recipes</Text>
           </Box>
         </HStack>
@@ -111,13 +114,13 @@ export default function NestedSettings() {
       </View>
     </NativeBaseProvider>
   );
-}
-
+};
+export default NestedSettings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     //display: "flex",
-    backgroundColor: "#00000025",
+    backgroundColor: "white",
   },
 
   //Profile
@@ -164,7 +167,7 @@ const styles = StyleSheet.create({
   account_settings_container: {
     flex: 1,
     position: "absolute",
-    marginLeft: 40,
+    marginLeft: 25,
     textAlign: "center",
     top: 225,
     //borderWidth: 1,
@@ -173,17 +176,18 @@ const styles = StyleSheet.create({
   },
 
   edit_button: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
+    backgroundColor: "purple",
+
+    borderRadius: 15,
     height: 50,
+    width: 375,
   },
 
   change_button: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
+    backgroundColor: "purple",
+    borderRadius: 15,
     height: 50,
+    width: 375,
     top: 15,
   },
 
@@ -191,12 +195,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textAlign: "left",
     margin: 10,
+    color: "white",
   },
 
   changePasswordText: {
     fontSize: 17,
     textAlign: "left",
     margin: 10,
+    color: "white",
   },
 
   ////////////////////
@@ -213,7 +219,7 @@ const styles = StyleSheet.create({
   others_container: {
     flex: 1,
     position: "absolute",
-    marginLeft: 40,
+    marginLeft: 25,
     textAlign: "center",
     top: 400,
     //borderWidth: 1,
@@ -222,45 +228,31 @@ const styles = StyleSheet.create({
   },
 
   FAQ_button: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
+    backgroundColor: "purple",
+    borderRadius: 15,
     height: 50,
+    width: 375,
   },
 
   FAQText: {
+    color: "white",
     fontSize: 17,
     textAlign: "left",
     margin: 10,
   },
 
   AboutUs_button: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderRadius: 10,
+    backgroundColor: "purple",
+    borderRadius: 15,
+    width: 375,
     height: 50,
     top: 15,
   },
 
   AboutUsText: {
+    color: "white",
     fontSize: 17,
     textAlign: "left",
     margin: 10,
   },
 });
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     display: "flex",
-//     // justifyContent: "center",
-//     // alignItems: "center",
-//     backgroundColor: "#00000025",
-//   },
-//   text: {
-//     color: "#000",
-//     fontWeight: "700",
-//     fontSize: 50,
-//   },
-
-// });

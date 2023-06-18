@@ -21,9 +21,9 @@ export default function Recommended() {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <NativeBaseProvider>
-      <ScrollView horizontal={true}>
-        <HStack space={2} overflow="scroll" px={10}>
-          <Box flex={1} height="100%" alignItems="center" py={10}>
+      <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+        <HStack space={2} overflow="scroll" px={6}>
+          <Box flex={1} height="100%" alignItems="center" py={5}>
             <Box
               maxW="40"
               rounded="lg"
@@ -55,7 +55,7 @@ export default function Recommended() {
             </Box>
           </Box>
 
-          <Box flex={1} height="100%" alignItems="center" py={10}>
+          <Box flex={1} height="100%" alignItems="center" py={5}>
             <Box
               maxW="40"
               rounded="lg"
@@ -87,7 +87,7 @@ export default function Recommended() {
             </Box>
           </Box>
 
-          <Box flex={1} height="100%" alignItems="center" py={10}>
+          <Box flex={1} height="100%" alignItems="center" py={5}>
             <Box
               maxW="40"
               rounded="lg"
@@ -119,7 +119,7 @@ export default function Recommended() {
             </Box>
           </Box>
 
-          <Box flex={1} height="100%" alignItems="center" py={10}>
+          <Box flex={1} height="100%" alignItems="center" py={5}>
             <Box
               maxW="40"
               rounded="lg"
@@ -151,7 +151,7 @@ export default function Recommended() {
             </Box>
           </Box>
 
-          <Box flex={1} height="100%" alignItems="center" py={10}>
+          <Box flex={1} height="100%" alignItems="center" py={5}>
             <Box
               maxW="40"
               rounded="lg"
@@ -183,7 +183,7 @@ export default function Recommended() {
             </Box>
           </Box>
 
-          <Box flex={1} height="100%" alignItems="center" py={10}>
+          <Box flex={1} height="100%" alignItems="center" py={5}>
             <Box
               maxW="40"
               rounded="lg"

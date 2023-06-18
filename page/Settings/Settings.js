@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   TouchableWithoutFeedback,
+  Animated,
+  Easing,
 } from "react-native";
 import {
   NativeBaseProvider,
@@ -17,7 +19,7 @@ import {
   Stack,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 // import "react-native-gesture-handler";
 // import SettingsPage from "./SettingsPage.js";
 
@@ -26,10 +28,17 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const username = route.params?.username ?? "Default";
 
   const handleSettingsPress = () => {
     navigation.navigate("Settings");
-    console.log("pressed");
+    console.log("settings_pressed");
+  };
+
+  const handleStatPress = () => {
+    navigation.navigate("Stats");
+    console.log("stat_pressed");
   };
 
   const [avatarSource, setAvatarSource] = useState({
@@ -54,17 +63,35 @@ export default function SettingsScreen() {
     // });
   };
 
+  const [isDraftButtonFocused, setIsDraftButtonFocused] = useState(true);
+  const [isUploadButtonFocused, setIsUploadButtonFocused] = useState(false);
+
   const handleDraftRecipePress = () => {
     console.log("Draft_pressed");
     setActiveTab("draft");
+    setIsDraftButtonFocused(true);
+    setIsUploadButtonFocused(false);
   };
 
   const handleUploadRecipePress = () => {
     console.log("Upload_pressed");
     setActiveTab("upload");
+    setIsDraftButtonFocused(false);
+    setIsUploadButtonFocused(true);
   };
 
   const [activeTab, setActiveTab] = useState("draft");
+
+  const [buttonOpacity] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(buttonOpacity, {
+      toValue: isDraftButtonFocused || isUploadButtonFocused ? 1 : 0,
+      duration: 300,
+      easing: Easing.ease,
+      useNativeDriver: true,
+    }).start();
+  }, [isDraftButtonFocused, isUploadButtonFocused]);
 
   return (
     <NativeBaseProvider>
@@ -80,13 +107,14 @@ export default function SettingsScreen() {
                 mr={2}
               />
             </TouchableWithoutFeedback>
-            <Text style={styles.profileName}>Profile Name</Text>
+            <Text style={styles.profileName}>{username}</Text>
             <Text style={styles.profileRecipe}>Recipes</Text>
             <IconButton
               icon={<Ionicons name="bar-chart-outline" size={30} />}
               style={styles.stats}
               variant="unstyled"
               colorScheme="gray"
+              onPress={handleStatPress}
             />
           </Box>
         </HStack>
@@ -104,14 +132,40 @@ export default function SettingsScreen() {
       <View style={styles.centeredContainer}>
         <HStack>
           <TouchableWithoutFeedback onPress={handleDraftRecipePress}>
-            <View style={styles.draft_button}>
-              <Text style={styles.draftedRecipeText}>Drafted Recipe</Text>
-            </View>
+            <Animated.View
+              style={[
+                styles.draft_button,
+                isDraftButtonFocused && styles.focusedButton,
+                { opacity: buttonOpacity },
+              ]}
+            >
+              <Animated.Text
+                style={[
+                  styles.draftedRecipeText,
+                  isDraftButtonFocused && styles.focusedText,
+                ]}
+              >
+                Drafted Recipe
+              </Animated.Text>
+            </Animated.View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={handleUploadRecipePress}>
-            <View style={styles.upload_button}>
-              <Text style={styles.uploadedRecipeText}>Uploaded Recipe</Text>
-            </View>
+            <Animated.View
+              style={[
+                styles.upload_button,
+                isUploadButtonFocused && styles.focusedButton,
+                { opacity: buttonOpacity },
+              ]}
+            >
+              <Animated.Text
+                style={[
+                  styles.uploadedRecipeText,
+                  isUploadButtonFocused && styles.focusedText,
+                ]}
+              >
+                Uploaded Recipe
+              </Animated.Text>
+            </Animated.View>
           </TouchableWithoutFeedback>
         </HStack>
       </View>
@@ -315,19 +369,19 @@ const styles = StyleSheet.create({
   },
 
   draft_button: {
-    borderWidth: 1,
+    //borderWidth: 1,
     borderColor: "black",
-    borderRadius: 5,
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     right: 10,
   },
 
   upload_button: {
-    borderWidth: 1,
+    //borderWidth: 1,
 
     borderColor: "black",
-    borderRadius: 5,
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
@@ -337,6 +391,7 @@ const styles = StyleSheet.create({
 
   draftedRecipeText: {
     fontSize: 17,
+
     textAlign: "center",
     marginTop: 10,
     marginBottom: 10,
@@ -373,5 +428,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: -350,
+  },
+
+  focusedButton: {
+    backgroundColor: "purple", // Add your desired focused button style here
+    color: "blue",
+  },
+
+  focusedText: {
+    color: "white",
   },
 });
