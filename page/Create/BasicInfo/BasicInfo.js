@@ -1,3 +1,5 @@
+//BasicInfo.js
+
 import {
   NativeBaseProvider,
   Box,
@@ -32,30 +34,37 @@ import Feather from "react-native-vector-icons/Feather";
 import AddButton from "../../Home/IngredientsBox/addButton";
 import { useNavigation } from "@react-navigation/native";
 
+import { Platform } from "react-native";
+// import { Picker, DatePicker } from "react-native-wheel-pick";
+
 const BasicInfo = () => {
   const navigation = useNavigation();
-  //Sending Datas
 
+  //Sending Datas
   const handleNext = () => {
     navigation.navigate("Steps", {
       dishName,
       hours: duration.hours,
       minutes: duration.minutes,
+      chefHatCount,
+      descriptions,
     });
   };
-
   //---------------------------------------------
   const [dishName, setDishName] = useState("");
+  const [descriptions, setDescriptions] = useState("");
   const [duration, setDuration] = useState({ hours: 0, minutes: 0 });
+  const [isOpen, setIsOpen] = useState(false);
+  const [placement, setPlacement] = useState(undefined);
+  const [chefHatCount, setChefHatCount] = useState(0);
+  const [activeChefHat, setActiveChefHat] = useState(0);
+
   const handleDurationChange = (value, type) => {
     setDuration((prevState) => ({
       ...prevState,
       [type]: parseInt(value),
     }));
   };
-
-  const [chefHatCount, setChefHatCount] = useState(0);
-  const [activeChefHat, setActiveChefHat] = useState(0);
 
   const handleChefHatPress = () => {
     if (chefHatCount < 5) {
@@ -71,9 +80,6 @@ const BasicInfo = () => {
       );
     }
   };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [placement, setPlacement] = useState(undefined);
 
   const handleExplorePress = (placement) => {
     setIsOpen(true);
@@ -161,9 +167,9 @@ const BasicInfo = () => {
             style={[
               styles.chefhat,
               { opacity: index > chefHatCount ? 0.3 : 1 },
-              //   console.log(index),
-              console.log("index", index),
-              console.log("chef hat", chefHatCount),
+
+              //   console.log("index", index),
+              //   console.log("chef hat", chefHatCount),
             ]}
           />
         ))}
@@ -193,6 +199,8 @@ const BasicInfo = () => {
           style={styles.inputDescription}
           placeholder="Description here . . ."
           multiline={true}
+          value={descriptions}
+          onChangeText={setDescriptions}
         />
       </View>
       <View>
@@ -252,7 +260,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    width: 325,
+    width: 350,
     backgroundColor: "#F2F2F2",
     borderRadius: 10,
     marginBottom: 15,
@@ -326,7 +334,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginLeft: 10,
     marginRight: 10,
-    height: 100,
+    minHeight: 100,
     textAlignVertical: "top",
   },
 
