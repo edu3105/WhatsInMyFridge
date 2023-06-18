@@ -19,6 +19,7 @@ import BookmarkScreen from "./page/Bookmark/BookmarkScreen.js";
 
 import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation.js";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { ExploretoRecipe } from "./CustomNavigation.js";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -51,7 +52,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Explore"
-          component={ExploreScreenNavigator}
+          component={ExploretoRecipe}
           options={{
             tabBarBadge: 5,
             tabBarLabel: " ",
@@ -137,7 +138,8 @@ const getTabBarVisibility = (route) => {
     routeName == "Change Password" ||
     routeName == "FAQ" ||
     routeName == "About Us" ||
-    routeName == "Steps"
+    routeName == "Steps" ||
+    routeName == "RecipePage"
   ) {
     return "none";
   } else {
@@ -154,7 +156,8 @@ const getHeaderVisibility = (route) => {
     routeName == "Change Password" ||
     routeName == "FAQ" ||
     routeName == "About Us" ||
-    routeName == "Steps"
+    routeName == "Steps" ||
+    routeName == "RecipePage"
   ) {
     return false;
   }

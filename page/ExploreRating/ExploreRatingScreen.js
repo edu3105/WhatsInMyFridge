@@ -25,7 +25,7 @@ export default function ExploreRatingScreen({ navigation }) {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <NativeBaseProvider>
-      <ScrollView vertical={true}>
+      <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
         <SearchBar />
         <FilterBar navigation={navigation} />
         <MainBoxes />
