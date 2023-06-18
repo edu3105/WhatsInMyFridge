@@ -31,6 +31,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import AddButton from "../../Home/IngredientsBox/addButton";
 import { useNavigation } from "@react-navigation/native";
+var ImagePicker = require('expo-image-picker');
+import { Asset } from 'expo-asset';
+//handle imagepicker
+
 
 const BasicInfo = () => {
   const navigation = useNavigation();
@@ -47,6 +51,9 @@ const BasicInfo = () => {
   //---------------------------------------------
   const [dishName, setDishName] = useState("");
   const [duration, setDuration] = useState({ hours: 0, minutes: 0 });
+  const [dishImageUri, setDishImageUri] = useState(null);
+  const [isImageSelected, setIsImageSelected] = useState(false);
+  const [showReplaceButton, setShowReplaceButton] = useState(false);
   const handleDurationChange = (value, type) => {
     setDuration((prevState) => ({
       ...prevState,
@@ -89,15 +96,47 @@ const BasicInfo = () => {
     handleClose();
   };
 
+  const handleImagePicker = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+    if (permissionResult.granted === false) {
+      alert('Permission to access the camera roll is required!');
+      return;
+    }
+  
+    const pickerResult = await ImagePicker.launchImageLibraryAsync();
+  
+    if (pickerResult.canceled === true) {
+      return;
+    }
+  
+    setDishImageUri(pickerResult.assets[0].uri);
+    setIsImageSelected(true);
+    setShowReplaceButton(true);
+  };
+
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.top}></View>
       <Text style={styles.heading}>Dish Picture</Text>
       <View style={styles.DishPicture}>
-        <Image
-          source={require("../../../assets/Create/cabbage.jpg")}
-          style={styles.dishimage}
-        />
+      {dishImageUri ? (
+        <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
+      ) : (
+        <Button onPress={handleImagePicker} style={styles.selectImageButton}>
+          <Text style={styles.buttonTextimage}>
+            Add Picture +
+          </Text>
+        </Button>
+      )}
+
+      {showReplaceButton && (
+        <Button onPress={handleImagePicker} style={styles.replaceImageButton}>
+          <Text style={styles.buttonTextimage}>
+            Replace Image
+          </Text>
+        </Button>
+      )}
       </View>
 
       <View style={styles.DishName}>
@@ -335,5 +374,20 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginTop: 20,
     marginBottom: 50,
+    backgroundColor: "#9747ff",
   },
+  selectImageButton: {
+    height: 120,
+    width: 250,
+    backgroundColor: "#9747ff",
+  },
+  buttonTextimage: {
+    color: "white",
+  },
+  replaceImageButton: {
+    height: 45,
+    width: 180,
+    marginTop: -10,
+    backgroundColor: "#9747ff",
+  }
 });
