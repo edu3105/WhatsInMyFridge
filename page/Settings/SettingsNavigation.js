@@ -12,13 +12,14 @@ import EditProfile from "./EditProfile";
 import ChangePassword from "./ChangePassword";
 import FAQ from "./FAQ";
 import AboutUs from "./AboutUs";
+import Stat_s from "./Stats";
 
 const Stack = createStackNavigator(); // creates object for Stack Navigator
 
 const FirstScreenNavigatorSettings = () => {
   return (
     <NativeBaseProvider>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ animation: "slide_from_left" }}>
         <Stack.Group>
           <Stack.Screen
             name="Profile"
@@ -41,6 +42,9 @@ const FirstScreenNavigatorSettings = () => {
         </Stack.Group>
         <Stack.Group>
           <Stack.Screen name="About Us" component={AboutUs} />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen name="Stats" component={Stat_s} />
         </Stack.Group>
       </Stack.Navigator>
     </NativeBaseProvider>
