@@ -36,6 +36,9 @@ const addButton = ({ setIngredients }) => {
     setIngredientName("");
   };
 
+  // const handleNameChange = (value) => {
+  //   setIngredientName(value);
+  // };
   const handleNameChange = (value) => {
     setIngredientName(value);
     const filteredList = ingredientDb
