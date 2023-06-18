@@ -13,11 +13,36 @@ import {
 } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { getData, deleteData } from "../../api/ingredientsData.js";
+import {
+  getData,
+  deleteData,
+  updateQuantity,
+} from "../../api/Data/ingredientsData.js";
 
-const ingredients = () => {
+const ingredients = ({ ingredients, setIngredients }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [updatedQuantity, setUpdatedQuantity] = useState(1);
+  //   const [ingredients, setIngredients] = useState([]);
+
+  const handleIncrement = () => {
+    setUpdatedQuantity(updatedQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (updatedQuantity > 1) {
+      setUpdatedQuantity(updatedQuantity - 1);
+    }
+  };
+
+  const handleQuantityChange = (value) => {
+    const numericValue = parseInt(value, 10);
+    if (!isNaN(numericValue)) {
+      setUpdatedQuantity(numericValue);
+    } else {
+      setUpdatedQuantity(1);
+    }
+  };
 
   const openModal = (ingredient) => {
     setSelectedItem(ingredient);
@@ -27,12 +52,13 @@ const ingredients = () => {
   const closeModal = () => {
     setSelectedItem(null);
     setShowModal(false);
+    setUpdatedQuantity(1);
   };
 
   const handleDeleteData = async () => {
     try {
       console.log(selectedItem.name);
-      await deleteData(selectedItem.name);
+      await deleteData(selectedItem.name, setIngredients);
 
       console.log("Ingredient data deleted successfully.");
       setSelectedItem(null);
@@ -42,72 +68,16 @@ const ingredients = () => {
     }
   };
 
-  //FOR ingredients list
-
-  const [ingredients, setIngredients] = useState([getData()]);
-
-  const fetchData = useCallback(async () => {
-    const data = await getData();
-    setIngredients(data);
-  }, [])
-
-
   useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData();
+      setIngredients(data);
+    };
+
     fetchData();
-    console.log(ingredients);
-  }, [fetchData]);
-
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await getData();
-  //     setIngredients(data);
-  //   };
-
-  //   fetchData();
-
-  //   console.log(ingredients);
-  // }, [ingredients]);
-
-
-
-  
-
-  // const fetchData = async () => {
-  //   const data = await getData();
-  //   setIngredients(data);
-  // };
-
-  // const ingredients = [
-  //   { name: "Item 1", amount: 100 },
-  //   { name: "Item 2", amount: 500 },
-  //   { name: "Poxad", amount: 1 },
-  // ];
+  }, []);
 
   //end of ingredients
-
-  // FOR THE NUMBER INSIDE THE MODAL
-  const [count, setCount] = useState(0);
-
-  const handleIncrement = () => {
-    setCount(count + 1);
-  };
-
-  const handleDecrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
-
-  const handleCountChange = (value) => {
-    const numericValue = parseInt(value, 10);
-    if (!isNaN(numericValue)) {
-      setCount(numericValue);
-    } else {
-      setCount(0);
-    }
-  };
-  // END OF NUMBER
 
   return (
     <NativeBaseProvider>
@@ -158,8 +128,8 @@ const ingredients = () => {
                         -
                       </Button>
                       <Input
-                        value={count.toString()}
-                        onChangeText={handleCountChange}
+                        value={updatedQuantity.toString()}
+                        onChangeText={handleQuantityChange}
                         keyboardType="numeric"
                         textAlign="center"
                       />
@@ -183,7 +153,23 @@ const ingredients = () => {
                     >
                       Delete
                     </Button>
-                    <Button onPress={closeModal}>Save</Button>
+                    <Button
+                      onPress={async () => {
+                        // Check if updated quantity is greater than 0
+                        if (updatedQuantity <= 0) {
+                          throw new Error("Quantity must be greater than 0");
+                        }
+
+                        await updateQuantity(
+                          selectedItem.name,
+                          updatedQuantity,
+                          setIngredients
+                        );
+                        closeModal();
+                      }}
+                    >
+                      Save
+                    </Button>
                   </Button.Group>
                 </Modal.Footer>
               </Modal.Content>
@@ -206,3 +192,5 @@ const ingredients = () => {
 };
 
 export default ingredients;
+
+export { ingredients };
