@@ -41,9 +41,6 @@ import { Asset } from 'expo-asset';
 import { Platform } from "react-native";
 // import { Picker, DatePicker } from "react-native-wheel-pick";
 
-import { Platform } from "react-native";
-// import { Picker, DatePicker } from "react-native-wheel-pick";
-
 const BasicInfo = () => {
   const navigation = useNavigation();
 
@@ -55,6 +52,7 @@ const BasicInfo = () => {
       minutes: duration.minutes,
       chefHatCount,
       descriptions,
+      dishImageUri,
     });
   };
   //---------------------------------------------

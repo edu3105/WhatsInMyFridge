@@ -34,7 +34,7 @@ import AddButton from "../../Home/IngredientsBox/addButton";
 import { useRoute } from "@react-navigation/native";
 const Review = ({ navigation }) => {
   const route = useRoute();
-  const { dishName, hours, minutes, chefHatCount, descriptions, inputs } =
+  const { dishName, hours, minutes, chefHatCount, descriptions, inputs,  dishImageUri} =
     route.params;
 
   //   console.log(inputs);
@@ -46,6 +46,7 @@ const Review = ({ navigation }) => {
       chefHatCount,
       descriptions,
       inputs,
+      dishImageUri,
     });
   };
   return (
@@ -53,10 +54,11 @@ const Review = ({ navigation }) => {
       <View style={styles.top}></View>
       <Text style={styles.title}>{dishName}</Text>
       <View style={styles.DishPicture}>
-        <Image
-          source={require("../../../assets/Create/cabbage.jpg")}
-          style={styles.dishimage}
-        />
+      {dishImageUri ? (
+        <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
+      ) : (
+        <Text>No file included</Text>
+      )}
       </View>
       <View style={styles.time}>
         <Text style={styles.heading}>Time</Text>

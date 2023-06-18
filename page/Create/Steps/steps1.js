@@ -19,7 +19,7 @@ var ImagePicker = require("expo-image-picker");
 const Steps = ({ navigation }) => {
   //Fetching Datas from Basic Info
   const route = useRoute();
-  const { dishName, hours, minutes, chefHatCount, descriptions } = route.params;
+  const { dishName, hours, minutes, chefHatCount, descriptions, dishImageUri } = route.params;
 
   //-----------------------------------------
   const [inputs, setInputs] = useState([]);
@@ -33,6 +33,7 @@ const Steps = ({ navigation }) => {
       chefHatCount,
       descriptions,
       inputs,
+      dishImageUri,
     });
   };
 
