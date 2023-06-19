@@ -55,7 +55,12 @@ export default function App() {
         <Tab.Screen
           name="Explore"
           component={ExploretoRecipe}
-          options={{
+          options={({ route }) => ({
+            tabBarStyle: {
+              display: getTabBarVisibility(route),
+              height: 60,
+            },
+            headerShown: getHeaderVisibility(route),
             tabBarBadge: 5,
             tabBarLabel: " ",
             tabBarIcon: ({ focused }) => (
@@ -66,7 +71,7 @@ export default function App() {
                 marginBottom={-15}
               />
             ),
-          }}
+          })}
         />
         <Tab.Screen
           name="Create"
@@ -158,7 +163,9 @@ const getTabBarVisibility = (route) => {
     routeName == "FAQ" ||
     routeName == "About Us" ||
     routeName == "Steps" ||
-    routeName == "RecipePage"
+    routeName == "RecipePage" ||
+    routeName == "RecipeSteps" ||
+    routeName == "RecipeDone"
   ) {
     return "none";
   } else {
@@ -176,7 +183,9 @@ const getHeaderVisibility = (route) => {
     routeName == "FAQ" ||
     routeName == "About Us" ||
     routeName == "Steps" ||
-    routeName == "RecipePage"
+    routeName == "RecipePage" ||
+    routeName == "RecipeSteps" ||
+    routeName == "RecipeDone"
   ) {
     return false;
   }

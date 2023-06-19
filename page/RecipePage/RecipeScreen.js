@@ -13,10 +13,6 @@ import RecipeBox from "./RecipeBoxes";
 export default function RecipeScreen({ navigation }) {
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleStartCooking = () => {
-    // Add your logic here for the button click action
-  };
-
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
@@ -24,7 +20,10 @@ export default function RecipeScreen({ navigation }) {
           <RecipeBox />
         </ScrollView>
         <View style={styles.buttonContainer} marginBottom={15}>
-          <TouchableOpacity style={styles.button} onPress={handleStartCooking}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("RecipeSteps")}
+          >
             <Text style={styles.buttonText}>Start Cooking</Text>
           </TouchableOpacity>
         </View>
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    backgroundColor: "purple",
+    backgroundColor: "#9747FF",
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 8,

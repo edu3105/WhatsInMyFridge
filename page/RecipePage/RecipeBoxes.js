@@ -36,6 +36,7 @@ export default function RecipeBox({ navigation }) {
     backgroundColor: "lightgrey",
     borderRadius: 8,
     padding: 12,
+    width: 380,
   };
   return (
     <NativeBaseProvider>
@@ -44,19 +45,26 @@ export default function RecipeBox({ navigation }) {
           <Image
             rounded="md"
             source={{
-              uri: "https://staticcookist.akamaized.net/wp-content/uploads/sites/22/2021/09/beef-burger.jpg",
+              uri: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/juicy-cheeseburger-pack-cea71279.jpg",
             }}
-            width={350}
+            width={370}
             height={150}
             marginTop={5}
           />
           <VStack space={3}>
-            <HStack space={19} marginTop={3} justifyContent="center">
+            <HStack space={50} marginTop={3} justifyContent="center">
               <View alignItems="center">
                 <Heading size="sm">Time</Heading>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <FontAwesome name="clock-o" size={20} color="black" />
-                  <Text marginLeft={2}>20 min</Text>
+                  <FontAwesome
+                    name="clock-o"
+                    size={20}
+                    color="black"
+                    marginTop={13}
+                  />
+                  <Text marginLeft={4} marginTop={15}>
+                    20 min
+                  </Text>
                 </View>
               </View>
               <View alignItems="center">
@@ -70,6 +78,7 @@ export default function RecipeBox({ navigation }) {
                     paddingHorizontal: 15,
                     paddingVertical: 4,
                   }}
+                  marginTop={10}
                 >
                   <FontAwesome name="star" size={20} color="orange" />
                   <Text marginLeft={2}>4.0</Text>
@@ -77,7 +86,10 @@ export default function RecipeBox({ navigation }) {
               </View>
               <View alignItems="center">
                 <Heading size="sm">Creator</Heading>
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View
+                  style={{ flexDirection: "row", alignItems: "center" }}
+                  marginTop={10}
+                >
                   <Avatar
                     bg="green.500"
                     alignSelf="center"
@@ -88,7 +100,7 @@ export default function RecipeBox({ navigation }) {
                   >
                     AJ
                   </Avatar>
-                  <Text marginLeft={2}>Jason</Text>
+                  <Text marginLeft={5}>Jamie</Text>
                 </View>
               </View>
             </HStack>
@@ -97,10 +109,13 @@ export default function RecipeBox({ navigation }) {
         <VStack space={2} marginLeft={6} marginTop={3}>
           <Heading size="md">Description</Heading>
           <Text>
-            Indulge in the Spicy Chicken Burger, where fiery flavors meet tender
-            chicken. With a perfect blend of spices, it delivers a satisfying
-            crunch and a kick of heat. Topped with fresh ingredients, this
-            burger is a tantalizing experience you won't forget.
+            A cheeseburger is a hamburger with a slice of melted cheese on top
+            of the meat patty, added near the end of the cooking time.
+            Cheeseburgers can include variations in structure, ingredients and
+            composition. As with other hamburgers, a cheeseburger may include
+            various condiments and other toppings such as lettuce, tomato,
+            onion, pickles, bacon, avocado, mushrooms, mayonnaise, ketchup, and
+            mustard.
           </Text>
         </VStack>
         <VStack space={2} marginLeft={6} marginTop={3}>
@@ -111,9 +126,13 @@ export default function RecipeBox({ navigation }) {
               <Text>{counter} servings</Text>
             </View>
             <HStack space={3} alignItems="center" marginRight={4}>
-              <Button onPress={decrementCounter}>-</Button>
+              <Button onPress={decrementCounter} colorScheme="purple">
+                -
+              </Button>
               <Text>{counter}</Text>
-              <Button onPress={incrementCounter}>+</Button>
+              <Button onPress={incrementCounter} colorScheme="purple">
+                +
+              </Button>
             </HStack>
           </HStack>
 
