@@ -212,7 +212,9 @@ const getTabBarVisibility = (route) => {
     routeName == "About Us" ||
     routeName == "Steps" ||
     routeName == "RecipePage" ||
-    routeName == "Stats"
+    routeName == "Stats" ||
+    routeName == "RecipeSteps" ||
+    routeName == "RecipeDone"
   ) {
     return "none";
   } else {
@@ -229,7 +231,10 @@ const getHeaderVisibility = (route) => {
     routeName == "Change Password" ||
     routeName == "FAQ" ||
     routeName == "About Us" ||
-    routeName == "Steps"
+    routeName == "Steps" ||
+    routeName == "RecipePage" ||
+    routeName == "RecipeSteps" ||
+    routeName == "RecipeDone"
   ) {
     return false;
   }

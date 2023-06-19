@@ -16,7 +16,7 @@ import {
   Flex,
 } from "native-base";
 
-const quickFilter = () => {
+const quickFilter = ({ Filtered }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
@@ -44,7 +44,7 @@ const quickFilter = () => {
               alignItems="center"
               w="90"
             >
-              All
+              {Filtered}
             </Box>
           );
         }}

@@ -205,9 +205,10 @@ const addButton = ({ setIngredients }) => {
                     width="10%"
                     mx="1"
                     my="3"
+                    bg="gray.300"
                     onPress={handleDecrement}
                   >
-                    test
+                    <Text style={{ fontFamily: "Poppins-Bold" }}>-</Text>
                   </Button>
                   <Input
                     value={count.toString()}
@@ -220,13 +221,14 @@ const addButton = ({ setIngredients }) => {
                     _text={{ fontFamily: "Poppins-Medium" }}
                   />
                   <Button
-                    style={{ width: "25%", fontFamily: "Poppins-Medium" }}
+                    style={{ width: "25%" }}
                     width="10%"
                     mx="1"
                     my="3"
+                    bg="gray.300"
                     onPress={handleIncrement}
                   >
-                    +
+                    <Text style={{ fontFamily: "Poppins-Bold" }}>+</Text>
                   </Button>
                   <Text></Text>
                 </Flex>
@@ -244,11 +246,15 @@ const addButton = ({ setIngredients }) => {
           </Modal.Body>
         </Modal.Content>
       </Modal>
-      <Box alignItems="center" mt="1">
-        <Button title="Delete All Ingredients" onPress={handleDeleteAll}>
+      {/* <Box alignItems="center" mt="1">
+        <Button
+          title="Delete All Ingredients"
+          colorScheme="red"
+          onPress={handleDeleteAll}
+        >
           Delete All
         </Button>
-      </Box>
+      </Box> */}
     </NativeBaseProvider>
   );
 };
