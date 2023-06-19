@@ -28,11 +28,11 @@ export default function ExploreScreen({ navigation }) {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <NativeBaseProvider>
-      <ScrollView vertical={true}>
+      <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
         <SearchBar />
         <FilterBar navigation={navigation} />
         <Recommended />
-        <MainBoxes />
+        <MainBoxes navigation={navigation} />
         <Creators />
       </ScrollView>
     </NativeBaseProvider>

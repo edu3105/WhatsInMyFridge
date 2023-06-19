@@ -23,18 +23,22 @@ import {
   Avatar,
   VStack,
 } from "native-base";
-
+import {
+  FontAwesome,
+  FontAwesomeIcon,
+} from "@fortawesome/react-native-fontawesome";
+import { faTimes, faStar } from "@fortawesome/free-solid-svg-icons";
 export default function MainBoxes() {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
     <NativeBaseProvider>
-      <VStack space={10} marginTop={5}>
+      <VStack space={0} marginTop={0}>
         <Center>
           <HStack>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
               <Box
-                maxW="40"
+                maxW="170"
                 rounded="lg"
                 overflow="hidden"
                 borderColor="coolGray.200"
@@ -55,81 +59,40 @@ export default function MainBoxes() {
                   <AspectRatio w="100%" ratio={1 / 1}>
                     <Image
                       source={{
-                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                        uri: "https://i.tribune.com.pk/media/images/964874-SEFAW-1443601755/964874-SEFAW-1443601755.jpg",
                       }}
                       alt="image"
                     />
+                    <Text
+                      position="absolute"
+                      top={0}
+                      right={0}
+                      p={2}
+                      bg="black"
+                      color="white"
+                      fontSize={16}
+                      fontWeight="bold"
+                    >
+                      4.0
+                    </Text>
+                    <Text
+                      position="absolute"
+                      bottom={0}
+                      p={2}
+                      bg="black"
+                      color="white"
+                      fontSize={16}
+                      fontWeight="bold"
+                    >
+                      French Fries
+                    </Text>
                   </AspectRatio>
                 </Box>
               </Box>
             </Box>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
               <Box
-                maxW="40"
-                rounded="lg"
-                overflow="hidden"
-                borderColor="coolGray.200"
-                borderWidth="1"
-                _dark={{
-                  borderColor: "coolGray.600",
-                  backgroundColor: "gray.700",
-                }}
-                _web={{
-                  shadow: 2,
-                  borderWidth: 0,
-                }}
-                _light={{
-                  backgroundColor: "gray.50",
-                }}
-              >
-                <Box>
-                  <AspectRatio w="100%" ratio={1 / 1}>
-                    <Image
-                      source={{
-                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-                      }}
-                      alt="image"
-                    />
-                  </AspectRatio>
-                </Box>
-              </Box>
-            </Box>
-          </HStack>
-          <HStack>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
-              <Box
-                maxW="40"
-                rounded="lg"
-                overflow="hidden"
-                borderColor="coolGray.200"
-                borderWidth="1"
-                _dark={{
-                  borderColor: "coolGray.600",
-                  backgroundColor: "gray.700",
-                }}
-                _web={{
-                  shadow: 2,
-                  borderWidth: 0,
-                }}
-                _light={{
-                  backgroundColor: "gray.50",
-                }}
-              >
-                <Box>
-                  <AspectRatio w="100%" ratio={1 / 1}>
-                    <Image
-                      source={{
-                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-                      }}
-                      alt="image"
-                    />
-                  </AspectRatio>
-                </Box>
-              </Box>
-            </Box>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
-              <Box
-                maxW="40"
+                maxW="170"
                 rounded="lg"
                 overflow="hidden"
                 borderColor="coolGray.200"
@@ -160,9 +123,9 @@ export default function MainBoxes() {
             </Box>
           </HStack>
           <HStack>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
               <Box
-                maxW="40"
+                maxW="170"
                 rounded="lg"
                 overflow="hidden"
                 borderColor="coolGray.200"
@@ -191,73 +154,9 @@ export default function MainBoxes() {
                 </Box>
               </Box>
             </Box>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
               <Box
-                maxW="40"
-                rounded="lg"
-                overflow="hidden"
-                borderColor="coolGray.200"
-                borderWidth="1"
-                _dark={{
-                  borderColor: "coolGray.600",
-                  backgroundColor: "gray.700",
-                }}
-                _web={{
-                  shadow: 2,
-                  borderWidth: 0,
-                }}
-                _light={{
-                  backgroundColor: "gray.50",
-                }}
-              >
-                <Box>
-                  <AspectRatio w="100%" ratio={1 / 1}>
-                    <Image
-                      source={{
-                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-                      }}
-                      alt="image"
-                    />
-                  </AspectRatio>
-                </Box>
-              </Box>
-            </Box>
-          </HStack>
-          <HStack>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
-              <Box
-                maxW="40"
-                rounded="lg"
-                overflow="hidden"
-                borderColor="coolGray.200"
-                borderWidth="1"
-                _dark={{
-                  borderColor: "coolGray.600",
-                  backgroundColor: "gray.700",
-                }}
-                _web={{
-                  shadow: 2,
-                  borderWidth: 0,
-                }}
-                _light={{
-                  backgroundColor: "gray.50",
-                }}
-              >
-                <Box>
-                  <AspectRatio w="100%" ratio={1 / 1}>
-                    <Image
-                      source={{
-                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
-                      }}
-                      alt="image"
-                    />
-                  </AspectRatio>
-                </Box>
-              </Box>
-            </Box>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
-              <Box
-                maxW="40"
+                maxW="170"
                 rounded="lg"
                 overflow="hidden"
                 borderColor="coolGray.200"
@@ -288,9 +187,9 @@ export default function MainBoxes() {
             </Box>
           </HStack>
           <HStack>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
               <Box
-                maxW="40"
+                maxW="170"
                 rounded="lg"
                 overflow="hidden"
                 borderColor="coolGray.200"
@@ -319,9 +218,137 @@ export default function MainBoxes() {
                 </Box>
               </Box>
             </Box>
-            <Box flex={1} height="100%" alignItems="center" py={10}>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
               <Box
-                maxW="40"
+                maxW="170"
+                rounded="lg"
+                overflow="hidden"
+                borderColor="coolGray.200"
+                borderWidth="1"
+                _dark={{
+                  borderColor: "coolGray.600",
+                  backgroundColor: "gray.700",
+                }}
+                _web={{
+                  shadow: 2,
+                  borderWidth: 0,
+                }}
+                _light={{
+                  backgroundColor: "gray.50",
+                }}
+              >
+                <Box>
+                  <AspectRatio w="100%" ratio={1 / 1}>
+                    <Image
+                      source={{
+                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                      }}
+                      alt="image"
+                    />
+                  </AspectRatio>
+                </Box>
+              </Box>
+            </Box>
+          </HStack>
+          <HStack>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
+              <Box
+                maxW="170"
+                rounded="lg"
+                overflow="hidden"
+                borderColor="coolGray.200"
+                borderWidth="1"
+                _dark={{
+                  borderColor: "coolGray.600",
+                  backgroundColor: "gray.700",
+                }}
+                _web={{
+                  shadow: 2,
+                  borderWidth: 0,
+                }}
+                _light={{
+                  backgroundColor: "gray.50",
+                }}
+              >
+                <Box>
+                  <AspectRatio w="100%" ratio={1 / 1}>
+                    <Image
+                      source={{
+                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                      }}
+                      alt="image"
+                    />
+                  </AspectRatio>
+                </Box>
+              </Box>
+            </Box>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
+              <Box
+                maxW="170"
+                rounded="lg"
+                overflow="hidden"
+                borderColor="coolGray.200"
+                borderWidth="1"
+                _dark={{
+                  borderColor: "coolGray.600",
+                  backgroundColor: "gray.700",
+                }}
+                _web={{
+                  shadow: 2,
+                  borderWidth: 0,
+                }}
+                _light={{
+                  backgroundColor: "gray.50",
+                }}
+              >
+                <Box>
+                  <AspectRatio w="100%" ratio={1 / 1}>
+                    <Image
+                      source={{
+                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                      }}
+                      alt="image"
+                    />
+                  </AspectRatio>
+                </Box>
+              </Box>
+            </Box>
+          </HStack>
+          <HStack>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
+              <Box
+                maxW="170"
+                rounded="lg"
+                overflow="hidden"
+                borderColor="coolGray.200"
+                borderWidth="1"
+                _dark={{
+                  borderColor: "coolGray.600",
+                  backgroundColor: "gray.700",
+                }}
+                _web={{
+                  shadow: 2,
+                  borderWidth: 0,
+                }}
+                _light={{
+                  backgroundColor: "gray.50",
+                }}
+              >
+                <Box>
+                  <AspectRatio w="100%" ratio={1 / 1}>
+                    <Image
+                      source={{
+                        uri: "https://www.holidify.com/images/cmsuploads/compressed/Bangalore_citycover_20190613234056.jpg",
+                      }}
+                      alt="image"
+                    />
+                  </AspectRatio>
+                </Box>
+              </Box>
+            </Box>
+            <Box flex={1} height="100%" alignItems="center" py={5}>
+              <Box
+                maxW="170"
                 rounded="lg"
                 overflow="hidden"
                 borderColor="coolGray.200"
