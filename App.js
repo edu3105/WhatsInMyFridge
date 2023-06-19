@@ -31,10 +31,8 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          tabBarShowLabel: false,
           tabBarStyle: {
             height: 60, // Set the height of the tab bar here
-            display: "flex",
           },
         }}
       >
