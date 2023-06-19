@@ -56,9 +56,12 @@ const ExploreScreenNavigator = () => {
 
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarStyle: [{
-            display: "flex",
-          }, null]
+          tabBarStyle: [
+            {
+              display: "flex",
+            },
+            null,
+          ],
         }}
       >
         <Tab.Screen

@@ -127,7 +127,7 @@ function App() {
             />
           ),
         })}
-      />  
+      />
     </Tab.Navigator>
   );
 }
@@ -197,7 +197,10 @@ const getTabBarVisibility = (route) => {
     routeName == "RecipePage" ||
     routeName == "Stats" ||
     routeName == "RecipeSteps" ||
-    routeName == "RecipeDone"
+    routeName == "RecipeDone" ||
+    routeName == "StepByStepMode" ||
+    routeName == "Review" ||
+    routeName == "Done"
   ) {
     return "none";
   } else {
@@ -217,7 +220,10 @@ const getHeaderVisibility = (route) => {
     routeName == "Steps" ||
     routeName == "RecipePage" ||
     routeName == "RecipeSteps" ||
-    routeName == "RecipeDone"
+    routeName == "RecipeDone" ||
+    routeName == "StepByStepMode" ||
+    routeName == "Review" ||
+    routeName == "Done"
   ) {
     return false;
   }
