@@ -1,7 +1,7 @@
 const recipeDB = [
     {
         recipeName: "Grandma Virginia's Oven-Fried Chicken",
-        image: "grandma-virginias-fried-chicken", 
+        image: "../assets/images/fried_chicken.png", 
         imageType: "png",
         timeToCook: "",
         creator: "Luv Cook Books",
@@ -49,7 +49,7 @@ const recipeDB = [
 
     {
         recipeName: "Chicken Fried Rice",
-        image: "",
+        image: "../assets/images/fried_rice.png",
         imageType: "png",
         timeToCook: "",
         creator: "Martha Stewart",
@@ -124,7 +124,7 @@ const recipeDB = [
 
     {
         recipeName: "Pan Fried Noodles",
-        image: "",
+        image: "../assets/images/fried_noodles.png",
         imageType: "jpg",
         timeToCook: "",
         creator: "Sara Welch",
@@ -216,9 +216,9 @@ const recipeDB = [
 
     {
         recipeName: "Siomay",
-        image: "",
-        imageType: "",
-        timeToCook: "",
+        image: "../assets/images/siomay.png",
+        imageType: "png",
+        timeToCook: "40",
         creator: "Felix",
         description: "Want to make a delicious snack at home? Try this fish siomay recipe. It uses ingredients such as Spanish mackerel as the main ingredient. However, the fish is processed with other selected ingredients so that there is no fishy smell or taste.",
         steps: [
@@ -303,9 +303,9 @@ const recipeDB = [
 
     {
         recipeName: "Xiao Long Bao",
-        image: res.image,
-        imageType: res.imageType,
-        timeToCook: res.readyInMinutes,
+        image: "../assets/images/xiaolongbao.png",
+        imageType: "png",
+        timeToCook: "40",
         creator: "Serious Eats",
         description: "a type of small Chinese steamed bun (baozi) traditionally prepared in a xiaolong, a small bamboo steaming basket, hence the name.",
         steps: [`Combine chicken bones, ham, scallion whites, half of scallion greens, ginger, and white peppercorns in a stockpot and cover with cold water. Bring to a boil over high heat, reduce to a simmer, and simmer, uncovered, for 2 1/2 hours. Line a fine-mesh strainer with cheesecloth, and set over a large heatproof bowl. Carefully pour bone broth through strainer into bowl until the liquid has been strained. Discard solids in strainer. Season to taste with salt, cover, and refrigerate until set into a semi-firm jelly, at least 8 hours. Scrape off the fat that sets on top of the chilled bone broth and discard.`
