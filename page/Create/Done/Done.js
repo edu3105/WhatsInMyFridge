@@ -10,6 +10,7 @@ import {
 import { NativeBaseProvider, Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 // import "react-native-gesture-handler";
+import { firebase } from "../../../config";
 
 const Done = ({ navigation }) => {
   const user = firebase.auth().currentUser;
