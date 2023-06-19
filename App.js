@@ -127,24 +127,7 @@ function App() {
             />
           ),
         })}
-      />
-      {/* demo owen */}
-      <Tab.Screen
-        name="Register"
-        component={SplashScreen}
-        options={{
-          // tabBarBadge: 0,
-          tabBarLabel: " ",
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? "bookmark" : "bookmark-outline"}
-              size={30} // Set the size of the icon here
-              focused={focused}
-              marginBottom={-15}
-            />
-          ),
-        }}
-      />
+      />  
     </Tab.Navigator>
   );
 }
