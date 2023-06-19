@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import {
   NativeBaseProvider,
   Box,
@@ -49,6 +55,10 @@ const addButton = ({ setIngredients }) => {
     setFilteredIngredientList(filteredList);
   };
 
+  const handleItemPress = (value) => {
+    setIngredientName(value);
+  };
+
   const handleSubmit = async () => {
     const ingredient = {
       name: ingredientName,
@@ -65,6 +75,16 @@ const addButton = ({ setIngredients }) => {
     }
 
     try {
+      const data = await getData(); // Retrieve the data from AsyncStorage
+
+      // Handle case when data is not an array
+      const storedIngredients = Array.isArray(data) ? data : [];
+
+      // Check if the ingredientName already exists in the stored data
+      if (storedIngredients.some((item) => item.name === ingredient.name)) {
+        throw new Error("Ingredient already exists");
+      }
+
       await onSubmit(ingredient, setIngredients); // Pass setIngredients to onSubmit
       console.log("Ingredient submitted successfully.");
     } catch (error) {
@@ -117,13 +137,27 @@ const addButton = ({ setIngredients }) => {
             <Box p="4">
               <Text>Ingredients Name:</Text>
               <Autocomplete
-                placeholder="Name"
-                onChangeText={handleNameChange}
-                value={ingredientName}
+                // placeholder="Name"
+                // onChangeText={handleNameChange}
+                // value={ingredientName}
+                // data={filteredIngredientList}
+                // renderItem={({ item }) => (
+                //   <Autocomplete.Item label={item} value={item} />
+                // )}=
                 data={filteredIngredientList}
-                renderItem={({ item }) => (
-                  <Autocomplete.Item label={item} value={item} />
-                )}
+                value={ingredientName}
+                onChangeText={handleNameChange}
+                placeholder="Name"
+                flatListProps={{
+                  keyboardShouldPersistTaps: "always",
+                  renderItem: ({ item }) => (
+                    <TouchableOpacity onPress={() => handleNameChange(item)}>
+                      <Text label={item} value={item}>
+                        {item}
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                }}
               />
               <Text>Quantity:</Text>
               <Box justifyContent="space-between" alignItems="center">
