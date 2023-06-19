@@ -12,6 +12,7 @@ import {
   FormControl,
   Modal,
   Image,
+  VStack,
 } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { loadFonts } from "../../../fonts.js";
@@ -22,11 +23,10 @@ import {
 } from "../../api/Data/ingredientsData.js";
 import IngredientImage from "../../../assets/logo/1.png";
 
-const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
+const Ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [updatedQuantity, setUpdatedQuantity] = useState(1);
-  //   const [ingredients, setIngredients] = useState([]);
 
   const handleIncrement = () => {
     setUpdatedQuantity(updatedQuantity + 1);
@@ -94,16 +94,6 @@ const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
     loadCustomFonts();
   }, []);
 
-  //   useEffect(() => {
-  //     // Load the Poppins Medium 500 font
-  //     const loadCustomFonts = async () => {
-  //       await loadFonts();
-  //     };
-
-  //     loadCustomFonts();
-  //   }, []);
-
-  //end of ingredients
   if (!fontLoaded) {
     return <View />; // Render an empty view while the font is loading
   }
@@ -114,10 +104,10 @@ const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
         <Box
           key={ingredient.name}
           alignSelf="center"
-          bg={["gray.200", "blue.400"]}
+          bg={["gray.300", "blue.400"]}
           w="90%"
           my="1"
-          borderRadius={8}
+          borderRadius={10}
         >
           <Flex
             direction="row"
@@ -138,7 +128,7 @@ const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
                 <Center
                   height={8}
                   width="60%"
-                  bg="gray.200"
+                  bg="gray.300"
                   _text={{
                     color: "coolGray.800",
                     fontFamily: "Poppins-Medium",
@@ -224,7 +214,7 @@ const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
             <Center
               height="8"
               width="16"
-              bg="gray.200"
+              bg="gray.300"
               _text={{
                 color: "coolGray.800",
                 fontFamily: "Poppins-Medium",
@@ -239,6 +229,6 @@ const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
   );
 };
 
-export default ingredients;
+export default Ingredients;
 
-export { ingredients };
+export { Ingredients };
