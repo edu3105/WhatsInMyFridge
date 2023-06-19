@@ -1,7 +1,13 @@
 // NestedSetting.js
 
 import React from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
 import { Avatar, NativeBaseProvider, IconButton } from "native-base";
 import { useState } from "react";
 import { HStack, Box, VStack } from "native-base";
@@ -44,13 +50,31 @@ const NestedSettings = () => {
       maxHeight: 300,
     };
   };
+  // const [isDraftButtonFocused, setIsDraftButtonFocused] = useState(true);
+  // const [isUploadButtonFocused, setIsUploadButtonFocused] = useState(false);
+
+  // const handleDraftRecipePress = () => {
+  //   console.log("Draft_pressed");
+  //   setActiveTab("draft");
+  //   setIsDraftButtonFocused(true);
+  //   setIsUploadButtonFocused(false);
+  // };
+
+  // const handleUploadRecipePress = () => {
+  //   console.log("Upload_pressed");
+  //   setActiveTab("upload");
+  //   setIsDraftButtonFocused(false);
+  //   setIsUploadButtonFocused(true);
+  // };
+
+  // const [activeTab, setActiveTab] = useState("draft");
 
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
         <HStack>
           <Box>
-            <TouchableWithoutFeedback onPress={handleAvatarPress}>
+            <TouchableOpacity onPress={handleAvatarPress}>
               <Avatar
                 style={styles.profilePicture}
                 size="sm"
@@ -58,7 +82,7 @@ const NestedSettings = () => {
                 alt="Avatar"
                 mr={2}
               />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
             <Text style={styles.profileName}>{username}</Text>
             <Text style={styles.profileRecipe}>Recipes</Text>
           </Box>
@@ -76,16 +100,16 @@ const NestedSettings = () => {
 
         <View style={styles.account_settings_container}>
           <VStack>
-            <TouchableWithoutFeedback onPress={handleEditProfilePress}>
+            <TouchableOpacity onPress={handleEditProfilePress}>
               <View style={styles.edit_button}>
                 <Text style={styles.editProfileText}>Edit Profile</Text>
               </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={handleChangePasswordPress}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleChangePasswordPress}>
               <View style={styles.change_button}>
                 <Text style={styles.changePasswordText}>Change Password</Text>
               </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           </VStack>
         </View>
 
@@ -99,18 +123,59 @@ const NestedSettings = () => {
 
         <View style={styles.others_container}>
           <VStack>
-            <TouchableWithoutFeedback onPress={handleFAQPress}>
+            <TouchableOpacity onPress={handleFAQPress}>
               <View style={styles.FAQ_button}>
                 <Text style={styles.FAQText}>FAQ</Text>
               </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={handleAboutUsPress}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleAboutUsPress}>
               <View style={styles.AboutUs_button}>
                 <Text style={styles.AboutUsText}>About Us</Text>
               </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           </VStack>
         </View>
+
+        <VStack>
+          {/* <View style={styles.centeredContainer}>
+            <HStack>
+              <TouchableOpacity onPress={handleDraftRecipePress}>
+                <View
+                  style={[
+                    styles.draft_button,
+                    isDraftButtonFocused && styles.focusedButton,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.draftedRecipeText,
+                      isDraftButtonFocused && styles.focusedText,
+                    ]}
+                  >
+                    Drafted Recipe
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleUploadRecipePress}>
+                <View
+                  style={[
+                    styles.upload_button,
+                    isUploadButtonFocused && styles.focusedButton,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.uploadedRecipeText,
+                      isUploadButtonFocused && styles.focusedText,
+                    ]}
+                  >
+                    Uploaded Recipe
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </HStack>
+          </View> */}
+        </VStack>
       </View>
     </NativeBaseProvider>
   );
@@ -180,14 +245,14 @@ const styles = StyleSheet.create({
 
     borderRadius: 15,
     height: 50,
-    width: 375,
+    width: 355,
   },
 
   change_button: {
     backgroundColor: "purple",
     borderRadius: 15,
     height: 50,
-    width: 375,
+    width: 355,
     top: 15,
   },
 
@@ -231,7 +296,7 @@ const styles = StyleSheet.create({
     backgroundColor: "purple",
     borderRadius: 15,
     height: 50,
-    width: 375,
+    width: 355,
   },
 
   FAQText: {
@@ -244,7 +309,7 @@ const styles = StyleSheet.create({
   AboutUs_button: {
     backgroundColor: "purple",
     borderRadius: 15,
-    width: 375,
+    width: 355,
     height: 50,
     top: 15,
   },
@@ -255,4 +320,54 @@ const styles = StyleSheet.create({
     textAlign: "left",
     margin: 10,
   },
+
+  // centeredContainer: {
+  //   //flex: 1,
+  //   position: "absolute",
+  //   left: 57,
+  //   textAlign: "center",
+  //   top: 170,
+  //   borderWidth: 1,
+  // },
+
+  // draft_button: {
+  //   //borderWidth: 1,
+  //   borderColor: "black",
+  //   borderRadius: 15,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   right: 10,
+  //   backgroundColor: "transparent",
+  // },
+
+  // upload_button: {
+  //   //borderWidth: 1,
+
+  //   borderColor: "black",
+  //   borderRadius: 15,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginLeft: 10,
+  //   paddingRight: 10,
+  //   right: 10,
+  // },
+
+  // draftedRecipeText: {
+  //   fontSize: 17,
+
+  //   textAlign: "center",
+  //   marginTop: 10,
+  //   marginBottom: 10,
+  //   right: 10,
+  //   marginLeft: 20,
+  // },
+
+  // uploadedRecipeText: {
+  //   fontSize: 17,
+  //   color: "gray",
+  //   textAlign: "center",
+  //   marginTop: 10,
+  //   marginBottom: 10,
+  //   marginLeft: 10,
+  // },
 });

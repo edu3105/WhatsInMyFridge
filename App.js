@@ -26,7 +26,158 @@ import SplashScreen from "./page/register/SplashScreen.js";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+<<<<<<< HEAD
 export default function App() {
+=======
+function App() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {
+          height: 60, // Set the height of the tab bar here
+        },
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarBadge: 5,
+          tabBarLabel: " ",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              size={30} // Set the size of the icon here
+              focused={focused}
+              marginBottom={-15}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Explore"
+        component={ExploretoRecipe}
+        options={{
+          tabBarBadge: 5,
+          tabBarLabel: " ",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "search" : "search-outline"}
+              size={30} // Set the size of the icon here
+              focused={focused}
+              marginBottom={-15}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Create"
+        component={Create_BasicInfo}
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+            height: 60,
+          },
+          //dont show header
+          headerShown: getHeaderVisibility(route),
+          tabBarLabel: " ",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "add-circle" : "add-circle-outline"}
+              size={30} // Set the size of the icon here
+              focused={focused}
+              marginBottom={-15}
+            />
+          ),
+        })}
+      />
+      <Tab.Screen
+        name="Bookmark"
+        component={BookmarkScreen}
+        options={{
+          // tabBarBadge: 0,
+          tabBarLabel: " ",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "bookmark" : "bookmark-outline"}
+              size={30} // Set the size of the icon here
+              focused={focused}
+              marginBottom={-15}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={FirstScreenNavigatorSettings}
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+            height: 60,
+          },
+          //dont show header
+          headerShown: getHeaderVisibility(route),
+          tabBarLabel: " ",
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? "person" : "person-outline"}
+              size={30} // Set the size of the icon here
+              focused={focused}
+              marginBottom={-15}
+            />
+          ),
+        })}
+      />
+    </Tab.Navigator>
+  );
+}
+
+function AuthToApp() {
+  const [initializing, setinitIalizing] = useState(true);
+  const [user, setUser] = useState();
+
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setinitIalizing(false);
+  }
+  useEffect(() => {
+    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <Stack.Navigator>
+        <Stack.Group>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            // options={}
+          />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen name="Register" component={RegisterScreen} />
+        </Stack.Group>
+      </Stack.Navigator>
+    );
+  }
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="App"
+        component={App}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export default () => {
+>>>>>>> 54553c0018cd6f0efda6b3379fc586649989eb57
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -148,7 +299,10 @@ const getTabBarVisibility = (route) => {
     routeName == "Steps" ||
     routeName == "RecipePage" ||
     routeName == "RecipeSteps" ||
-    routeName == "RecipeDone"
+    routeName == "RecipeDone" ||
+    routeName == "StepByStepMode" ||
+    routeName == "Review" ||
+    routeName == "Done"
   ) {
     return "none";
   } else {
@@ -166,9 +320,13 @@ const getHeaderVisibility = (route) => {
     routeName == "FAQ" ||
     routeName == "About Us" ||
     routeName == "Steps" ||
+    routeName == "Stats" ||
     routeName == "RecipePage" ||
     routeName == "RecipeSteps" ||
-    routeName == "RecipeDone"
+    routeName == "RecipeDone" ||
+    routeName == "StepByStepMode" ||
+    routeName == "Review" ||
+    routeName == "Done"
   ) {
     return false;
   }

@@ -7,6 +7,7 @@ import {
   View,
   Image,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Modal,
   Animated,
 } from "react-native";
@@ -24,6 +25,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 //import { Navigation } from "react-native-navigation";
 import "react-native-gesture-handler";
+import { Touchable } from "react-native";
 
 export default function EditProfile() {
   const [avatarSource, setAvatarSource] = useState({
@@ -39,10 +41,12 @@ export default function EditProfile() {
       maxWidth: 300,
       maxHeight: 300,
     };
+    selectImage();
   };
 
   const handleChangePicturePress = () => {
     console.log("change_picture_pressed");
+    selectImage();
   };
 
   const [successVisible, setSuccessVisible] = useState(false);
@@ -80,11 +84,33 @@ export default function EditProfile() {
     }
   }, [successVisible, fadeAnimation]);
 
+  var ImagePicker = require("expo-image-picker");
+  const selectImage = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const selectedAsset = result.assets[0];
+      setAvatarSource({ uri: selectedAsset.uri });
+    }
+  };
+
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
         <VStack style={styles.profile}>
-          <TouchableWithoutFeedback onPress={handleAvatarPress}>
+          <TouchableOpacity onPress={handleAvatarPress}>
             <Avatar
               style={styles.profilePicture}
               size="sm"
@@ -92,15 +118,15 @@ export default function EditProfile() {
               alt="Avatar"
               mr={2}
             />
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </VStack>
         <View>
           <VStack>
-            <TouchableWithoutFeedback onPress={handleChangePicturePress}>
+            <TouchableOpacity onPress={handleChangePicturePress}>
               <View style={[styles.change_picture]}>
                 <Text style={styles.change_picture_text}>Change Picture</Text>
               </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           </VStack>
         </View>
       </View>
@@ -145,11 +171,11 @@ export default function EditProfile() {
       </View>
 
       <VStack style={styles.update_container}>
-        <TouchableWithoutFeedback onPress={handleUpdatePress}>
+        <TouchableOpacity onPress={handleUpdatePress}>
           <View style={[styles.update]}>
             <Text style={styles.update_text}>Update</Text>
           </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </VStack>
       {successVisible && (
         <Modal animationType="none" transparent visible={successVisible}>
@@ -158,9 +184,9 @@ export default function EditProfile() {
               style={[styles.modalContent, { opacity: fadeAnimation }]}
             >
               <Text style={styles.successText}>Successfully updated!</Text>
-              <TouchableWithoutFeedback onPress={handleDismissPress}>
+              <TouchableOpacity onPress={handleDismissPress}>
                 <Text style={styles.dismissButton}>Dismiss</Text>
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             </Animated.View>
           </View>
         </Modal>
