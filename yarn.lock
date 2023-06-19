@@ -7903,10 +7903,10 @@
   dependencies:
     "hoist-non-react-statics" "^2.3.1"
 
-"react-native-screens@>= 3.0.0":
-  "integrity" "sha512-SybzBhceTN2LUfzvEQxpZ9SchlFgEdsR/+YOKcpIhKg2BdRObdIyQsRoJBvduZ55lKbO9Gpyl3Ke8tngz3873g=="
-  "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.21.0.tgz"
-  "version" "3.21.0"
+"react-native-screens@^3.21.1", "react-native-screens@>= 3.0.0":
+  "integrity" "sha512-asyqTA/0Ij9Sa16zB9YCUmZku5bf8RVKS0FKKhS2jfmF98BFt5XV6ldvM+Ze9cwgssSyRz4jYOIDSK1Wr5ZaYQ=="
+  "resolved" "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.21.1.tgz"
+  "version" "3.21.1"
   dependencies:
     "react-freeze" "^1.0.0"
     "warn-once" "^0.1.0"

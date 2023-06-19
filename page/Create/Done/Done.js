@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRoute, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,21 +13,16 @@ import { useNavigation } from "@react-navigation/native";
 import { firebase } from "../../../config";
 
 const Done = ({ navigation }) => {
-  const user = firebase.auth().currentUser;
-  const recipeDataRef = firebase
-    .firestore()
-    .collection(`/users/${user.uid}/myRecipes`);
-
-  const route = useRoute();
-  const {
-    dishName,
-    hours,
-    minutes,
-    chefHatCount,
-    descriptions,
-    inputs,
-    dishImageUri,
-  } = route.params;
+  //   const route = useRoute();
+  //   const {
+  //     dishName,
+  //     hours,
+  //     minutes,
+  //     chefHatCount,
+  //     descriptions,
+  //     inputs,
+  //     dishImageUri,
+  //   } = route.params;
 
   //coba-coba
   const [name, setName] = useState("");
@@ -46,22 +41,6 @@ const Done = ({ navigation }) => {
       }, []);
   });
   //----------------------------------
-
-  const addMyRecipe = () => {
-    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-    const recipeData = {
-      DishName: dishName,
-      duration: [hours, minutes],
-      diffculty: chefHatCount + 1,
-      desc: descriptions,
-      steps: inputs,
-      createdAt: timestamp,
-      dishImage: dishImageUri,
-    };
-    recipeDataRef.add(recipeData).catch((error) => {
-      alert(error);
-    });
-  };
 
   return (
     <NativeBaseProvider>
