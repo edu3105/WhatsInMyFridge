@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
@@ -18,8 +18,10 @@ import {
 import Ingredients from "./ingredients.js";
 import AddButton from "./addButton.js";
 
-const bigBox = () => {
+const bigBox = ({ searchIngredients }) => {
   const { height } = Dimensions.get("window");
+
+  const [ingredients, setIngredients] = useState([]); // State for ingredients
 
   return (
     <NativeBaseProvider>
@@ -28,17 +30,20 @@ const bigBox = () => {
           nestedScrollEnabled={true}
           vertical={true}
           style={{ flexDirection: "column" }}
-          bg="coolGray.300"
+          bg="gray.100"
           mx="5"
           mt="3"
-          w="80%"
+          w="100%"
           h={height * 0.5}
         >
-          <Ingredients />
+          <Ingredients
+            ingredients={ingredients}
+            setIngredients={setIngredients}
+            searchIngredients={searchIngredients}
+          />
         </ScrollView>
       </View>
-
-      <AddButton />
+      <AddButton setIngredients={setIngredients} />
     </NativeBaseProvider>
   );
 };

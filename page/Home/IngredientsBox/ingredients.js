@@ -2,6 +2,7 @@ import { React, useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
+  extendTheme,
   Box,
   Center,
   Input,
@@ -10,14 +11,41 @@ import {
   Flex,
   FormControl,
   Modal,
+  Image,
 } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { loadFonts } from "../../../fonts.js";
+import {
+  getData,
+  deleteData,
+  updateQuantity,
+} from "../../api/Data/ingredientsData.js";
+import IngredientImage from "../../../assets/logo/1.png";
 
-import { getData, deleteData } from "../../api/ingredientsData.js";
-
-const ingredients = () => {
+const ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [updatedQuantity, setUpdatedQuantity] = useState(1);
+  //   const [ingredients, setIngredients] = useState([]);
+
+  const handleIncrement = () => {
+    setUpdatedQuantity(updatedQuantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (updatedQuantity > 1) {
+      setUpdatedQuantity(updatedQuantity - 1);
+    }
+  };
+
+  const handleQuantityChange = (value) => {
+    const numericValue = parseInt(value, 10);
+    if (!isNaN(numericValue)) {
+      setUpdatedQuantity(numericValue);
+    } else {
+      setUpdatedQuantity(1);
+    }
+  };
 
   const openModal = (ingredient) => {
     setSelectedItem(ingredient);
@@ -27,12 +55,13 @@ const ingredients = () => {
   const closeModal = () => {
     setSelectedItem(null);
     setShowModal(false);
+    setUpdatedQuantity(1);
   };
 
   const handleDeleteData = async () => {
     try {
       console.log(selectedItem.name);
-      await deleteData(selectedItem.name);
+      await deleteData(selectedItem.name, setIngredients);
 
       console.log("Ingredient data deleted successfully.");
       setSelectedItem(null);
@@ -42,72 +71,42 @@ const ingredients = () => {
     }
   };
 
-  //FOR ingredients list
+  useEffect(() => {
+    const fetchData = async () => {
+      const allData = await getData(); // Fetch all the data
+      const filteredData = allData.filter((ingredient) =>
+        ingredient.name.toLowerCase().includes(searchIngredients.toLowerCase())
+      ); // Filter the data based on the search query
+      setIngredients(filteredData);
+    };
 
-  const [ingredients, setIngredients] = useState([getData()]);
+    fetchData();
+  }, [searchIngredients]);
 
-  const fetchData = useCallback(async () => {
-    const data = await getData();
-    setIngredients(data);
-  }, [])
-
+  const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
-    fetchData();
-    console.log(ingredients);
-  }, [fetchData]);
+    const loadCustomFonts = async () => {
+      await loadFonts();
+      setFontLoaded(true);
+    };
 
+    loadCustomFonts();
+  }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const data = await getData();
-  //     setIngredients(data);
-  //   };
+  //   useEffect(() => {
+  //     // Load the Poppins Medium 500 font
+  //     const loadCustomFonts = async () => {
+  //       await loadFonts();
+  //     };
 
-  //   fetchData();
-
-  //   console.log(ingredients);
-  // }, [ingredients]);
-
-
-
-  
-
-  // const fetchData = async () => {
-  //   const data = await getData();
-  //   setIngredients(data);
-  // };
-
-  // const ingredients = [
-  //   { name: "Item 1", amount: 100 },
-  //   { name: "Item 2", amount: 500 },
-  //   { name: "Poxad", amount: 1 },
-  // ];
+  //     loadCustomFonts();
+  //   }, []);
 
   //end of ingredients
-
-  // FOR THE NUMBER INSIDE THE MODAL
-  const [count, setCount] = useState(0);
-
-  const handleIncrement = () => {
-    setCount(count + 1);
-  };
-
-  const handleDecrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
-
-  const handleCountChange = (value) => {
-    const numericValue = parseInt(value, 10);
-    if (!isNaN(numericValue)) {
-      setCount(numericValue);
-    } else {
-      setCount(0);
-    }
-  };
-  // END OF NUMBER
+  if (!fontLoaded) {
+    return <View />; // Render an empty view while the font is loading
+  }
 
   return (
     <NativeBaseProvider>
@@ -115,7 +114,7 @@ const ingredients = () => {
         <Box
           key={ingredient.name}
           alignSelf="center"
-          bg={["red.400", "blue.400"]}
+          bg={["gray.200", "blue.400"]}
           w="90%"
           my="1"
           borderRadius={8}
@@ -128,27 +127,43 @@ const ingredients = () => {
             justifyContent="center"
           >
             <Pressable onPress={() => openModal(ingredient)}>
-              <Center
-                mr="1"
-                height="8"
-                width="48"
-                bg="primary.100"
-                _text={{
-                  color: "coolGray.800",
-                }}
-              >
-                {ingredient.name}
-              </Center>
+              <Flex alignItems="center" direction="row">
+                <Image
+                  source={IngredientImage}
+                  alt="Ingredient Image"
+                  mr={0}
+                  height={8}
+                  width={10}
+                />
+                <Center
+                  height={8}
+                  width="60%"
+                  bg="gray.200"
+                  _text={{
+                    color: "coolGray.800",
+                    fontFamily: "Poppins-Medium",
+                  }}
+                >
+                  {ingredient.name}
+                </Center>
+              </Flex>
             </Pressable>
+
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
               <Modal.Content maxWidth="400px">
                 <Modal.CloseButton />
-                <Modal.Header>Update Inventory</Modal.Header>
+                <Modal.Header _text={{ fontFamily: "Poppins-Medium" }}>
+                  Update Inventory
+                </Modal.Header>
                 <Modal.Body>
-                  <Text>Name:</Text>
-                  <Text>{selectedItem?.name}</Text>
+                  <Text style={{ fontFamily: "Poppins-Medium" }}>Name:</Text>
+                  <Text style={{ fontFamily: "Poppins-Medium" }}>
+                    {selectedItem?.name}
+                  </Text>
                   <FormControl mt="3">
-                    <FormControl.Label>Amount</FormControl.Label>
+                    <Text style={{ fontFamily: "Poppins-Medium" }}>
+                      Amount:{" "}
+                    </Text>
                     <Box justifyContent="space-between" alignItems="center">
                       <Button
                         style={{ width: "25%" }}
@@ -158,8 +173,8 @@ const ingredients = () => {
                         -
                       </Button>
                       <Input
-                        value={count.toString()}
-                        onChangeText={handleCountChange}
+                        value={updatedQuantity.toString()}
+                        onChangeText={handleQuantityChange}
                         keyboardType="numeric"
                         textAlign="center"
                       />
@@ -180,10 +195,28 @@ const ingredients = () => {
                       // variant="ghost"
                       colorScheme="danger"
                       onPress={handleDeleteData}
+                      _text={{ fontFamily: "Poppins-Medium" }}
                     >
                       Delete
                     </Button>
-                    <Button onPress={closeModal}>Save</Button>
+                    <Button
+                      onPress={async () => {
+                        // Check if updated quantity is greater than 0
+                        if (updatedQuantity <= 0) {
+                          throw new Error("Quantity must be greater than 0");
+                        }
+
+                        await updateQuantity(
+                          selectedItem.name,
+                          updatedQuantity,
+                          setIngredients
+                        );
+                        closeModal();
+                      }}
+                      _text={{ fontFamily: "Poppins-Medium" }}
+                    >
+                      Save
+                    </Button>
                   </Button.Group>
                 </Modal.Footer>
               </Modal.Content>
@@ -191,9 +224,10 @@ const ingredients = () => {
             <Center
               height="8"
               width="16"
-              bg="primary.200"
+              bg="gray.200"
               _text={{
                 color: "coolGray.800",
+                fontFamily: "Poppins-Medium",
               }}
             >
               {ingredient.quantity}
@@ -206,3 +240,5 @@ const ingredients = () => {
 };
 
 export default ingredients;
+
+export { ingredients };

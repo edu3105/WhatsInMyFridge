@@ -15,6 +15,8 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { firebase } from "../../config";
+
 // import "react-native-gesture-handler";
 
 const AddScreen = ({ navigation }) => {
@@ -25,7 +27,7 @@ const AddScreen = ({ navigation }) => {
           source={require("../../assets/Create/FeatherPen2.png")}
           style={styles.image}
         />
-        <Button onPress={() => navigation.navigate("Basic Information")}>
+        <Button style={styles.startwritingbutton} onPress={() => navigation.navigate("Basic Information") }>
           Start Writing
         </Button>
       </View>
@@ -70,4 +72,7 @@ const styles = StyleSheet.create({
 
     //  position: "absolute",
   },
+  startwritingbutton: {
+    backgroundColor: "#9474ff",
+  }
 });

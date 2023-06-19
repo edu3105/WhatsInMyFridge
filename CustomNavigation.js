@@ -50,8 +50,15 @@ const ExploreScreenNavigator = () => {
   return (
     <NativeBaseProvider>
       <Tab.Navigator
-        tabBarOptions={{
-          showLabel: false,
+        // tabBarOptions={{
+        //   showLabel: false,
+        // }}
+
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarStyle: [{
+            display: "flex",
+          }, null]
         }}
       >
         <Tab.Screen
