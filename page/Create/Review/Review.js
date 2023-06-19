@@ -32,14 +32,34 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import AddButton from "../../Home/IngredientsBox/addButton";
 import { useRoute } from "@react-navigation/native";
+import { firebase } from "../../../config";
+
 const Review = ({ navigation }) => {
   const route = useRoute();
-  const { dishName, hours, minutes, chefHatCount, descriptions, inputs,  dishImageUri} =
-    route.params;
+  const {
+    dishName,
+    hours,
+    minutes,
+    chefHatCount,
+    descriptions,
+    inputs,
+    dishImageUri,
+  } = route.params;
 
   //   console.log(inputs);
   const handleStepByStepMode = () => {
     navigation.navigate("StepByStepMode", {
+      dishName,
+      hours,
+      minutes,
+      chefHatCount,
+      descriptions,
+      inputs,
+      dishImageUri,
+    });
+  };
+  const handlePublishButton = () => {
+    navigation.navigate("Done", {
       dishName,
       hours,
       minutes,
@@ -54,11 +74,11 @@ const Review = ({ navigation }) => {
       <View style={styles.top}></View>
       <Text style={styles.title}>{dishName}</Text>
       <View style={styles.DishPicture}>
-      {dishImageUri ? (
-        <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
-      ) : (
-        <Text>No file included</Text>
-      )}
+        {dishImageUri ? (
+          <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
+        ) : (
+          <Text>No file included</Text>
+        )}
       </View>
       <View style={styles.time}>
         <Text style={styles.heading}>Time</Text>
@@ -107,10 +127,7 @@ const Review = ({ navigation }) => {
           ))}
         </View>
       </View>
-      <Button
-        style={styles.nextButton}
-        onPress={() => navigation.navigate("Done")}
-      >
+      <Button style={styles.nextButton} onPress={handlePublishButton}>
         Publish
       </Button>
     </ScrollView>

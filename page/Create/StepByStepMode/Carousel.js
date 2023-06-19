@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import React, { useRef, useState } from "react";
-
+import { firebase } from "../../../config";
 export const SLIDER_WIDTH = Dimensions.get("window").width + 30;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 

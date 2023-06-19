@@ -15,6 +15,8 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { firebase } from "../../config";
+
 // import "react-native-gesture-handler";
 
 const AddScreen = ({ navigation }) => {
