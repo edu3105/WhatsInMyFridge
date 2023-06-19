@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
   Image,
   TouchableWithoutFeedback,
   Animated,
   Easing,
+  ImageBackground,
 } from "react-native";
 import {
   NativeBaseProvider,
   HStack,
   IconButton,
   Box,
+  Button,
   Avatar,
   ScrollView,
   VStack,
@@ -20,6 +23,7 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Touchable } from "react-native";
 // import "react-native-gesture-handler";
 // import SettingsPage from "./SettingsPage.js";
 
@@ -52,25 +56,49 @@ export default function SettingsScreen() {
       maxHeight: 300,
     };
 
-    // ImagePicker.launchImageLibrary(options, response => {
-    //   if (response.didCancel) {
-    //     console.log('User cancelled image picker');
-    //   } else if (response.errorMessage) {
-    //     console.log('ImagePicker Error: ', response.errorMessage);
-    //   } else if (response.uri) {
-    //     setAvatarSource({ uri: response.uri });
-    //   }
-    // });
+    //navigation.navigate("Edit Profile");
   };
 
   const [isDraftButtonFocused, setIsDraftButtonFocused] = useState(true);
   const [isUploadButtonFocused, setIsUploadButtonFocused] = useState(false);
-
+  useEffect(() => {
+    handleDraftRecipePress();
+  }, []); // Add this useEffect block
   const handleDraftRecipePress = () => {
     console.log("Draft_pressed");
     setActiveTab("draft");
     setIsDraftButtonFocused(true);
     setIsUploadButtonFocused(false);
+    setContent([
+      {
+        title: "Drafted Recipe 1",
+        creator: "John",
+        time: "30 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+      {
+        title: "Drafted Recipe 2",
+        creator: "John2",
+        time: "40 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+      {
+        title: "Drafted Recipe 3",
+        creator: "John3",
+        time: "50 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+      {
+        title: "Drafted Recipe 4",
+        creator: "John4",
+        time: "60 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+    ]);
   };
 
   const handleUploadRecipePress = () => {
@@ -78,27 +106,46 @@ export default function SettingsScreen() {
     setActiveTab("upload");
     setIsDraftButtonFocused(false);
     setIsUploadButtonFocused(true);
+    setContent([
+      {
+        title: "Upload Recipe 1",
+        creator: "Johna",
+        time: "30 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+      {
+        title: "Upload Recipe 2",
+        creator: "Johnb",
+        time: "40 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+      {
+        title: "Upload Recipe 3",
+        creator: "Johnc",
+        time: "50 min",
+        imageSource:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+      },
+    ]);
   };
 
   const [activeTab, setActiveTab] = useState("draft");
 
-  const [buttonOpacity] = useState(new Animated.Value(0));
+  //const scrollViewRef = useRef(null);
 
-  useEffect(() => {
-    Animated.timing(buttonOpacity, {
-      toValue: isDraftButtonFocused || isUploadButtonFocused ? 1 : 0,
-      duration: 300,
-      easing: Easing.ease,
-      useNativeDriver: true,
-    }).start();
-  }, [isDraftButtonFocused, isUploadButtonFocused]);
+  const [content, setContent] = useState(["Check", "Check2", "Check3"]);
+  // useEffect(() => {
+  //   scrollViewRef.current.scrollToEnd({ animated: true });
+  // }, [content]);
 
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
-        <HStack>
-          <Box>
-            <TouchableWithoutFeedback onPress={handleAvatarPress}>
+        <VStack>
+          <HStack>
+            <TouchableOpacity onPress={handleAvatarPress}>
               <Avatar
                 style={styles.profilePicture}
                 size="sm"
@@ -106,216 +153,102 @@ export default function SettingsScreen() {
                 alt="Avatar"
                 mr={2}
               />
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
             <Text style={styles.profileName}>{username}</Text>
             <Text style={styles.profileRecipe}>Recipes</Text>
-            <IconButton
-              icon={<Ionicons name="bar-chart-outline" size={30} />}
-              style={styles.stats}
+
+            <TouchableOpacity onPress={handleStatPress} style={styles.stats}>
+              <Ionicons
+                name="podium-outline"
+                size={40}
+                variant="unstyled"
+                colorScheme="gray"
+              />
+            </TouchableOpacity>
+          </HStack>
+        </VStack>
+        <VStack>
+          <View style={styles.centeredContainer}>
+            <HStack>
+              <TouchableOpacity onPress={handleDraftRecipePress}>
+                <View
+                  style={[
+                    styles.draft_button,
+                    isDraftButtonFocused && styles.focusedButton,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.draftedRecipeText,
+                      isDraftButtonFocused && styles.focusedText,
+                    ]}
+                  >
+                    Drafted Recipe
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleUploadRecipePress}>
+                <View
+                  style={[
+                    styles.upload_button,
+                    isUploadButtonFocused && styles.focusedButton,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.uploadedRecipeText,
+                      isUploadButtonFocused && styles.focusedText,
+                    ]}
+                  >
+                    Uploaded Recipe
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </HStack>
+          </View>
+        </VStack>
+
+        <VStack style={{ marginTop: 250, flexGrow: 1 }}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContainer}
+            //ref={scrollViewRef}
+            showsVerticalScrollIndicator={false}
+          >
+            {content.map((item, index) => (
+              <TouchableOpacity>
+                <View key={index} style={styles.box}>
+                  <Text style={styles.boxContent_header}>{item.title}</Text>
+                  <Text style={styles.boxContent_creator}>{item.creator}</Text>
+                  <Text style={styles.boxContent_time}> {item.time}</Text>
+                  <ImageBackground
+                    style={styles.boxContent_image}
+                    source={{ uri: item.imageSource }}
+                  />
+                  {/* {index === content.length - 1 && (
+                    <View
+                      style={{ position: "absolute", bottom: 10 }} // Position the view at the bottom of the last box
+                      onLayout={() => {
+                        // Scroll to the bottom of the ScrollView once the last box has been rendered
+                        scrollViewRef.current?.scrollToEnd({ animated: true });
+                      }}
+                    />
+                  )} */}
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </VStack>
+
+        <HStack position="absolute" top={0} right={0} m={4}>
+          <TouchableOpacity onPress={handleSettingsPress}>
+            <Ionicons
+              name="settings-outline"
+              size={30}
               variant="unstyled"
               colorScheme="gray"
-              onPress={handleStatPress}
             />
-          </Box>
+          </TouchableOpacity>
         </HStack>
-      </View>
-
-      <HStack position="absolute" top={0} right={0} m={4}>
-        <IconButton
-          icon={<Ionicons name="settings-outline" size={24} />}
-          onPress={handleSettingsPress}
-          variant="unstyled"
-          colorScheme="gray"
-        />
-      </HStack>
-
-      <View style={styles.centeredContainer}>
-        <HStack>
-          <TouchableWithoutFeedback onPress={handleDraftRecipePress}>
-            <Animated.View
-              style={[
-                styles.draft_button,
-                isDraftButtonFocused && styles.focusedButton,
-                { opacity: buttonOpacity },
-              ]}
-            >
-              <Animated.Text
-                style={[
-                  styles.draftedRecipeText,
-                  isDraftButtonFocused && styles.focusedText,
-                ]}
-              >
-                Drafted Recipe
-              </Animated.Text>
-            </Animated.View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={handleUploadRecipePress}>
-            <Animated.View
-              style={[
-                styles.upload_button,
-                isUploadButtonFocused && styles.focusedButton,
-                { opacity: buttonOpacity },
-              ]}
-            >
-              <Animated.Text
-                style={[
-                  styles.uploadedRecipeText,
-                  isUploadButtonFocused && styles.focusedText,
-                ]}
-              >
-                Uploaded Recipe
-              </Animated.Text>
-            </Animated.View>
-          </TouchableWithoutFeedback>
-        </HStack>
-      </View>
-
-      <View style={styles.shared_draft}>
-        <ScrollView
-          nestedScrollEnabled={true}
-          vertical={true}
-          style={{ flexDirection: "column" }}
-          //bg="coolGray.300"
-          showsVerticalScrollIndicator={false}
-          mx="5"
-          mt="3"
-          w={375}
-          h={300}
-        >
-          {activeTab === "draft" && (
-            <>
-              {/* Drafted Recipe content */}
-              <Box
-                alignSelf="center"
-                bg="white"
-                w="100%"
-                h={200}
-                my="2"
-                borderRadius={8}
-              >
-                {/* Content for Drafted Recipe */}
-                <View style={styles.boxContent}>
-                  <Text style={styles.header_title}>AYAM KFC</Text>
-                  <Text style={styles.body}>
-                    Fried chicken, also known as Southern fried chicken, is a
-                    dish consisting of chicken pieces that have been coated with
-                    seasoned flour or batter and pan-fried chicken while
-                    retaining.....
-                  </Text>
-                </View>
-              </Box>
-
-              {/* Add more draft recipe boxes here */}
-
-              <Box
-                alignSelf="center"
-                bg="white"
-                w="100%"
-                h={200}
-                my="2"
-                borderRadius={8}
-              >
-                {/* Content for Drafted Recipe */}
-                <View style={styles.boxContent}>
-                  <Text style={styles.header_title}>AYAM KFC2</Text>
-                  <Text style={styles.body}>
-                    Fried chicken, also known as Southern fried chicken, is a
-                    dish consisting of chicken pieces that have been coated with
-                    seasoned flour or batter and pan-fried chicken while
-                    retaining.....
-                  </Text>
-                </View>
-              </Box>
-
-              <Box
-                alignSelf="center"
-                bg="white"
-                w="100%"
-                h={200}
-                my="2"
-                borderRadius={8}
-              >
-                {/* Content for Drafted Recipe */}
-                <View style={styles.boxContent}>
-                  <Text style={styles.header_title}>AYAM KFC3</Text>
-                  <Text style={styles.body}>
-                    Fried chicken, also known as Southern fried chicken, is a
-                    dish consisting of chicken pieces that have been coated with
-                    seasoned flour or batter and pan-fried chicken while
-                    retaining.....
-                  </Text>
-                </View>
-              </Box>
-            </>
-          )}
-
-          {activeTab === "upload" && (
-            <>
-              {/* Uploaded Recipe content */}
-              <Box
-                alignSelf="center"
-                bg="white"
-                w="100%"
-                h={200}
-                my="2"
-                borderRadius={8}
-              >
-                {/* Content for Uploaded Recipe */}
-                <View style={styles.boxContent}>
-                  <Text style={styles.header_title}>AYAM MCD</Text>
-                  <Text style={styles.body}>
-                    Fried chicken, also known as Southern fried chicken, is a
-                    dish consisting of chicken pieces that have been coated with
-                    seasoned flour or batter and pan-fried chicken while
-                    retaining.....
-                  </Text>
-                </View>
-              </Box>
-
-              {/* Add more uploaded recipe boxes here */}
-
-              <Box
-                alignSelf="center"
-                bg="white"
-                w="100%"
-                h={200}
-                my="2"
-                borderRadius={8}
-              >
-                {/* Content for Uploaded Recipe */}
-                <View style={styles.boxContent}>
-                  <Text style={styles.header_title}>AYAM MCD2</Text>
-                  <Text style={styles.body}>
-                    Fried chicken, also known as Southern fried chicken, is a
-                    dish consisting of chicken pieces that have been coated with
-                    seasoned flour or batter and pan-fried chicken while
-                    retaining.....
-                  </Text>
-                </View>
-              </Box>
-
-              <Box
-                alignSelf="center"
-                bg="white"
-                w="100%"
-                h={200}
-                my="2"
-                borderRadius={8}
-              >
-                {/* Content for Uploaded Recipe */}
-                <View style={styles.boxContent}>
-                  <Text style={styles.header_title}>AYAM MCD3</Text>
-                  <Text style={styles.body}>
-                    Fried chicken, also known as Southern fried chicken, is a
-                    dish consisting of chicken pieces that have been coated with
-                    seasoned flour or batter and pan-fried chicken while
-                    retaining.....
-                  </Text>
-                </View>
-              </Box>
-            </>
-          )}
-        </ScrollView>
       </View>
     </NativeBaseProvider>
   );
@@ -324,6 +257,8 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    //borderWidth: 1,
+    //height: "auto",
   },
   profilePicture: {
     position: "absolute",
@@ -356,16 +291,18 @@ const styles = StyleSheet.create({
 
   stats: {
     position: "absolute",
-    top: 65,
-    left: 350,
+    top: 70,
+    left: 325,
+    //borderWidth: 1,
   },
 
   centeredContainer: {
-    flex: 1,
+    //flex: 1,
     position: "absolute",
     left: 57,
     textAlign: "center",
     top: 170,
+    //borderWidth: 1,
   },
 
   draft_button: {
@@ -375,6 +312,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     right: 10,
+    backgroundColor: "transparent",
   },
 
   upload_button: {
@@ -415,19 +353,63 @@ const styles = StyleSheet.create({
   },
   body: {},
 
-  boxContent: {
+  scroll: {
+    //top: 700,
+    //flexDirection: "column",
+    //borderWidth: 1,
+    //borderColor: "red",
+    //top: 300,
+    // height: "auto",
+    // width: "auto",
+    //display: "none",
+  },
+
+  boxContent_header: {
     flex: 1,
-    padding: 10,
+    top: 160,
     margin: 15,
-    marginLeft: 125,
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+
+  boxContent_creator: {
+    //flex: 1,
+    margin: 15,
+    top: 55,
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  boxContent_time: {
+    //flex: 1,
+    margin: 15,
+    top: 0,
+    left: 225,
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  boxContent_image: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+    marginTop: 10,
+    zIndex: -1,
+    resizeMode: "cover",
   },
 
   shared_draft: {
-    flex: 1,
-
+    //flex: 1,
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -350,
+    //marginTop: -700,
+    //top: 700,
+    //bottom: 300,
   },
 
   focusedButton: {
@@ -437,5 +419,26 @@ const styles = StyleSheet.create({
 
   focusedText: {
     color: "white",
+  },
+
+  scrollViewContainer: {
+    //borderWidth: 1,
+    paddingBottom: 50, // Adjust the bottom padding if needed
+    flexGrow: 1,
+    display: "flex",
+    borderColor: "green",
+  },
+  box: {
+    alignSelf: "center",
+    backgroundColor: "gray",
+
+    width: "80%",
+    height: 250,
+    marginVertical: 10,
+    borderRadius: 8,
+    //alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+    position: "relative",
   },
 });

@@ -176,7 +176,8 @@ const getHeaderVisibility = (route) => {
     routeName == "Change Password" ||
     routeName == "FAQ" ||
     routeName == "About Us" ||
-    routeName == "Steps"
+    routeName == "Steps" ||
+    routeName == "Stats"
   ) {
     return false;
   }
