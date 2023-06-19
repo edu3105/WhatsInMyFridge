@@ -4,21 +4,11 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ImageBackground,
+  Image,
   Keyboard,
 } from "react-native";
-import {
-  NativeBaseProvider,
-  HStack,
-  IconButton,
-  Box,
-  Button,
-} from "native-base";
-import { Ionicons } from "@expo/vector-icons";
+import { NativeBaseProvider, Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/native";
-import { firebase } from "../../../config";
-import { useEffect } from "react";
 // import "react-native-gesture-handler";
 
 const Done = ({ navigation }) => {
@@ -77,9 +67,7 @@ const Done = ({ navigation }) => {
       <View style={styles.screen}>
         <Text>Recipe Created</Text>
         <Text>Created recipes can be viewed in your</Text>
-        <Text> hello, {name.firstName}</Text>
         <Button onPress={() => navigation.navigate("Profile")}>Profile</Button>
-        <Button onPress={addMyRecipe}>Add data</Button>
       </View>
     </NativeBaseProvider>
   );
@@ -87,4 +75,29 @@ const Done = ({ navigation }) => {
 
 export default Done;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  gifcontainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontWeight: "bold",
+    // fontSize: 20,
+  },
+  profilebutton: {
+    backgroundColor: "#9474ff",
+    marginHorizontal: 100,
+    marginTop: 20,
+    width: 100,
+  },
+  gif: {
+    width: 200,
+    height: 200,
+  },
+});

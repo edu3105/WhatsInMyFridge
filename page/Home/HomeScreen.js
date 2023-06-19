@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
@@ -21,10 +21,12 @@ import BigBox from "./IngredientsBox/bigBox";
 import Recipes from "./Recipes";
 
 export default function HomeScreen() {
+  const [searchIngredients, setSearchIngredients] = useState("");
+
   return (
     <NativeBaseProvider>
       <ScrollView vertical={true}>
-        <SearchBar />
+        <SearchBar setSearchIngredients={setSearchIngredients} />
 
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -40,7 +42,7 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
 
-        <BigBox />
+        <BigBox searchIngredients={searchIngredients} />
 
         <ScrollView horizontal={true}>
           <HStack space={2} overflow="scroll" px={10}>

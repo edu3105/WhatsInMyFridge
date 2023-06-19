@@ -249,6 +249,7 @@ const BasicInfo = () => {
             <Button
               colorScheme="secondary"
               onPress={() => handleExplorePress("center")}
+              style={styles.addingrbutton}
             >
               Add Ingredients
             </Button>
@@ -380,7 +381,7 @@ const styles = StyleSheet.create({
   nextButton: {
     marginLeft: 15,
     marginRight: 15,
-    marginTop: 20,
+    marginTop: 30,
     marginBottom: 50,
     backgroundColor: "#9747ff",
   },
@@ -397,5 +398,8 @@ const styles = StyleSheet.create({
     width: 180,
     marginTop: -10,
     backgroundColor: "#9747ff",
+  },
+  addingrbutton: {
+    backgroundColor: "#9474ff",
   },
 });
