@@ -25,7 +25,7 @@ const AddScreen = ({ navigation }) => {
           source={require("../../assets/Create/FeatherPen2.png")}
           style={styles.image}
         />
-        <Button onPress={() => navigation.navigate("Basic Information")}>
+        <Button style={styles.startwritingbutton} onPress={() => navigation.navigate("Basic Information") }>
           Start Writing
         </Button>
       </View>
@@ -70,4 +70,7 @@ const styles = StyleSheet.create({
 
     //  position: "absolute",
   },
+  startwritingbutton: {
+    backgroundColor: "#9474ff",
+  }
 });

@@ -20,7 +20,7 @@ import {
   getData,
   deleteAllData,
 } from "../../api/Data/ingredientsData.js";
-import ingredientDb from "../../../assets/ingredientsList/ingredientsDb.js";
+import ingredientDb from "../../../database/ingredientsDb.js";
 import Autocomplete from "react-native-autocomplete-input";
 import { loadFonts } from "../../../fonts.js";
 
