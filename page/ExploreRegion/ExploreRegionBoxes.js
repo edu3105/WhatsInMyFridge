@@ -5,6 +5,7 @@ import {
   View,
   Dimensions,
   ImageBackground,
+  Pressable,
 } from "react-native";
 import {
   NativeBaseProvider,
@@ -14,41 +15,43 @@ import {
   VStack,
 } from "native-base";
 
-export default function MainBoxes() {
+export default function MainBoxes({ navigation }) {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
     <NativeBaseProvider>
       <VStack space={10} marginTop={5}>
         <Center>
-          <Box
-            width="90%"
-            height={100}
-            borderRadius={10}
-            overflow="hidden"
-            marginBottom={7}
-          >
-            <ImageBackground
-              source={{
-                uri: "https://img.cdn4dd.com/cdn-cgi/image/fit=cover,width=600,height=400,format=auto,quality=70/https://doordash-static.s3.amazonaws.com/media/store/header/225978.jpg",
-              }}
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+          <Pressable onPress={() => navigation.navigate("RegionPage")}>
+            <Box
+              width={370}
+              height={100}
+              borderRadius={10}
+              overflow="hidden"
+              marginBottom={7}
             >
-              <Text
+              <ImageBackground
+                source={{
+                  uri: "https://img.cdn4dd.com/cdn-cgi/image/fit=cover,width=600,height=400,format=auto,quality=70/https://doordash-static.s3.amazonaws.com/media/store/header/225978.jpg",
+                }}
                 style={{
-                  fontSize: 70,
-                  fontWeight: "bold",
-                  color: "rgba(255, 255, 255, 0.8)",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                ASIAN
-              </Text>
-            </ImageBackground>
-          </Box>
+                <Text
+                  style={{
+                    fontSize: 70,
+                    fontWeight: "bold",
+                    color: "rgba(255, 255, 255, 0.8)",
+                  }}
+                >
+                  ASIAN
+                </Text>
+              </ImageBackground>
+            </Box>
+          </Pressable>
           <Box
             width="90%"
             height={100}

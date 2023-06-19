@@ -15,6 +15,7 @@ import ExploreRatingScreen from "./page/ExploreRating/ExploreRatingScreen";
 import RecipeScreen from "./page/RecipePage/RecipeScreen";
 import RecipeSteps from "./page/RecipePage/RecipeSteps";
 import RecipeDone from "./page/RecipePage/RecipeDone";
+import RegionPage from "./page/ExploreRegion/ExploreRegionList";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import {
   FontAwesome,
@@ -169,6 +170,18 @@ const ExploretoRecipe = () => {
             component={RecipeDone}
             options={{
               headerTitle: "Cheeseburger",
+              headerTitleAlign: "center",
+            }}
+          />
+        </Stack.Group>
+
+        <Stack.Group>
+          <Stack.Screen name="ExploreRegion" component={ExploreRegionScreen} />
+          <Stack.Screen
+            name="RegionPage"
+            component={RegionPage}
+            options={{
+              headerTitle: "ASIAN",
               headerTitleAlign: "center",
             }}
           />
