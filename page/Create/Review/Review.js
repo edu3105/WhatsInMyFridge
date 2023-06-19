@@ -92,17 +92,13 @@ const Review = ({ navigation }) => {
       <View style={styles.Steps}>
         <Text style={styles.heading}>Steps</Text>
         <View style={styles.textBox}>
-          <Button
-            onPress={handleStepByStepMode}
-            style={styles.StepByStepModeButton}
-          >
+          <Button onPress={handleStepByStepMode} style={styles.StepByStepModeButton}>
             Step By Step Mode
           </Button>
           {inputs.map((inputValue, index) => (
             <View key={index} style={styles.StepsTextContainer}>
-              <Text style={styles.StepsText}>
-                {`${index + 1}. ${inputValue.text}`}
-              </Text>
+              <Text style={styles.StepNumber}>{`${index + 1}.`}</Text>
+              <Text style={styles.StepsText}>{inputValue.text}</Text>
             </View>
           ))}
         </View>
@@ -230,6 +226,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginTop: 20,
     marginBottom: 50,
+    backgroundColor: "#9474ff",
   },
   difficulty: {},
   textBox: {
@@ -247,12 +244,24 @@ const styles = StyleSheet.create({
   },
   StepsText: {
     lineHeight: 22,
+    paddingRight: -100,
   },
   StepsTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     marginVertical: 4,
   },
+  StepNumber: {
+    marginRight: 8,
+    fontWeight: 'normal',
+  },
+  StepsText: {
+    flex: 1,
+    lineHeight: 19,
+  },  
   StepByStepModeButton: {
     width: 150,
     alignContent: "center",
+    backgroundColor: "#9474ff",
   },
 });
