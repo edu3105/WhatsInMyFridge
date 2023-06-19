@@ -90,6 +90,7 @@ import { StatusBar } from "expo-status-bar";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import React, { useRef, useState } from "react";
+import { firebase } from "../../../config";
 import { TextInput } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -112,9 +113,9 @@ const StepByStepMode = () => {
     for (let i = 1; i <= inputs.length; i++) {
       dataArray.push({
         id: i,
-        name: `${i}. ` + inputs[i-1].text,
-        url: inputs[i-1].imageUri,
-      }); 
+        name: `${i}. ` + inputs[i - 1].text,
+        url: inputs[i - 1].imageUri,
+      });
     }
 
     return dataArray;
@@ -127,7 +128,6 @@ const StepByStepMode = () => {
       <View style={styles.slideContainer}>
         <Image source={{ uri: item.url }} style={styles.slideImage} />
         <Text style={styles.slideText}>{item.name}</Text>
-        
       </View>
     );
   };

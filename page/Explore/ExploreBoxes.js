@@ -31,7 +31,7 @@ const theme = extendTheme({
   },
 });
 
-title = "Daddy's Chicken";
+title = "Cheeseburger";
 
 function addLineBreaks(text) {
   const words = text.split(" ");
@@ -46,7 +46,7 @@ function addLineBreaks(text) {
 }
 
 const body =
-  "Fried chicken, also known as Southern fried chicken, is a dish consisting of chicken pieces that have been coated with seasoned flour or batter and..";
+  "A cheeseburger is a hamburger with a slice of melted cheese on top of the meat patty, added near the end of the cooking time";
 
 const bodyWithLineBreaks = addLineBreaks(body);
 
@@ -83,7 +83,7 @@ export default function MainBoxes({ navigation }) {
                   <Image
                     rounded="md"
                     source={{
-                      uri: "https://media.istockphoto.com/id/477596753/photo/homemade-southern-fried-chicken.jpg?s=612x612&w=0&k=20&c=8b_5KjKmmO34ChsqVZN4-1YlDXyVJNlKh3w6qtVjR88=",
+                      uri: "https://img.hellofresh.com/f_auto,fl_lossy,q_auto,w_1200/hellofresh_s3/image/juicy-cheeseburger-pack-cea71279.jpg",
                     }}
                     alt="Alternate Text"
                     size="xl"

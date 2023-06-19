@@ -1,29 +1,74 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Keyboard,
+} from "react-native";
 import { NativeBaseProvider, Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
+// import "react-native-gesture-handler";
+import { firebase } from "../../../config";
 
 const Done = ({ navigation }) => {
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = firebase
+    .firestore()
+    .collection(`/users/${user.uid}/myRecipes`);
+
+  const route = useRoute();
+  const {
+    dishName,
+    hours,
+    minutes,
+    chefHatCount,
+    descriptions,
+    inputs,
+    dishImageUri,
+  } = route.params;
+
+  //coba-coba
+  const [name, setName] = useState("");
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          setName(snapshot.data());
+        } else {
+          console.log("Users doesnt exist");
+        }
+      }, []);
+  });
+  //----------------------------------
+
+  const addMyRecipe = () => {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    const recipeData = {
+      DishName: dishName,
+      duration: [hours, minutes],
+      diffculty: chefHatCount + 1,
+      desc: descriptions,
+      steps: inputs,
+      createdAt: timestamp,
+      dishImage: dishImageUri,
+    };
+    recipeDataRef.add(recipeData).catch((error) => {
+      alert(error);
+    });
+  };
+
   return (
     <NativeBaseProvider>
       <View style={styles.screen}>
-        <View style={styles.gifcontainer}>
-          <Image
-            source={{
-              uri: "https://media.tenor.com/0AVbKGY_MxMAAAAM/check-mark-verified.gif",
-            }}
-            alt="Check Mark GIF"
-            style={styles.gif}
-          />
-        </View>
-        <Text style={styles.text}>RECIPE CREATED</Text>
-        <Text style={styles.text}>You can see the created recipe in your profile</Text>
-        <Button
-          style={styles.profilebutton}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          Profile
-        </Button>
+        <Text>Recipe Created</Text>
+        <Text>Created recipes can be viewed in your</Text>
+        <Button onPress={() => navigation.navigate("Profile")}>Profile</Button>
       </View>
     </NativeBaseProvider>
   );

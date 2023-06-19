@@ -33,10 +33,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import AddButton from "../../Home/IngredientsBox/addButton";
 import { useNavigation } from "@react-navigation/native";
-var ImagePicker = require('expo-image-picker');
-import { Asset } from 'expo-asset';
-//handle imagepicker
+var ImagePicker = require("expo-image-picker");
+import { Asset } from "expo-asset";
+import { firebase } from "../../../config";
 
+//handle imagepicker
 
 import { Platform } from "react-native";
 // import { Picker, DatePicker } from "react-native-wheel-pick";
@@ -56,6 +57,7 @@ const BasicInfo = () => {
     });
   };
   //---------------------------------------------
+
   const [dishName, setDishName] = useState("");
   const [descriptions, setDescriptions] = useState("");
   const [duration, setDuration] = useState({ hours: 0, minutes: 0 });
@@ -104,19 +106,20 @@ const BasicInfo = () => {
   };
 
   const handleImagePicker = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-  
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
     if (permissionResult.granted === false) {
-      alert('Permission to access the camera roll is required!');
+      alert("Permission to access the camera roll is required!");
       return;
     }
-  
+
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
-  
+
     if (pickerResult.canceled === true) {
       return;
     }
-  
+
     setDishImageUri(pickerResult.assets[0].uri);
     setIsImageSelected(true);
     setShowReplaceButton(true);
@@ -127,23 +130,19 @@ const BasicInfo = () => {
       <View style={styles.top}></View>
       <Text style={styles.heading}>Dish Picture</Text>
       <View style={styles.DishPicture}>
-      {dishImageUri ? (
-        <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
-      ) : (
-        <Button onPress={handleImagePicker} style={styles.selectImageButton}>
-          <Text style={styles.buttonTextimage}>
-            Add Picture +
-          </Text>
-        </Button>
-      )}
+        {dishImageUri ? (
+          <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
+        ) : (
+          <Button onPress={handleImagePicker} style={styles.selectImageButton}>
+            <Text style={styles.buttonTextimage}>Add Picture +</Text>
+          </Button>
+        )}
 
-      {showReplaceButton && (
-        <Button onPress={handleImagePicker} style={styles.replaceImageButton}>
-          <Text style={styles.buttonTextimage}>
-            Replace Image
-          </Text>
-        </Button>
-      )}
+        {showReplaceButton && (
+          <Button onPress={handleImagePicker} style={styles.replaceImageButton}>
+            <Text style={styles.buttonTextimage}>Replace Image</Text>
+          </Button>
+        )}
       </View>
 
       <View style={styles.DishName}>
@@ -402,5 +401,5 @@ const styles = StyleSheet.create({
   },
   addingrbutton: {
     backgroundColor: "#9474ff",
-  }
+  },
 });
