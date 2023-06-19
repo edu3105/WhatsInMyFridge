@@ -13,6 +13,7 @@ import {
   Pressable,
   Button,
   Modal,
+  Flex,
 } from "native-base";
 import {
   onSubmit,
@@ -21,6 +22,7 @@ import {
 } from "../../api/Data/ingredientsData.js";
 import ingredientDb from "../../../assets/ingredientsList/ingredientsDb.js";
 import Autocomplete from "react-native-autocomplete-input";
+import { loadFonts } from "../../../fonts.js";
 
 const addButton = ({ setIngredients }) => {
   // Accept setIngredients as a prop
@@ -119,12 +121,38 @@ const addButton = ({ setIngredients }) => {
     deleteAllData(setIngredients);
   };
 
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadCustomFonts = async () => {
+      await loadFonts();
+      setFontLoaded(true);
+    };
+
+    loadCustomFonts();
+  }, []);
+
+  //   useEffect(() => {
+  //     // Load the Poppins Medium 500 font
+  //     const loadCustomFonts = async () => {
+  //       await loadFonts();
+  //     };
+
+  //     loadCustomFonts();
+  //   }, []);
+
+  if (!fontLoaded) {
+    return <View />; // Render an empty view while the font is loading
+  }
+
   return (
     <NativeBaseProvider>
       <Box alignItems="center" mt="3">
         <Button
-          colorScheme="secondary"
+          colorScheme="purple"
           onPress={() => handleExplorePress("center")}
+          _text={{ fontFamily: "Poppins-Medium" }}
+          _pressed={{ backgroundColor: "#9747FF" }}
         >
           Add Ingredients
         </Button>
@@ -132,10 +160,14 @@ const addButton = ({ setIngredients }) => {
       <Modal isOpen={isOpen} onClose={handleClose}>
         <Modal.Content {...styles[placement]}>
           <Modal.CloseButton />
-          <Modal.Header>Add Ingredients</Modal.Header>
+          <Modal.Header _text={{ fontFamily: "Poppins-Medium" }}>
+            Add Ingredients
+          </Modal.Header>
           <Modal.Body>
             <Box p="4">
-              <Text>Ingredients Name:</Text>
+              <Text style={{ fontFamily: "Poppins-Medium" }}>
+                Ingredients Name:
+              </Text>
               <Autocomplete
                 // placeholder="Name"
                 // onChangeText={handleNameChange}
@@ -152,47 +184,71 @@ const addButton = ({ setIngredients }) => {
                   keyboardShouldPersistTaps: "always",
                   renderItem: ({ item }) => (
                     <TouchableOpacity onPress={() => handleNameChange(item)}>
-                      <Text label={item} value={item}>
+                      <Text
+                        label={item}
+                        value={item}
+                        style={{ fontFamily: "Poppins-Medium" }}
+                      >
                         {item}
                       </Text>
                     </TouchableOpacity>
                   ),
                 }}
+                _text={{ fontFamily: "Poppins-Medium" }}
               />
-              <Text>Quantity:</Text>
+              <Text style={{ fontFamily: "Poppins-Medium" }}>Quantity:</Text>
+
               <Box justifyContent="space-between" alignItems="center">
-                <Button
-                  style={{ width: "25%" }}
-                  m="2"
-                  onPress={handleDecrement}
-                >
-                  -
-                </Button>
-                <Input
-                  value={count.toString()}
-                  onChangeText={handleCountChange}
-                  keyboardType="numeric"
-                  textAlign="center"
-                />
-                <Button
-                  style={{ width: "25%" }}
-                  m="2"
-                  onPress={handleIncrement}
-                >
-                  +
-                </Button>
-                <Text></Text>
+                <Flex direction="row">
+                  <Button
+                    style={{ width: "25%", fontFamily: "Poppins-Bold" }}
+                    width="10%"
+                    mx="1"
+                    my="3"
+                    onPress={handleDecrement}
+                  >
+                    test
+                  </Button>
+                  <Input
+                    value={count.toString()}
+                    onChangeText={handleCountChange}
+                    keyboardType="numeric"
+                    textAlign="center"
+                    width="40%"
+                    my="2"
+                    style={{ width: "75%" }}
+                    _text={{ fontFamily: "Poppins-Medium" }}
+                  />
+                  <Button
+                    style={{ width: "25%", fontFamily: "Poppins-Medium" }}
+                    width="10%"
+                    mx="1"
+                    my="3"
+                    onPress={handleIncrement}
+                  >
+                    +
+                  </Button>
+                  <Text></Text>
+                </Flex>
               </Box>
-              <Button mt="3" onPress={handleSubmit}>
-                Submit
+
+              <Button
+                mt="3"
+                onPress={handleSubmit}
+                _text={{ fontFamily: "Poppins-Medium" }}
+                colorScheme="purple"
+              >
+                Add/Submit
               </Button>
             </Box>
           </Modal.Body>
         </Modal.Content>
       </Modal>
-      <Button title="Delete All Ingredients" onPress={handleDeleteAll}>
-        Delete All
-      </Button>
+      <Box alignItems="center" mt="1">
+        <Button title="Delete All Ingredients" onPress={handleDeleteAll}>
+          Delete All
+        </Button>
+      </Box>
     </NativeBaseProvider>
   );
 };
