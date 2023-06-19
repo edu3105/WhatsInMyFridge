@@ -35,6 +35,10 @@ import { useRoute } from "@react-navigation/native";
 import { firebase } from "../../../config";
 
 const Review = ({ navigation }) => {
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = firebase
+    .firestore()
+    .collection(`/users/${user.uid}/myRecipes`);
   const route = useRoute();
   const {
     dishName,
@@ -58,15 +62,26 @@ const Review = ({ navigation }) => {
       dishImageUri,
     });
   };
-  const handlePublishButton = () => {
+  const handlePublishButton = async () => {
+    await addMyRecipe(); // Upload the recipe data first
     navigation.navigate("Done", {
-      dishName,
-      hours,
-      minutes,
-      chefHatCount,
-      descriptions,
       inputs,
-      dishImageUri,
+    });
+  };
+
+  const addMyRecipe = () => {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    const recipeData = {
+      DishName: dishName,
+      duration: [hours, minutes],
+      diffculty: chefHatCount + 1,
+      desc: descriptions,
+      steps: inputs,
+      createdAt: timestamp,
+      dishImage: dishImageUri,
+    };
+    recipeDataRef.add(recipeData).catch((error) => {
+      alert(error);
     });
   };
   return (
@@ -112,7 +127,10 @@ const Review = ({ navigation }) => {
       <View style={styles.Steps}>
         <Text style={styles.heading}>Steps</Text>
         <View style={styles.textBox}>
-          <Button onPress={handleStepByStepMode} style={styles.StepByStepModeButton}>
+          <Button
+            onPress={handleStepByStepMode}
+            style={styles.StepByStepModeButton}
+          >
             Step By Step Mode
           </Button>
           {inputs.map((inputValue, index) => (
@@ -264,18 +282,18 @@ const styles = StyleSheet.create({
     paddingRight: -100,
   },
   StepsTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginVertical: 4,
   },
   StepNumber: {
     marginRight: 8,
-    fontWeight: 'normal',
+    fontWeight: "normal",
   },
   StepsText: {
     flex: 1,
     lineHeight: 19,
-  },  
+  },
   StepByStepModeButton: {
     width: 150,
     alignContent: "center",
