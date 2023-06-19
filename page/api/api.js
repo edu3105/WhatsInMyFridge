@@ -14,7 +14,7 @@ const recipePage = {
     ingredients: [],
 };
 
-
+//spoonacular api
 function fetchRecipeByIngredients(ingredientList) {
     const ls = ingredientList.join(",+");
     var url = `${baseUrl}/recipes/findByIngredients?apiKey=${key}&ingredients=${ls}`;
@@ -63,6 +63,10 @@ export function fetchRecipeById(recipeId){
         return recipe;
     });
 }
+
+
+
+
 
 
 const createIngredient = (name, amount) => ({

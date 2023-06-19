@@ -2,13 +2,14 @@
 import React from "react";
 import { NativeBaseProvider } from "native-base";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import BasicInfo from "./BasicInfo/BasicInfo";
 import AddScreen from "./CreateRecipes";
 import Steps from "./Steps/steps1";
 import Review from "./Review/Review";
 import StepByStepMode from "./StepByStepMode/Carousel";
 import Done from "./Done/Done";
+import { firebase } from "../../config";
+
 const Stack = createStackNavigator(); // creates object for Stack Navigator
 
 const Create_BasicInfo = () => {

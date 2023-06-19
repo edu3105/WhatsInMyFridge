@@ -32,10 +32,23 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import AddButton from "../../Home/IngredientsBox/addButton";
 import { useRoute } from "@react-navigation/native";
+import { firebase } from "../../../config";
+
 const Review = ({ navigation }) => {
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = firebase
+    .firestore()
+    .collection(`/users/${user.uid}/myRecipes`);
   const route = useRoute();
-  const { dishName, hours, minutes, chefHatCount, descriptions, inputs } =
-    route.params;
+  const {
+    dishName,
+    hours,
+    minutes,
+    chefHatCount,
+    descriptions,
+    inputs,
+    dishImageUri,
+  } = route.params;
 
   //   console.log(inputs);
   const handleStepByStepMode = () => {
@@ -46,6 +59,29 @@ const Review = ({ navigation }) => {
       chefHatCount,
       descriptions,
       inputs,
+      dishImageUri,
+    });
+  };
+  const handlePublishButton = async () => {
+    await addMyRecipe(); // Upload the recipe data first
+    navigation.navigate("Done", {
+      inputs,
+    });
+  };
+
+  const addMyRecipe = () => {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    const recipeData = {
+      DishName: dishName,
+      duration: [hours, minutes],
+      diffculty: chefHatCount + 1,
+      desc: descriptions,
+      steps: inputs,
+      createdAt: timestamp,
+      dishImage: dishImageUri,
+    };
+    recipeDataRef.add(recipeData).catch((error) => {
+      alert(error);
     });
   };
   return (
@@ -53,10 +89,11 @@ const Review = ({ navigation }) => {
       <View style={styles.top}></View>
       <Text style={styles.title}>{dishName}</Text>
       <View style={styles.DishPicture}>
-        <Image
-          source={require("../../../assets/Create/cabbage.jpg")}
-          style={styles.dishimage}
-        />
+        {dishImageUri ? (
+          <Image source={{ uri: dishImageUri }} style={styles.dishimage} />
+        ) : (
+          <Text>No file included</Text>
+        )}
       </View>
       <View style={styles.time}>
         <Text style={styles.heading}>Time</Text>
@@ -98,17 +135,13 @@ const Review = ({ navigation }) => {
           </Button>
           {inputs.map((inputValue, index) => (
             <View key={index} style={styles.StepsTextContainer}>
-              <Text style={styles.StepsText}>
-                {`${index + 1}. ${inputValue.text}`}
-              </Text>
+              <Text style={styles.StepNumber}>{`${index + 1}.`}</Text>
+              <Text style={styles.StepsText}>{inputValue.text}</Text>
             </View>
           ))}
         </View>
       </View>
-      <Button
-        style={styles.nextButton}
-        onPress={() => navigation.navigate("Done")}
-      >
+      <Button style={styles.nextButton} onPress={handlePublishButton}>
         Publish
       </Button>
     </ScrollView>
@@ -228,6 +261,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginTop: 20,
     marginBottom: 50,
+    backgroundColor: "#9474ff",
   },
   difficulty: {},
   textBox: {
@@ -245,12 +279,24 @@ const styles = StyleSheet.create({
   },
   StepsText: {
     lineHeight: 22,
+    paddingRight: -100,
   },
   StepsTextContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
     marginVertical: 4,
+  },
+  StepNumber: {
+    marginRight: 8,
+    fontWeight: "normal",
+  },
+  StepsText: {
+    flex: 1,
+    lineHeight: 19,
   },
   StepByStepModeButton: {
     width: 150,
     alignContent: "center",
+    backgroundColor: "#9474ff",
   },
 });

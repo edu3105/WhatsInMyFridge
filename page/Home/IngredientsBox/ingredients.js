@@ -2,6 +2,7 @@ import { React, useState, useEffect, useCallback } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import {
   NativeBaseProvider,
+  extendTheme,
   Box,
   Center,
   Input,
@@ -10,20 +11,22 @@ import {
   Flex,
   FormControl,
   Modal,
+  Image,
+  VStack,
 } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { loadFonts } from "../../../fonts.js";
 import {
   getData,
   deleteData,
   updateQuantity,
 } from "../../api/Data/ingredientsData.js";
+import IngredientImage from "../../../assets/logo/1.png";
 
-const ingredients = ({ ingredients, setIngredients }) => {
+const Ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [updatedQuantity, setUpdatedQuantity] = useState(1);
-  //   const [ingredients, setIngredients] = useState([]);
 
   const handleIncrement = () => {
     setUpdatedQuantity(updatedQuantity + 1);
@@ -70,14 +73,30 @@ const ingredients = ({ ingredients, setIngredients }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getData();
-      setIngredients(data);
+      const allData = await getData(); // Fetch all the data
+      const filteredData = allData.filter((ingredient) =>
+        ingredient.name.toLowerCase().includes(searchIngredients.toLowerCase())
+      ); // Filter the data based on the search query
+      setIngredients(filteredData);
     };
 
     fetchData();
+  }, [searchIngredients]);
+
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadCustomFonts = async () => {
+      await loadFonts();
+      setFontLoaded(true);
+    };
+
+    loadCustomFonts();
   }, []);
 
-  //end of ingredients
+  if (!fontLoaded) {
+    return <View />; // Render an empty view while the font is loading
+  }
 
   return (
     <NativeBaseProvider>
@@ -85,10 +104,10 @@ const ingredients = ({ ingredients, setIngredients }) => {
         <Box
           key={ingredient.name}
           alignSelf="center"
-          bg={["red.400", "blue.400"]}
+          bg={["gray.300", "blue.400"]}
           w="90%"
           my="1"
-          borderRadius={8}
+          borderRadius={10}
         >
           <Flex
             direction="row"
@@ -98,27 +117,43 @@ const ingredients = ({ ingredients, setIngredients }) => {
             justifyContent="center"
           >
             <Pressable onPress={() => openModal(ingredient)}>
-              <Center
-                mr="1"
-                height="8"
-                width="48"
-                bg="primary.100"
-                _text={{
-                  color: "coolGray.800",
-                }}
-              >
-                {ingredient.name}
-              </Center>
+              <Flex alignItems="center" direction="row">
+                <Image
+                  source={IngredientImage}
+                  alt="Ingredient Image"
+                  mr={0}
+                  height={8}
+                  width={10}
+                />
+                <Center
+                  height={8}
+                  width="60%"
+                  bg="gray.300"
+                  _text={{
+                    color: "coolGray.800",
+                    fontFamily: "Poppins-Medium",
+                  }}
+                >
+                  {ingredient.name}
+                </Center>
+              </Flex>
             </Pressable>
+
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
               <Modal.Content maxWidth="400px">
                 <Modal.CloseButton />
-                <Modal.Header>Update Inventory</Modal.Header>
+                <Modal.Header _text={{ fontFamily: "Poppins-Medium" }}>
+                  Update Inventory
+                </Modal.Header>
                 <Modal.Body>
-                  <Text>Name:</Text>
-                  <Text>{selectedItem?.name}</Text>
+                  <Text style={{ fontFamily: "Poppins-Medium" }}>Name:</Text>
+                  <Text style={{ fontFamily: "Poppins-Medium" }}>
+                    {selectedItem?.name}
+                  </Text>
                   <FormControl mt="3">
-                    <FormControl.Label>Amount</FormControl.Label>
+                    <Text style={{ fontFamily: "Poppins-Medium" }}>
+                      Amount:{" "}
+                    </Text>
                     <Box justifyContent="space-between" alignItems="center">
                       <Button
                         style={{ width: "25%" }}
@@ -150,6 +185,7 @@ const ingredients = ({ ingredients, setIngredients }) => {
                       // variant="ghost"
                       colorScheme="danger"
                       onPress={handleDeleteData}
+                      _text={{ fontFamily: "Poppins-Medium" }}
                     >
                       Delete
                     </Button>
@@ -167,6 +203,7 @@ const ingredients = ({ ingredients, setIngredients }) => {
                         );
                         closeModal();
                       }}
+                      _text={{ fontFamily: "Poppins-Medium" }}
                     >
                       Save
                     </Button>
@@ -177,9 +214,10 @@ const ingredients = ({ ingredients, setIngredients }) => {
             <Center
               height="8"
               width="16"
-              bg="primary.200"
+              bg="gray.300"
               _text={{
                 color: "coolGray.800",
+                fontFamily: "Poppins-Medium",
               }}
             >
               {ingredient.quantity}
@@ -191,6 +229,6 @@ const ingredients = ({ ingredients, setIngredients }) => {
   );
 };
 
-export default ingredients;
+export default Ingredients;
 
-export { ingredients };
+export { Ingredients };

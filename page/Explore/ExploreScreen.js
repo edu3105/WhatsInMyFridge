@@ -32,7 +32,7 @@ export default function ExploreScreen({ navigation }) {
         <SearchBar />
         <FilterBar navigation={navigation} />
         <Recommended />
-        <MainBoxes />
+        <MainBoxes navigation={navigation} />
         <Creators />
       </ScrollView>
     </NativeBaseProvider>
