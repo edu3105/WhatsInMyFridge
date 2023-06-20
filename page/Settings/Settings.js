@@ -24,6 +24,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Touchable } from "react-native";
+import { firebase } from "../../config";
+import Steps from "../Create/Steps/steps1";
 // import "react-native-gesture-handler";
 // import SettingsPage from "./SettingsPage.js";
 
@@ -34,6 +36,24 @@ export default function SettingsScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const username = route.params?.username ?? "Default";
+  const [draftedRecipes, setDraftedRecipes] = useState([]);
+  const [uploadedRecipes, setUploadedRecipes] = useState([]);
+  const handleRecipePress = (item) => {
+    navigation.navigate("uRecipeScreen", { 
+      title: item.DishName,
+      creator: userName,
+      time: item.duration,
+      imageSource: item.dishImage,
+      diff: item.difficulty,
+      step: item.steps,
+      des: item.desc,
+    });
+  };
+  
+  useEffect(() => {
+    handleDraftRecipePress();
+    handleUploadRecipePress();
+  }, []); 
 
   const handleSettingsPress = () => {
     navigation.navigate("Settings");
@@ -46,7 +66,7 @@ export default function SettingsScreen() {
   };
 
   const [avatarSource, setAvatarSource] = useState({
-    uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+    uri: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg",
   });
   const handleAvatarPress = () => {
     console.log("avatar_pressed");
@@ -59,46 +79,68 @@ export default function SettingsScreen() {
     //navigation.navigate("Edit Profile");
   };
 
+  useEffect(() => {
+    if (recipeDataRef) {
+      recipeDataRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const { email, userName } = doc.data();
+            setUserName(userName);
+            setEmail(email);
+          } else {
+            console.log("User document does not exist");
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting user document:", error);
+        });
+    }
+  }, [recipeDataRef]);
+
   const [isDraftButtonFocused, setIsDraftButtonFocused] = useState(true);
   const [isUploadButtonFocused, setIsUploadButtonFocused] = useState(false);
   useEffect(() => {
     handleDraftRecipePress();
   }, []); // Add this useEffect block
+
   const handleDraftRecipePress = () => {
     console.log("Draft_pressed");
     setActiveTab("draft");
     setIsDraftButtonFocused(true);
     setIsUploadButtonFocused(false);
-    setContent([
-      {
-        title: "Drafted Recipe 1",
-        creator: "John",
-        time: "30 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-      {
-        title: "Drafted Recipe 2",
-        creator: "John2",
-        time: "40 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-      {
-        title: "Drafted Recipe 3",
-        creator: "John3",
-        time: "50 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-      {
-        title: "Drafted Recipe 4",
-        creator: "John4",
-        time: "60 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-    ]);
+
+    const user = firebase.auth().currentUser;
+    const recipeDraftRef = firebase.firestore().collection(`/users/${user.uid}/myDraft`);
+    recipeDraftRef.get().then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      const formattedData = data.map((item) => {      
+        let time;
+        if (item.duration[0] && item.duration[1]) {
+          time = item.duration[0] + ' hours ' + item.duration[1] + ' minutes';
+        } else if (item.duration[0]) {
+          time = item.duration[0] + ' hours';
+        } else if (item.duration[1]) {
+          time = item.duration[1] + ' minutes';
+        } else {
+          time = 'N/A'; // Handle case when both durations are zero or falsy
+        }
+        return {
+          title: item.DishName,
+          creator: userName,
+          time: time,
+          imageSource: item.dishImage,
+          diff: item.difficulty,
+          step: item.steps,
+          des: item.desc,
+        };
+      });
+      setContent(formattedData);
+      setDraftedRecipes(formattedData);
+    })
+    .catch((error) => {
+      console.log("Error getting drafted recipes:", error);
+    });
   };
 
   const handleUploadRecipePress = () => {
@@ -106,39 +148,49 @@ export default function SettingsScreen() {
     setActiveTab("upload");
     setIsDraftButtonFocused(false);
     setIsUploadButtonFocused(true);
-    setContent([
-      {
-        title: "Upload Recipe 1",
-        creator: "Johna",
-        time: "30 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-      {
-        title: "Upload Recipe 2",
-        creator: "Johnb",
-        time: "40 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-      {
-        title: "Upload Recipe 3",
-        creator: "Johnc",
-        time: "50 min",
-        imageSource:
-          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      },
-    ]);
+
+    const user = firebase.auth().currentUser;
+    const recipeDataRef = firebase.firestore().collection(`/users/${user.uid}/myRecipes`);
+    recipeDataRef.get().then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      const formattedData = data.map((item) => {        
+        let time;
+        if (item.duration[0] && item.duration[1]) {
+          time = item.duration[0] + ' hours ' + item.duration[1] + ' minutes';
+        } else if (item.duration[0]) {
+          time = item.duration[0] + ' hours';
+        } else if (item.duration[1]) {
+          time = item.duration[1] + ' minutes';
+        } else {
+          time = 'N/A'; // Handle case when both durations are zero or falsy
+        }
+        return {
+          title: item.DishName,
+          creator: userName,
+          time: time,
+          imageSource: item.dishImage,
+          diff: item.difficulty,
+          step: item.steps,
+          des: item.desc,
+        };
+      });
+      setContent(formattedData);
+      setUploadedRecipes(formattedData);
+    })
+    .catch((error) => {
+      console.log("Error getting uploaded recipes:", error);
+    });
   };
 
   const [activeTab, setActiveTab] = useState("draft");
 
-  //const scrollViewRef = useRef(null);
-
   const [content, setContent] = useState(["Check", "Check2", "Check3"]);
-  // useEffect(() => {
-  //   scrollViewRef.current.scrollToEnd({ animated: true });
-  // }, [content]);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = user
+    ? firebase.firestore().collection("users").doc(user.uid)
+    : null;
 
   return (
     <NativeBaseProvider>
@@ -154,9 +206,8 @@ export default function SettingsScreen() {
                 mr={2}
               />
             </TouchableOpacity>
-            <Text style={styles.profileName}>{username}</Text>
-            <Text style={styles.profileRecipe}>Recipes</Text>
-
+            <Text style={styles.profileName}>{userName}</Text>
+            <Text style={styles.profileRecipe}> Recipes:{" "} {draftedRecipes.length + uploadedRecipes.length} </Text>
             <TouchableOpacity onPress={handleStatPress} style={styles.stats}>
               <Ionicons
                 name="podium-outline"
@@ -211,28 +262,19 @@ export default function SettingsScreen() {
         <VStack style={{ marginTop: 250, flexGrow: 1 }}>
           <ScrollView
             contentContainerStyle={styles.scrollViewContainer}
-            //ref={scrollViewRef}
+            // ref={scrollViewRef}
             showsVerticalScrollIndicator={false}
           >
             {content.map((item, index) => (
-              <TouchableOpacity>
-                <View key={index} style={styles.box}>
+              <TouchableOpacity key={index} onPress={() => handleRecipePress(item)}>
+                <View style={styles.box}>
                   <Text style={styles.boxContent_header}>{item.title}</Text>
-                  <Text style={styles.boxContent_creator}>{item.creator}</Text>
+                  <Text style={styles.boxContent_creator}>{item.creator} </Text>
                   <Text style={styles.boxContent_time}> {item.time}</Text>
                   <ImageBackground
                     style={styles.boxContent_image}
                     source={{ uri: item.imageSource }}
                   />
-                  {/* {index === content.length - 1 && (
-                    <View
-                      style={{ position: "absolute", bottom: 10 }} // Position the view at the bottom of the last box
-                      onLayout={() => {
-                        // Scroll to the bottom of the ScrollView once the last box has been rendered
-                        scrollViewRef.current?.scrollToEnd({ animated: true });
-                      }}
-                    />
-                  )} */}
                 </View>
               </TouchableOpacity>
             ))}
@@ -367,7 +409,7 @@ const styles = StyleSheet.create({
   boxContent_header: {
     flex: 1,
     top: 160,
-    margin: 15,
+    paddingLeft: 15,
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
@@ -375,7 +417,8 @@ const styles = StyleSheet.create({
 
   boxContent_creator: {
     //flex: 1,
-    margin: 15,
+    marginBottom: 62,
+    marginLeft: 15,
     top: 55,
     color: "white",
     fontWeight: "bold",
@@ -384,9 +427,10 @@ const styles = StyleSheet.create({
 
   boxContent_time: {
     //flex: 1,
-    margin: 15,
-    top: 0,
-    left: 225,
+    
+    paddingLeft:20,
+    paddingBottom: 10,
+    right: 10,
     color: "white",
     fontWeight: "bold",
     fontSize: 16,

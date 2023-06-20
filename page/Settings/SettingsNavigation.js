@@ -13,8 +13,12 @@ import ChangePassword from "./ChangePassword";
 import FAQ from "./FAQ";
 import AboutUs from "./AboutUs";
 import Stat_s from "./Stats";
-
+import { ExploretoUpload } from "./uploadNavigation/navigation";
 const Stack = createStackNavigator(); // creates object for Stack Navigator
+import uRecipeScreen from "./uploadNavigation/uRecipeScreen";
+//import uRecipeBox from "./uploadNavigation/uRecipeBox";
+import uRecipeDone from "./uploadNavigation/uRecipeDone";
+import uRecipeSteps from "./uploadNavigation/uRecipeSteps"
 
 const FirstScreenNavigatorSettings = () => {
   return (
@@ -45,6 +49,19 @@ const FirstScreenNavigatorSettings = () => {
         </Stack.Group>
         <Stack.Group>
           <Stack.Screen name="Stats" component={Stat_s} />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen name="uRecipeScreen" component={uRecipeScreen}/>
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen
+            name="uRecipeSteps"
+            component={uRecipeSteps}
+          />
+          <Stack.Screen
+            name="uRecipeDone"
+            component={uRecipeDone}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NativeBaseProvider>

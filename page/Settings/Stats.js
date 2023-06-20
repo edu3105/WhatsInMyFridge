@@ -41,7 +41,7 @@ export default function Stat_s() {
   const fetchCreatedData = () => {
     // Perform your data fetching logic here for "Created" data
     // Replace the following line with your actual data fetching code
-    const data = "Created data"; // Example data for "Created"
+    const data = 5; // Example data for "Created"
 
     // Set the fetched data in the state
     setCreatedData(data);
@@ -50,7 +50,7 @@ export default function Stat_s() {
   const fetchCookedData = () => {
     // Perform your data fetching logic here for "Cooked" data
     // Replace the following line with your actual data fetching code
-    const data = "Cooked data"; // Example data for "Cooked"
+    const data = 2; // Example data for "Cooked"
 
     // Set the fetched data in the state
     setCookedData(data);
@@ -59,7 +59,7 @@ export default function Stat_s() {
   const fetchRatingData = () => {
     // Perform your data fetching logic here for "Average Rating" data
     // Replace the following line with your actual data fetching code
-    const data = "Rating data"; // Example data for "Average Rating"
+    const data = "not-available"; // Example data for "Average Rating"
 
     // Set the fetched data in the state
     setRatingData(data);
@@ -68,7 +68,7 @@ export default function Stat_s() {
   const fetchPopularData = () => {
     // Perform your data fetching logic here for "Most Popular" data
     // Replace the following line with your actual data fetching code
-    const data = "Popular data"; // Example data for "Most Popular"
+    const data = "not-available"; // Example data for "Most Popular"
 
     // Set the fetched data in the state
     setPopularData(data);
@@ -77,7 +77,7 @@ export default function Stat_s() {
   const fetchUsedData = () => {
     // Perform your data fetching logic here for "Most Popular" data
     // Replace the following line with your actual data fetching code
-    const data = "Used data"; // Example data for "Most Popular"
+    const data = " Meat"; // Example data for "Most Popular"
 
     // Set the fetched data in the state
     setUsedData(data);
@@ -86,7 +86,7 @@ export default function Stat_s() {
   const fetchFavoriteData = () => {
     // Perform your data fetching logic here for "Most Popular" data
     // Replace the following line with your actual data fetching code
-    const data = "Favorite data"; // Example data for "Most Popular"
+    const data = " Meat"; // Example data for "Most Popular"
 
     // Set the fetched data in the state
     setFavoriteData(data);

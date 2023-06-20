@@ -36,9 +36,8 @@ import { firebase } from "../../../config";
 
 const Review = ({ navigation }) => {
   const user = firebase.auth().currentUser;
-  const recipeDataRef = firebase
-    .firestore()
-    .collection(`/users/${user.uid}/myRecipes`);
+  const recipeDataRef = firebase.firestore().collection(`/users/${user.uid}/myRecipes`);
+  const recipeDraftRef = firebase.firestore().collection(`/users/${user.uid}/myDraft`);
   const route = useRoute();
   const {
     dishName,
@@ -68,6 +67,29 @@ const Review = ({ navigation }) => {
       inputs,
     });
   };
+  const handleDraftButton = async () => {
+    await addMyDraft(); // Save the recipe data as a draft
+    navigation.navigate("Done", {
+      inputs,
+    });
+  };
+  
+  const addMyDraft = () => {
+    const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+    const recipeData = {
+      DishName: dishName,
+      duration: [hours, minutes],
+      diffculty: chefHatCount + 1,
+      desc: descriptions,
+      steps: inputs,
+      createdAt: timestamp,
+      dishImage: dishImageUri,
+    };
+    recipeDraftRef.add(recipeData).catch((error) => {
+      alert(error);
+    });
+  };
+  
 
   const addMyRecipe = () => {
     const timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -143,6 +165,9 @@ const Review = ({ navigation }) => {
       </View>
       <Button style={styles.nextButton} onPress={handlePublishButton}>
         Publish
+      </Button>
+      <Button style={styles.draftButton} onPress={handleDraftButton}> 
+        Save as draft
       </Button>
     </ScrollView>
   );
@@ -260,7 +285,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
     marginTop: 20,
-    marginBottom: 50,
     backgroundColor: "#9474ff",
   },
   difficulty: {},
@@ -299,4 +323,11 @@ const styles = StyleSheet.create({
     alignContent: "center",
     backgroundColor: "#9474ff",
   },
+  draftButton: {
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 20,
+    marginBottom: 50,
+    backgroundColor: "#9474ff",
+  }
 });

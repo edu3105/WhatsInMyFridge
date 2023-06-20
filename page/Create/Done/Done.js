@@ -45,9 +45,16 @@ const Done = ({ navigation }) => {
   return (
     <NativeBaseProvider>
       <View style={styles.screen}>
+        <Image
+            source={{
+              uri: "https://media.tenor.com/0AVbKGY_MxMAAAAM/check-mark-verified.gif",
+            }}
+            alt="Check Mark GIF"
+            style={styles.gif}
+          />
         <Text>Recipe Created</Text>
-        <Text>Created recipes can be viewed in your</Text>
-        <Button onPress={() => navigation.navigate("Profile")}>Profile</Button>
+        <Text>Recipes can be viewed in your profile</Text>
+        <Button style={styles.profilebutton} onPress={() => navigation.navigate("Profile")}>Profile</Button>
       </View>
     </NativeBaseProvider>
   );
