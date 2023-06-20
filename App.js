@@ -4,7 +4,7 @@
 // import { StyleSheet, Text, View } from 'react-native';
 // import { NativeBaseProvider, Box } from "native-base";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,6 +23,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ExploretoRecipe } from "./CustomNavigation.js";
 import SplashScreen from "./page/register/SplashScreen.js";
 import LoginScreen from "./page/register/LoginScreen.js";
+import { Text, View, Button, Platform } from "react-native";
 
 import { firebase } from "./config.js";
 

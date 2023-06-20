@@ -19,8 +19,19 @@ import {
   Flex,
   VStack,
 } from "native-base";
+
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
 import { FontAwesome } from "react-native-vector-icons";
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 export default function RecipeBox({ navigation }) {
   const [counter, setCounter] = useState(1);
 
