@@ -11,6 +11,7 @@ import { NativeBaseProvider, Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 // import "react-native-gesture-handler";
 import { firebase } from "../../../config";
+import { CommonActions } from "@react-navigation/native";
 
 const Done = ({ navigation }) => {
   //   const route = useRoute();
@@ -25,22 +26,48 @@ const Done = ({ navigation }) => {
   //   } = route.params;
 
   //coba-coba
-  const [name, setName] = useState("");
-  useEffect(() => {
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(firebase.auth().currentUser.uid)
-      .get()
-      .then((snapshot) => {
-        if (snapshot.exists) {
-          setName(snapshot.data());
-        } else {
-          console.log("Users doesnt exist");
-        }
-      }, []);
-  });
+  //   const [name, setName] = useState("");
+  //   useEffect(() => {
+  //     firebase
+  //       .firestore()
+  //       .collection("users")
+  //       .doc(firebase.auth().currentUser.uid)
+  //       .get()
+  //       .then((snapshot) => {
+  //         if (snapshot.exists) {
+  //           setName(snapshot.data());
+  //         } else {
+  //           console.log("Users doesnt exist");
+  //         }
+  //       }, []);
+  //   });
   //----------------------------------
+
+  //   const [userName, setUserName] = useState("");
+  //   const [email, setEmail] = useState("");
+  //   const user = firebase.auth().currentUser;
+  //   const recipeDataRef = user
+  //     ? firebase.firestore().collection("users").doc(user.uid)
+  //     : null;
+
+  //   useEffect(() => {
+  //     if (recipeDataRef) {
+  //       recipeDataRef
+  //         .get()
+  //         .then((doc) => {
+  //           if (doc.exists) {
+  //             const { email, userName } = doc.data();
+  //             setUserName(userName);
+  //             setEmail(email);
+  //           } else {
+  //             console.log("User document does not exist");
+  //           }
+  //         })
+  //         .catch((error) => {
+  //           console.log("Error getting user document:", error);
+  //         });
+  //     }
+  //   }, [recipeDataRef]);
 
   return (
     <NativeBaseProvider>
@@ -53,8 +80,20 @@ const Done = ({ navigation }) => {
             style={styles.gif}
           />
         <Text>Recipe Created</Text>
-        <Text>Recipes can be viewed in your profile</Text>
-        <Button style={styles.profilebutton} onPress={() => navigation.navigate("Profile")}>Profile</Button>
+        <Text>Created recipes can be viewed in your</Text>
+
+        <Button
+          onPress={() =>
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [{ name: "Profile" }],
+              })
+            )
+          }
+        >
+          Profile
+        </Button>
       </View>
     </NativeBaseProvider>
   );

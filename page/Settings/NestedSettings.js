@@ -7,17 +7,46 @@ import {
   View,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { Avatar, NativeBaseProvider, IconButton } from "native-base";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HStack, Box, VStack } from "native-base";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Settings } from "react-native";
 
+import { firebase } from "../../config";
+
 const NestedSettings = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const username = route.params?.username ?? "Default";
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = user
+    ? firebase.firestore().collection("users").doc(user.uid)
+    : null;
+
+  useEffect(() => {
+    if (recipeDataRef) {
+      recipeDataRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const { email, userName, profilePicture } = doc.data();
+            setUserName(userName);
+            setEmail(email);
+            setProfilePicture(profilePicture);
+          } else {
+            console.log("User document does not exist");
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting user document:", error);
+        });
+    }
+  }, [recipeDataRef]);
 
   const handleAboutUsPress = () => {
     console.log("about_us_pressed");
@@ -35,8 +64,18 @@ const NestedSettings = () => {
   };
 
   const handleChangePasswordPress = () => {
-    console.log("change_password_pressed");
-    navigation.navigate("Change Password");
+    firebase
+      .auth()
+      .sendPasswordResetEmail(firebase.auth().currentUser.email)
+      .then(() => {
+        alert("Password reset email sent");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+  const handleSignOutPress = () => {
+    firebase.auth().signOut();
   };
 
   const [avatarSource, setAvatarSource] = useState({
@@ -78,12 +117,12 @@ const NestedSettings = () => {
               <Avatar
                 style={styles.profilePicture}
                 size="sm"
-                source={avatarSource}
+                source={profilePicture}
                 alt="Avatar"
                 mr={2}
               />
             </TouchableOpacity>
-            <Text style={styles.profileName}>{username}</Text>
+            <Text style={styles.profileName}>{userName}</Text>
             <Text style={styles.profileRecipe}>Recipes</Text>
           </Box>
         </HStack>
@@ -128,54 +167,26 @@ const NestedSettings = () => {
                 <Text style={styles.FAQText}>FAQ</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleAboutUsPress}>
-              <View style={styles.AboutUs_button}>
+            <TouchableOpacity
+              style={styles.AboutUs_button}
+              onPress={handleAboutUsPress}
+            >
+              <View>
                 <Text style={styles.AboutUsText}>About Us</Text>
               </View>
             </TouchableOpacity>
           </VStack>
+          <VStack style={styles.signOutButtonContainer}>
+            <TouchableOpacity
+              style={styles.signOutButton}
+              onPress={handleSignOutPress}
+            >
+              <View>
+                <Text style={styles.signOutButtonText}>Sign Out</Text>
+              </View>
+            </TouchableOpacity>
+          </VStack>
         </View>
-
-        <VStack>
-          {/* <View style={styles.centeredContainer}>
-            <HStack>
-              <TouchableOpacity onPress={handleDraftRecipePress}>
-                <View
-                  style={[
-                    styles.draft_button,
-                    isDraftButtonFocused && styles.focusedButton,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.draftedRecipeText,
-                      isDraftButtonFocused && styles.focusedText,
-                    ]}
-                  >
-                    Drafted Recipe
-                  </Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleUploadRecipePress}>
-                <View
-                  style={[
-                    styles.upload_button,
-                    isUploadButtonFocused && styles.focusedButton,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.uploadedRecipeText,
-                      isUploadButtonFocused && styles.focusedText,
-                    ]}
-                  >
-                    Uploaded Recipe
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </HStack>
-          </View> */}
-        </VStack>
       </View>
     </NativeBaseProvider>
   );
@@ -312,6 +323,7 @@ const styles = StyleSheet.create({
     width: 355,
     height: 50,
     top: 15,
+    marginBottom: 100,
   },
 
   AboutUsText: {
@@ -320,54 +332,24 @@ const styles = StyleSheet.create({
     textAlign: "left",
     margin: 10,
   },
+  signOutButtonContainer: {
+    alignItems: "center",
+  },
 
-  // centeredContainer: {
-  //   //flex: 1,
-  //   position: "absolute",
-  //   left: 57,
-  //   textAlign: "center",
-  //   top: 170,
-  //   borderWidth: 1,
-  // },
+  signOutButton: {
+    backgroundColor: "red",
+    borderRadius: 15,
+    height: 40,
+    width: 100,
+    marginTop: 10,
+    alignItems: "center",
+    alignContent: "center",
+  },
 
-  // draft_button: {
-  //   //borderWidth: 1,
-  //   borderColor: "black",
-  //   borderRadius: 15,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   right: 10,
-  //   backgroundColor: "transparent",
-  // },
-
-  // upload_button: {
-  //   //borderWidth: 1,
-
-  //   borderColor: "black",
-  //   borderRadius: 15,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   marginLeft: 10,
-  //   paddingRight: 10,
-  //   right: 10,
-  // },
-
-  // draftedRecipeText: {
-  //   fontSize: 17,
-
-  //   textAlign: "center",
-  //   marginTop: 10,
-  //   marginBottom: 10,
-  //   right: 10,
-  //   marginLeft: 20,
-  // },
-
-  // uploadedRecipeText: {
-  //   fontSize: 17,
-  //   color: "gray",
-  //   textAlign: "center",
-  //   marginTop: 10,
-  //   marginBottom: 10,
-  //   marginLeft: 10,
-  // },
+  signOutButtonText: {
+    color: "white",
+    fontSize: 13,
+    textAlign: "center",
+    margin: 10,
+  },
 });

@@ -26,7 +26,7 @@ const FirstScreenNavigatorSettings = () => {
       <Stack.Navigator screenOptions={{ animation: "slide_from_left" }}>
         <Stack.Group>
           <Stack.Screen
-            name="Profile"
+            name="ProfilePage"
             component={SettingsScreen}
             options={{
               headerShown: false,

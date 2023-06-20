@@ -4,7 +4,7 @@
 // import { StyleSheet, Text, View } from 'react-native';
 // import { NativeBaseProvider, Box } from "native-base";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,9 +22,10 @@ import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ExploretoRecipe } from "./CustomNavigation.js";
 import SplashScreen from "./page/register/SplashScreen.js";
-import { firebase } from "./config.js";
 import LoginScreen from "./page/register/LoginScreen.js";
-// import { useFocus } from "native-base/lib/typescript/components/primitives/index.js";
+import { Text, View, Button, Platform } from "react-native";
+
+import { firebase } from "./config.js";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,6 @@ function App() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarBadge: 5,
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -57,8 +57,12 @@ function App() {
       <Tab.Screen
         name="Explore"
         component={ExploretoRecipe}
-        options={{
-          tabBarBadge: 5,
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+            height: 60,
+          },
+          headerShown: getHeaderVisibility(route),
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -68,7 +72,7 @@ function App() {
               marginBottom={-15}
             />
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="Create"
@@ -110,12 +114,13 @@ function App() {
       <Tab.Screen
         name="Profile"
         component={FirstScreenNavigatorSettings}
+        key={true}
         options={({ route }) => ({
           tabBarStyle: {
             display: getTabBarVisibility(route),
             height: 60,
           },
-          //dont show header
+          //dont show
           headerShown: getHeaderVisibility(route),
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
@@ -195,12 +200,12 @@ const getTabBarVisibility = (route) => {
     routeName == "About Us" ||
     routeName == "Steps" ||
     routeName == "RecipePage" ||
-    routeName == "Stats" ||
     routeName == "RecipeSteps" ||
     routeName == "RecipeDone" ||
     routeName == "StepByStepMode" ||
     routeName == "Review" ||
-    routeName == "Done"
+    routeName == "Done" ||
+    routeName == "RegionPage"
   ) {
     return "none";
   } else {
@@ -224,7 +229,8 @@ const getHeaderVisibility = (route) => {
     routeName == "RecipeDone" ||
     routeName == "StepByStepMode" ||
     routeName == "Review" ||
-    routeName == "Done"
+    routeName == "Done" ||
+    routeName == "RegionPage"
   ) {
     return false;
   }

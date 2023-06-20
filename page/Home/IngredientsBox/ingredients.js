@@ -74,12 +74,23 @@ const Ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
   useEffect(() => {
     const fetchData = async () => {
       const allData = await getData(); // Fetch all the data
+      setIngredients(allData);
+    };
+
+    // Fetch data on component mount
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const allData = await getData(); // Fetch all the data
       const filteredData = allData.filter((ingredient) =>
         ingredient.name.toLowerCase().includes(searchIngredients.toLowerCase())
       ); // Filter the data based on the search query
       setIngredients(filteredData);
     };
 
+    // Fetch data when searchIngredients changes
     fetchData();
   }, [searchIngredients]);
 
@@ -126,7 +137,6 @@ const Ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
                   width={10}
                 />
                 <Center
-                  height={8}
                   width="60%"
                   bg="gray.300"
                   _text={{
@@ -212,7 +222,6 @@ const Ingredients = ({ ingredients, setIngredients, searchIngredients }) => {
               </Modal.Content>
             </Modal>
             <Center
-              height="8"
               width="16"
               bg="gray.300"
               _text={{

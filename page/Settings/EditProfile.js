@@ -26,14 +26,46 @@ import { useNavigation } from "@react-navigation/native";
 //import { Navigation } from "react-native-navigation";
 import "react-native-gesture-handler";
 import { Touchable } from "react-native";
+import { firebase } from "../../config";
 
 export default function EditProfile() {
+  //firebase
+  const user = firebase.auth().currentUser;
+  const userRef = user
+    ? firebase.firestore().collection("users").doc(user.uid)
+    : null;
+
+  //------------------------------------------
+
   const [avatarSource, setAvatarSource] = useState({
     uri: "https://t4.ftcdn.net/jpg/04/08/24/43/360_F_408244382_Ex6k7k8XYzTbiXLNJgIL8gssebpLLBZQ.jpg",
   });
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+
+  const [successVisible, setSuccessVisible] = useState(false);
+  const fadeAnimation = useState(new Animated.Value(0))[0];
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (userRef) {
+      userRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const { email, userName, profilePicture } = doc.data();
+            setProfilePicture(profilePicture);
+          } else {
+            console.log("User document does not exist");
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting user document:", error);
+        });
+    }
+  }, [userRef]);
   const handleAvatarPress = () => {
     console.log("avatar_pressed");
     const options = {
@@ -49,16 +81,22 @@ export default function EditProfile() {
     selectImage();
   };
 
-  const [successVisible, setSuccessVisible] = useState(false);
-  const fadeAnimation = useState(new Animated.Value(0))[0];
-  const navigation = useNavigation();
   const handleUpdatePress = () => {
-    console.log("update_pressed");
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Phone Number:", phoneNumber);
-
-    setSuccessVisible(true);
+    if (userRef) {
+      userRef
+        .update({ userName: username, profilePicture: avatarSource })
+        .then(() => {
+          console.log("Updated successfully!");
+        })
+        .catch((error) => {
+          console.log("Error updating :", error);
+        });
+    }
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Profile" }],
+    });
+    //  setSuccessVisible(true);
   };
 
   const handleDismissPress = () => {
@@ -109,17 +147,6 @@ export default function EditProfile() {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
-        <VStack style={styles.profile}>
-          <TouchableOpacity onPress={handleAvatarPress}>
-            <Avatar
-              style={styles.profilePicture}
-              size="sm"
-              source={avatarSource}
-              alt="Avatar"
-              mr={2}
-            />
-          </TouchableOpacity>
-        </VStack>
         <View>
           <VStack>
             <TouchableOpacity onPress={handleChangePicturePress}>

@@ -35,7 +35,33 @@ import Steps from "../Create/Steps/steps1";
 export default function SettingsScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const username = route.params?.username ?? "Default";
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = user
+    ? firebase.firestore().collection("users").doc(user.uid)
+    : null;
+
+  useEffect(() => {
+    if (recipeDataRef) {
+      recipeDataRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const { email, userName, profilePicture } = doc.data();
+            setUserName(userName);
+            setEmail(email);
+            setProfilePicture(profilePicture);
+          } else {
+            console.log("User document does not exist");
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting user document:", error);
+        });
+    }
+  }, [recipeDataRef]);
   const [draftedRecipes, setDraftedRecipes] = useState([]);
   const [uploadedRecipes, setUploadedRecipes] = useState([]);
   const handleRecipePress = (item) => {
@@ -185,12 +211,7 @@ export default function SettingsScreen() {
   const [activeTab, setActiveTab] = useState("draft");
 
   const [content, setContent] = useState(["Check", "Check2", "Check3"]);
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const user = firebase.auth().currentUser;
-  const recipeDataRef = user
-    ? firebase.firestore().collection("users").doc(user.uid)
-    : null;
+
 
   return (
     <NativeBaseProvider>

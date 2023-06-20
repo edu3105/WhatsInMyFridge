@@ -19,8 +19,19 @@ import {
   Flex,
   VStack,
 } from "native-base";
+
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
 import { FontAwesome } from "react-native-vector-icons";
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 export default function RecipeBox({ navigation }) {
   const [counter, setCounter] = useState(1);
 
@@ -50,6 +61,7 @@ export default function RecipeBox({ navigation }) {
             width={370}
             height={150}
             marginTop={5}
+            alt="Burger"
           />
           <VStack space={3}>
             <HStack space={50} marginTop={3} justifyContent="center">
@@ -145,6 +157,7 @@ export default function RecipeBox({ navigation }) {
                 }}
                 width={8}
                 height={8}
+                alt="burger"
               />
               <Heading size="sm">Burger Bun</Heading>
               <Heading size="sm" flex={1} textAlign="right">
@@ -162,6 +175,7 @@ export default function RecipeBox({ navigation }) {
                 }}
                 width={8}
                 height={8}
+                alt="pickles"
               />
               <Heading size="sm">Pickles</Heading>
               <Heading size="sm" flex={1} textAlign="right">
@@ -178,6 +192,7 @@ export default function RecipeBox({ navigation }) {
                 }}
                 width={8}
                 height={8}
+                alt="cheese"
               />
               <Heading size="sm">American Cheese</Heading>
               <Heading size="sm" flex={1} textAlign="right">
@@ -194,6 +209,7 @@ export default function RecipeBox({ navigation }) {
                 }}
                 width={8}
                 height={8}
+                alt="patty"
               />
               <Heading size="sm">Beef Patty</Heading>
               <Heading size="sm" flex={1} textAlign="right">

@@ -28,7 +28,7 @@ export default function ExploreRegionScreen({ navigation }) {
       <ScrollView vertical={true} showsVerticalScrollIndicator={false}>
         <SearchBar />
         <FilterBar navigation={navigation} />
-        <MainBoxes />
+        <MainBoxes navigation={navigation} />
       </ScrollView>
     </NativeBaseProvider>
   );

@@ -42,6 +42,7 @@ const addButton = ({ setIngredients }) => {
     setIsOpen(false);
     setCount(1);
     setIngredientName("");
+    setFilteredIngredientList(ingredientDb.slice(0, 3));
   };
 
   // const handleNameChange = (value) => {
