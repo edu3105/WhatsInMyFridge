@@ -4,11 +4,11 @@
 // import { StyleSheet, Text, View } from 'react-native';
 // import { NativeBaseProvider, Box } from "native-base";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "./page/Home/HomeScreen.js";
+import HomeNavigator from "./page/Home/homeNavigator.js";
 // import SettingsScreen from "./page/Settings.js";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import ExploreScreen from "./page/Explore/ExploreScreen.js";
@@ -23,9 +23,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ExploretoRecipe } from "./CustomNavigation.js";
 import SplashScreen from "./page/register/SplashScreen.js";
 import LoginScreen from "./page/register/LoginScreen.js";
-import { Text, View, Button, Platform } from "react-native";
 
 import { firebase } from "./config.js";
+
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+console.disableYellowBox = true;
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,7 +45,7 @@ function App() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigator}
         options={{
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
