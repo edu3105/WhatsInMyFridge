@@ -98,6 +98,7 @@ export default function SearchBar() {
             <Image
               source={require("../../assets/filtericon.jpg")}
               style={{ width: 40, height: 40 }}
+              alt="wassup"
             />
           </Pressable>
         </HStack>

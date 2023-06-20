@@ -140,6 +140,7 @@ export default function RecipeDone({ navigation }) {
               <Image
                 source={require("../../assets/share.png")}
                 style={{ width: 400, aspectRatio: 5 }}
+                alt="share"
               />
             </Pressable>
 

@@ -57,7 +57,8 @@ export default function MainBoxes({ navigation }) {
       <VStack space={2} marginLeft={6}>
         <Heading size="md">For You</Heading>
 
-        <Pressable onPress={() => navigation.navigate("RecipePage")}>
+        <Pressable onPress={() => {
+          navigation.navigate("RecipePage")}}>
           <Box
             maxW="380"
             rounded="lg"

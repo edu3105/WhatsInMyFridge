@@ -167,7 +167,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 12,
-    marginRight: 30,
+    marginRight: 15,
+    marginLeft: 12,
   },
   signUpContainer: {
     justifyContent: "center",

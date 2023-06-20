@@ -308,7 +308,7 @@ const recipeDB = [
         timeToCook: "40",
         creator: "Serious Eats",
         description: "a type of small Chinese steamed bun (baozi) traditionally prepared in a xiaolong, a small bamboo steaming basket, hence the name.",
-        steps: [`Combine chicken bones, ham, scallion whites, half of scallion greens, ginger, and white peppercorns in a stockpot and cover with cold water. Bring to a boil over high heat, reduce to a simmer, and simmer, uncovered, for 2 1/2 hours. Line a fine-mesh strainer with cheesecloth, and set over a large heatproof bowl. Carefully pour bone broth through strainer into bowl until the liquid has been strained. Discard solids in strainer. Season to taste with salt, cover, and refrigerate until set into a semi-firm jelly, at least 8 hours. Scrape off the fat that sets on top of the chilled bone broth and discard.`
+        steps: [`Combine chicken bones, ham, scallion whites, half of scallion greens, ginger, and white peppercorns in a stockpot and cover with cold water. Bring to a boil over high heat, reduce to a simmer, and simmer, uncovered, for 2 1/2 hours. Line a fine-mesh strainer with cheesecloth, and set over a large heatproof bowl. Carefully pour bone broth through strainer into bowl until the liquid has been strained. Discard solids in strainer. Season to taste with salt, cover, and refrigerate until set into a semi-firm jelly, at least 8 hours. Scrape off the fat that sets on top of the chilled bone broth and discard.`,
                 `Meanwhile, combine pork, shrimp, soy sauce, wine, sugar, 1 teaspoon salt, and remaining scallion greens in a food processor. Process until a fine paste is formed, about 12 to 15 one-second pulses. Refrigerate until ready to use.`,
                 `Meanwhile, place flour in the bowl of a food processor. With machine running, slowly drizzle in water until a cohesive dough is formed (you probably won't need all the water). Allow dough to ride around processor for 30 seconds. Form into a ball using floured hands and transfer to a bowl. Cover with a damp towel and let rest for at least 30 minutes. `,
                 `When broth is gelled, transfer filling mixture to a bowl along with 1 1/2 cups of jellied broth (save the rest for another use). Beat or whisk it in until homogenous. Season with salt. Keep filling well chilled.`,
@@ -396,3 +396,4 @@ const recipeDB = [
     }
 ];
 
+export default recipeDB;

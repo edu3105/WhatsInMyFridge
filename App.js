@@ -43,7 +43,6 @@ function App() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarBadge: 5,
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -64,7 +63,6 @@ function App() {
             height: 60,
           },
           headerShown: getHeaderVisibility(route),
-          tabBarBadge: 5,
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -116,12 +114,13 @@ function App() {
       <Tab.Screen
         name="Profile"
         component={FirstScreenNavigatorSettings}
+        key={true}
         options={({ route }) => ({
           tabBarStyle: {
             display: getTabBarVisibility(route),
             height: 60,
           },
-          //dont show header
+          //dont show
           headerShown: getHeaderVisibility(route),
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
