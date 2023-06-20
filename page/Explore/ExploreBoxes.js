@@ -58,7 +58,6 @@ export default function MainBoxes({ navigation }) {
         <Heading size="md">For You</Heading>
 
         <Pressable onPress={() => {
-          console.log("Pressed")
           navigation.navigate("RecipePage")}}>
           <Box
             maxW="380"
