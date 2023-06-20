@@ -34,7 +34,7 @@ export default function ChangePassword() {
         <VStack>
           <TextInput
             style={styles.inputField}
-            placeholder="At Least 8 Digits"
+            placeholder="6 Digits"
             // Add other props and event handlers as needed
           />
         </VStack>
@@ -44,7 +44,7 @@ export default function ChangePassword() {
         <VStack>
           <TextInput
             style={styles.inputField}
-            placeholder="At Least 8 Digits"
+            placeholder="At Least 6 Digits"
             // Add other props and event handlers as needed
           />
         </VStack>

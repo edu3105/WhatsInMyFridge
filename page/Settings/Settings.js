@@ -29,11 +29,38 @@ import { Touchable } from "react-native";
 
 //var ImagePicker = require('react-native-image-picker');
 //import ImagePicker from 'react-native-image-crop-picker';
+import { firebase } from "../../config";
 
 export default function SettingsScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const username = route.params?.username ?? "Default";
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const user = firebase.auth().currentUser;
+  const recipeDataRef = user
+    ? firebase.firestore().collection("users").doc(user.uid)
+    : null;
+
+  useEffect(() => {
+    if (recipeDataRef) {
+      recipeDataRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const { email, userName, profilePicture } = doc.data();
+            setUserName(userName);
+            setEmail(email);
+            setProfilePicture(profilePicture);
+          } else {
+            console.log("User document does not exist");
+          }
+        })
+        .catch((error) => {
+          console.log("Error getting user document:", error);
+        });
+    }
+  }, [recipeDataRef]);
 
   const handleSettingsPress = () => {
     navigation.navigate("Settings");
@@ -149,12 +176,14 @@ export default function SettingsScreen() {
               <Avatar
                 style={styles.profilePicture}
                 size="sm"
-                source={avatarSource}
+                source={profilePicture}
                 alt="Avatar"
                 mr={2}
               />
             </TouchableOpacity>
-            <Text style={styles.profileName}>{username}</Text>
+            <View style={styles.profileNameContainer}>
+              <Text style={styles.profileName}>{userName}</Text>
+            </View>
             <Text style={styles.profileRecipe}>Recipes</Text>
 
             <TouchableOpacity onPress={handleStatPress} style={styles.stats}>

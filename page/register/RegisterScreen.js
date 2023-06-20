@@ -19,10 +19,11 @@ import CustomButton from "./CustomButton.js";
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const profilePicture =
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80";
 
-  const registerUser = async (email, password, firstName, lastName) => {
+  const registerUser = async (email, password, userName, profilePicture) => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
       await firebase.auth().currentUser.sendEmailVerification({
@@ -34,9 +35,10 @@ const RegisterScreen = ({ navigation }) => {
         .collection("users")
         .doc(firebase.auth().currentUser.uid)
         .set({
-          firstName,
-          lastName,
+          userName,
           email,
+          password,
+          profilePicture,
         });
       alert("Verification email sent");
     } catch (error) {
@@ -59,15 +61,8 @@ const RegisterScreen = ({ navigation }) => {
 
           <TextInput
             style={styles.input}
-            placeholder="First Name"
-            onChangeText={(firstName) => setFirstName(firstName)}
-            autoCorrect={false}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Last Name"
-            onChangeText={(lastName) => setLastName(lastName)}
+            placeholder="User Name"
+            onChangeText={(userName) => setUserName(userName)}
             autoCorrect={false}
           />
 
@@ -96,7 +91,9 @@ const RegisterScreen = ({ navigation }) => {
 
           <CustomButton
             label={"Sign Up"}
-            onPress={() => registerUser(email, password, firstName, lastName)}
+            onPress={() =>
+              registerUser(email, password, userName, profilePicture)
+            }
           />
 
           <View style={styles.signInContainer}>

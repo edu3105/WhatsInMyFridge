@@ -4,7 +4,7 @@
 // import { StyleSheet, Text, View } from 'react-native';
 // import { NativeBaseProvider, Box } from "native-base";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -22,13 +22,13 @@ import { FirstScreenNavigatorSettings } from "./page/Settings/SettingsNavigation
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ExploretoRecipe } from "./CustomNavigation.js";
 import SplashScreen from "./page/register/SplashScreen.js";
+import LoginScreen from "./page/register/LoginScreen.js";
+
+import { firebase } from "./config.js";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-<<<<<<< HEAD
-export default function App() {
-=======
 function App() {
   return (
     <Tab.Navigator
@@ -110,12 +110,13 @@ function App() {
       <Tab.Screen
         name="Profile"
         component={FirstScreenNavigatorSettings}
+        key={true}
         options={({ route }) => ({
           tabBarStyle: {
             display: getTabBarVisibility(route),
             height: 60,
           },
-          //dont show header
+          //dont show
           headerShown: getHeaderVisibility(route),
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
@@ -177,115 +178,12 @@ function AuthToApp() {
 }
 
 export default () => {
->>>>>>> 54553c0018cd6f0efda6b3379fc586649989eb57
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarStyle: {
-            height: 60, // Set the height of the tab bar here
-          },
-        }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarBadge: 5,
-            tabBarLabel: " ",
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? "home" : "home-outline"}
-                size={30} // Set the size of the icon here
-                focused={focused}
-                marginBottom={-15}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Explore"
-          component={ExploretoRecipe}
-          options={({ route }) => ({
-            tabBarStyle: {
-              display: getTabBarVisibility(route),
-              height: 60,
-            },
-            headerShown: getHeaderVisibility(route),
-            tabBarBadge: 5,
-            tabBarLabel: " ",
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? "search" : "search-outline"}
-                size={30} // Set the size of the icon here
-                focused={focused}
-                marginBottom={-15}
-              />
-            ),
-          })}
-        />
-        <Tab.Screen
-          name="Create"
-          component={Create_BasicInfo}
-          options={({ route }) => ({
-            tabBarStyle: {
-              display: getTabBarVisibility(route),
-              height: 60,
-            },
-            //dont show header
-            headerShown: getHeaderVisibility(route),
-            tabBarLabel: " ",
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? "add-circle" : "add-circle-outline"}
-                size={30} // Set the size of the icon here
-                focused={focused}
-                marginBottom={-15}
-              />
-            ),
-          })}
-        />
-        <Tab.Screen
-          name="Bookmark"
-          component={BookmarkScreen}
-          options={{
-            // tabBarBadge: 0,
-            tabBarLabel: " ",
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? "bookmark" : "bookmark-outline"}
-                size={30} // Set the size of the icon here
-                focused={focused}
-                marginBottom={-15}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={FirstScreenNavigatorSettings}
-          options={({ route }) => ({
-            tabBarStyle: {
-              display: getTabBarVisibility(route),
-              height: 60,
-            },
-            //dont show header
-            headerShown: getHeaderVisibility(route),
-            tabBarLabel: " ",
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? "person" : "person-outline"}
-                size={30} // Set the size of the icon here
-                focused={focused}
-                marginBottom={-15}
-              />
-            ),
-          })}
-        />
-      </Tab.Navigator>
+      <AuthToApp />
     </NavigationContainer>
   );
-}
+};
 
 const getTabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
