@@ -36,6 +36,8 @@ import { useNavigation } from "@react-navigation/native";
 var ImagePicker = require("expo-image-picker");
 import { Asset } from "expo-asset";
 import { firebase } from "../../../config";
+import Autocomplete from "react-native-autocomplete-input";
+import ingredientDb from "../../../database/ingredientsDb.js";
 
 //handle imagepicker
 
@@ -55,6 +57,7 @@ const BasicInfo = () => {
       descriptions,
       dishImageUri,
     });
+    setIngredientNeeded([]);
   };
   //---------------------------------------------
 
@@ -65,6 +68,10 @@ const BasicInfo = () => {
   const [placement, setPlacement] = useState(undefined);
   const [chefHatCount, setChefHatCount] = useState(0);
   const [activeChefHat, setActiveChefHat] = useState(0);
+  const [filteredIngredientList, setFilteredIngredientList] = useState(
+    ingredientDb.slice(0, 3)
+  );
+  const [ingredientName, setIngredientName] = useState("");
 
   const [dishImageUri, setDishImageUri] = useState(null);
   const [isImageSelected, setIsImageSelected] = useState(false);
@@ -100,8 +107,23 @@ const BasicInfo = () => {
     setIsOpen(false);
   };
 
+  const [ingredientNeeded, setIngredientNeeded] = useState([]);
+
   const handleSubmit = () => {
-    // Handle form submission logic here
+    // Create a new ingredient object with the name and quantity
+    const newIngredient = { name: ingredientName, quantity: count };
+
+    // Update the ingredientNeeded state by adding the new ingredient
+    setIngredientNeeded((prevIngredients) => [
+      ...prevIngredients,
+      newIngredient,
+    ]);
+
+    // Clear the input fields
+    setIngredientName("");
+    setCount(0);
+
+    // Close the modal
     handleClose();
   };
 
@@ -123,6 +145,37 @@ const BasicInfo = () => {
     setDishImageUri(pickerResult.assets[0].uri);
     setIsImageSelected(true);
     setShowReplaceButton(true);
+  };
+
+  const handleNameChange = (value) => {
+    setIngredientName(value);
+    const filteredList = ingredientDb
+      .filter((ingredient) =>
+        ingredient.toLowerCase().includes(value.toLowerCase())
+      )
+      .slice(0, 3);
+    setFilteredIngredientList(filteredList);
+  };
+
+  const [count, setCount] = useState(1);
+
+  const handleDecrement = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
+
+  const handleIncrement = () => {
+    setCount(count + 1);
+  };
+
+  const handleCountChange = (value) => {
+    const numericValue = parseInt(value, 10);
+    if (!isNaN(numericValue)) {
+      setCount(numericValue);
+    } else {
+      setCount(0);
+    }
   };
 
   return (
@@ -254,22 +307,111 @@ const BasicInfo = () => {
               Add Ingredients
             </Button>
           </Box>
-          <Modal isOpen={isOpen} onClose={handleClose} avoidKeyboard>
+          <Modal isOpen={isOpen} onClose={handleClose}>
             <Modal.Content {...styles[placement]}>
               <Modal.CloseButton />
-              <Modal.Header>Add Ingredients</Modal.Header>
+              <Modal.Header _text={{ fontFamily: "Poppins-Medium" }}>
+                Add Ingredients
+              </Modal.Header>
               <Modal.Body>
                 <Box p="4">
-                  <Input placeholder="Name" />
-                  <Input placeholder="Quantity" />
-                  <Button mt="3" onPress={handleSubmit}>
-                    Submit
+                  <Text style={{ fontFamily: "Poppins-Medium" }}>
+                    Ingredients Name:
+                  </Text>
+                  <Autocomplete
+                    // placeholder="Name"
+                    // onChangeText={handleNameChange}
+                    // value={ingredientName}
+                    // data={filteredIngredientList}
+                    // renderItem={({ item }) => (
+                    //   <Autocomplete.Item label={item} value={item} />
+                    // )}=
+                    data={filteredIngredientList}
+                    value={ingredientName}
+                    onChangeText={handleNameChange}
+                    placeholder="Name"
+                    flatListProps={{
+                      keyboardShouldPersistTaps: "always",
+                      renderItem: ({ item }) => (
+                        <TouchableOpacity
+                          onPress={() => handleNameChange(item)}
+                        >
+                          <Text
+                            label={item}
+                            value={item}
+                            style={{ fontFamily: "Poppins-Medium" }}
+                          >
+                            {item}
+                          </Text>
+                        </TouchableOpacity>
+                      ),
+                    }}
+                    _text={{ fontFamily: "Poppins-Medium" }}
+                  />
+                  <Text style={{ fontFamily: "Poppins-Medium" }}>
+                    Quantity:
+                  </Text>
+
+                  <Box justifyContent="space-between" alignItems="center">
+                    <Flex direction="row">
+                      <Button
+                        style={{ width: "25%", fontFamily: "Poppins-Bold" }}
+                        width="10%"
+                        mx="1"
+                        my="3"
+                        bg="gray.300"
+                        onPress={handleDecrement}
+                      >
+                        <Text style={{ fontFamily: "Poppins-Bold" }}>-</Text>
+                      </Button>
+                      <Input
+                        value={count.toString()}
+                        onChangeText={handleCountChange}
+                        keyboardType="numeric"
+                        textAlign="center"
+                        width="40%"
+                        my="2"
+                        style={{ width: "75%" }}
+                        _text={{ fontFamily: "Poppins-Medium" }}
+                      />
+                      <Button
+                        style={{ width: "25%" }}
+                        width="10%"
+                        mx="1"
+                        my="3"
+                        bg="gray.300"
+                        onPress={handleIncrement}
+                      >
+                        <Text style={{ fontFamily: "Poppins-Bold" }}>+</Text>
+                      </Button>
+                      <Text></Text>
+                    </Flex>
+                  </Box>
+
+                  <Button
+                    mt="3"
+                    onPress={handleSubmit}
+                    _text={{ fontFamily: "Poppins-Medium" }}
+                    colorScheme="purple"
+                  >
+                    Add/Submit
                   </Button>
                 </Box>
               </Modal.Body>
             </Modal.Content>
           </Modal>
         </View>
+        <View style={styles.Descriptions}>
+          <Text style={styles.heading}>Ingredients:</Text>
+          <Box style={styles.inputDescription}>
+            {ingredientNeeded.map((ingredient, index) => (
+              <Text key={index}>
+                {ingredient.name}: {ingredient.quantity}
+              </Text>
+            ))}
+          </Box>
+        </View>
+
         <Button style={styles.nextButton} onPress={handleNext}>
           Next
         </Button>

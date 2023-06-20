@@ -19,8 +19,10 @@ import SearchBar from "./searchBar";
 import QuickFilter from "./quickFilter";
 import BigBox from "./IngredientsBox/bigBox";
 import Recipes from "./Recipes";
+import { getData } from "../api/Data/ingredientsData.js";
+import recipeDB from "../../database/recipeDb.js";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [searchIngredients, setSearchIngredients] = useState("");
   const quickFilter = [
     "All",
@@ -32,6 +34,43 @@ export default function HomeScreen() {
     "Sauce",
     "Spices",
   ];
+  const [ingredients, setIngredients] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+
+  // useEffect(() => {
+  //   // Filter the recipeDB based on ingredients whenever it changes
+  //   const canCookRecipes = recipeDB.filter((recipe) => {
+  //     // Check if any ingredient in the recipe matches the user's ingredients
+  //     return recipe.ingredients.some(
+  //       (ingredient) => ingredients.name === ingredient.name
+  //     );
+  //   });
+
+  //   console.log("filtered recipes:", canCookRecipes);
+  //   // Update the state with the filtered recipes
+  //   setFilteredRecipes(canCookRecipes);
+  // }, [ingredients]);
+
+  useEffect(() => {
+    const canCookRecipes = recipeDB.filter((recipe) => {
+      const matchingIngredients = ingredients.filter((userIngredient) =>
+        recipe.ingredients.some(
+          (recipeIngredient) => recipeIngredient.name === userIngredient.name
+        )
+      );
+
+      // Log the matching ingredients
+      matchingIngredients.forEach((ingredient) => {
+        console.log("Matching Ingredient:", ingredient.name);
+      });
+
+      return matchingIngredients.length > 0;
+    });
+
+    console.log("Filtered Recipes:", canCookRecipes);
+
+    setFilteredRecipes(canCookRecipes);
+  }, [ingredients]);
 
   return (
     <NativeBaseProvider>
@@ -53,14 +92,15 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
 
-        <BigBox searchIngredients={searchIngredients} />
+        <BigBox
+          searchIngredients={searchIngredients}
+          ingredients={ingredients}
+          setIngredients={setIngredients}
+        />
 
-        <ScrollView horizontal={true}>
+        <ScrollView horizontal={true} pt={3} pb={4}>
           <HStack space={2} overflow="scroll" px={10}>
-            <Recipes />
-            <Recipes />
-            <Recipes />
-            <Recipes />
+            <Recipes recipes={filteredRecipes} navigation={navigation} />
           </HStack>
         </ScrollView>
       </ScrollView>

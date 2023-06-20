@@ -42,6 +42,7 @@ const addButton = ({ setIngredients }) => {
     setIsOpen(false);
     setCount(1);
     setIngredientName("");
+    setFilteredIngredientList(ingredientDb.slice(0, 3));
   };
 
   // const handleNameChange = (value) => {
@@ -246,7 +247,7 @@ const addButton = ({ setIngredients }) => {
           </Modal.Body>
         </Modal.Content>
       </Modal>
-      {/* <Box alignItems="center" mt="1">
+      <Box alignItems="center" mt="1">
         <Button
           title="Delete All Ingredients"
           colorScheme="red"
@@ -254,7 +255,7 @@ const addButton = ({ setIngredients }) => {
         >
           Delete All
         </Button>
-      </Box> */}
+      </Box>
     </NativeBaseProvider>
   );
 };

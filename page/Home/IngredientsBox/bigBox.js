@@ -18,13 +18,67 @@ import {
 } from "native-base";
 import Ingredients from "./ingredients.js";
 import AddButton from "./addButton.js";
+import { loadFonts } from "../../../fonts.js";
+import { getData } from "../../api/Data/ingredientsData.js";
 
-const bigBox = ({ searchIngredients }) => {
+const bigBox = ({ searchIngredients, ingredients, setIngredients }) => {
   const { height } = Dimensions.get("window");
 
-  const [ingredients, setIngredients] = useState([]); // State for ingredients
+  // const [ingredients, setIngredients] = useState([]); // State for ingredients
 
-  if (ingredients.length === 0) {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const allData = await getData(); // Fetch all the data
+      setIngredients(allData);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const loadCustomFonts = async () => {
+      await loadFonts();
+      setFontLoaded(true);
+    };
+
+    loadCustomFonts();
+  }, []);
+
+  if (!fontLoaded) {
+    return <View />; // Render an empty view while the font is loading
+  }
+
+  if (isLoading) {
+    return (
+      <NativeBaseProvider>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Center
+            flex={1}
+            h={height * 0.5}
+            borderRadius={10}
+            bg="gray.100"
+            w="90%"
+          >
+            <VStack justifyContent="center" alignItems="center">
+              <Text style={{ fontFamily: "Poppins-Medium", opacity: 0.7 }}>
+                OPENING YOUR FRIDGE..
+              </Text>
+            </VStack>
+          </Center>
+          <AddButton setIngredients={setIngredients} />
+        </View>
+      </NativeBaseProvider>
+    ); // Render a loading state while data is being fetched
+  }
+
+  if (ingredients.length === 0 && searchIngredients.length != 0) {
     return (
       <NativeBaseProvider>
         <View
@@ -47,7 +101,7 @@ const bigBox = ({ searchIngredients }) => {
                 style={{ opacity: 0.7 }}
               />
               <Text style={{ fontFamily: "Poppins-Medium", opacity: 0.7 }}>
-                Your Fridge is Empty, Let's Add new Ingredients
+                You Don't have that Ingredients Right Now
               </Text>
             </VStack>
           </Center>
