@@ -50,7 +50,7 @@ const data = [
 const renderItem = ({ item }) => {
   return (
     <View style={styles.slideContainer}>
-      <Image source={{ uri: item.url }} style={styles.slideImage} />
+      <Image source={{ uri: item.url }} style={styles.slideImage} alt="hi"/>
       <Text style={styles.slideText}>{item.name}</Text>
     </View>
   );

@@ -57,7 +57,8 @@ export default function MainBoxes({ navigation }) {
       <VStack space={2} marginLeft={6}>
         <Heading size="md">For You</Heading>
 
-        <Pressable onPress={() => navigation.navigate("RecipePage")}>
+        <Pressable onPress={() => {
+          navigation.navigate("RecipePage")}}>
           <Box
             maxW="380"
             rounded="lg"
@@ -137,8 +138,12 @@ export default function MainBoxes({ navigation }) {
                 />
                 <Text>ㅤ</Text>
                 <VStack space={0}>
-                  <Heading size="md">{title}</Heading>
-                  <Text>{bodyWithLineBreaks}</Text>
+                  <Heading size="md">Crispy Fried Chicken</Heading>
+                  <Text>
+                    {addLineBreaks(
+                      "Fried chicken, also known as Southern fried chicken, is a dish consisting of chicken pieces that have been coated with seasoned flour or batter"
+                    )}
+                  </Text>
                   <Text marginTop={3}>ㅤㅤㅤㅤㅤㅤㅤㅤㅤTap to see more</Text>
                 </VStack>
               </HStack>

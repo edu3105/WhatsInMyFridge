@@ -42,7 +42,6 @@ function App() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarBadge: 5,
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -57,8 +56,12 @@ function App() {
       <Tab.Screen
         name="Explore"
         component={ExploretoRecipe}
-        options={{
-          tabBarBadge: 5,
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: getTabBarVisibility(route),
+            height: 60,
+          },
+          headerShown: getHeaderVisibility(route),
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -68,7 +71,7 @@ function App() {
               marginBottom={-15}
             />
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="Create"
@@ -200,7 +203,8 @@ const getTabBarVisibility = (route) => {
     routeName == "RecipeDone" ||
     routeName == "StepByStepMode" ||
     routeName == "Review" ||
-    routeName == "Done"
+    routeName == "Done" ||
+    routeName == "RegionPage"
   ) {
     return "none";
   } else {
@@ -224,7 +228,8 @@ const getHeaderVisibility = (route) => {
     routeName == "RecipeDone" ||
     routeName == "StepByStepMode" ||
     routeName == "Review" ||
-    routeName == "Done"
+    routeName == "Done" ||
+    routeName == "RegionPage"
   ) {
     return false;
   }
