@@ -42,7 +42,6 @@ function App() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarBadge: 5,
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -63,7 +62,6 @@ function App() {
             height: 60,
           },
           headerShown: getHeaderVisibility(route),
-          tabBarBadge: 5,
           tabBarLabel: " ",
           tabBarIcon: ({ focused }) => (
             <Ionicons
